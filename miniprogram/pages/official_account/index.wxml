@@ -1,0 +1,5 @@
+<!--pages/official_account/index.wxml-->
+
+<!-- https://mp.weixin.qq.com/s/8Ggl_qi4M_mboDZ06F1_SA -->
+
+<web-view src="{{blogPath}}" bindload="hideLoading"></web-view>

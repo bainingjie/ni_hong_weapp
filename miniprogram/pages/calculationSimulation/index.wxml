@@ -1,0 +1,38 @@
+<!--pages/calculation_simulation/index.wxml-->
+
+<!-- <van-cell-group> -->
+
+
+
+<view class=" mid_menu" style="margin-bottom:40rpx;margin-top: 40rpx;">
+  <view style="margin-bottom: 10rpx;text-align: center;" class="top_tip">中国→日本 空运</view>
+  <view style="margin-left: 80rpx;" wx:if="{{price}}">时价：{{price}} </view>
+  <view style="margin-top: 15rpx;margin-bottom: 10rpx;margin-left: 80rpx;" class="top_tip">以付款日的时价为准。报关手续费为4元。</view>
+</view>
+
+<view style="padding-left: 30rpx;">重量</view>
+<van-field
+  type='digit'
+  value="{{ weight }}"
+  placeholder="请输入重量(kg)"
+  border="{{ false }}"
+  bind:change="getInputVal"
+/>
+<!-- </van-cell-group> -->
+<view style="margin-top: 15rpx;margin-bottom: 10rpx;margin-left: 30rpx;margin-right: 30rpx;" class="top_tip"><text wx:if="{{weight_example}}">{{weight_example}}</text></view>
+
+<view class=" mid_menu" style="margin-top:40rpx;"  wx:if="{{trimmed_weight}}">
+  <view style="margin-left: 30rpx; font-weight: bold;font-size: small;">运费试算</view>
+  <view style="margin-top: 15rpx; margin-left: 30rpx; font-size: small;">计费重量：<text wx:if="{{trimmed_weight}}">{{trimmed_weight}}kg</text></view>
+  <view style="margin-left: 30rpx; font-size: small;">预计运费：<text wx:if="{{price_estimate}}">{{price_estimate}}元</text></view>
+  <!-- <view style="margin-left: 30rpx; font-size: small;">预计运费 = 时价 ×　计费重量 + 报关手续费</view> -->
+  <view style="margin-top: 15rpx;margin-bottom: 10rpx;margin-left: 30rpx;" class="top_tip">*重量以仓库签收后实际称重为准。</view>
+</view>
+
+<view class=" mid_menu" style="margin-top:40rpx;" wx:if="{{price_opponent}}">
+  <view style="margin-left: 30rpx; font-weight: bold;font-size: small;">同行比较</view>
+  <view style="margin-top: 15rpx; margin-left: 30rpx; font-size: small;" >同行参考运费：<text>{{price_opponent}}元</text></view>
+  <view style="margin-left: 30rpx; font-size: small;"><text>同行参考算法：10kg以内，首重{{opponent_head_500g}}元500g,
+  续重{{opponent_price_500g}}元/500g。报关手续费4元。</text> </view>
+  <!-- <view style="margin-top: 15rpx;margin-bottom: 10rpx;margin-left: 30rpx;" class="top_tip">*重量以仓库签收后实际称重为准。</view> -->
+</view>

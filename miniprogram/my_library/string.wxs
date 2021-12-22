@@ -1,0 +1,25 @@
+function my_slice(str,a,b){
+    return str.slice(a,b);
+  }
+function my_equal(a,type){
+  switch (type) {
+    case 0:
+      return a=="待支付";
+    case 1:
+      return a=="待发货";
+    case 2:
+      return a=="待打包称重";
+  }
+}
+
+// wxs 只支持es5语法，不支持arrow function,也不持支findindex
+function steps_index(text){
+  var states=["待打包称重",'待支付','待发货', '运输中','待取货','已取货'];
+  return states.indexOf(text);
+}
+module.exports = {
+my_slice: my_slice,
+my_equal: my_equal,
+steps_index:steps_index
+}
+  

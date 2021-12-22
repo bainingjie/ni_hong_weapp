@@ -1,0 +1,42 @@
+
+<wxs src="../../my_library/string.wxs" module="tools" />
+
+<view class=" mid_menu">
+    <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 自提点名称：</view>
+    <view style="margin-left: 30rpx;margin-bottom: 30rpx;" class="top_tip"  > {{spot.name}}</view>
+    <van-row>
+        <van-col span="16">
+            <view style="margin-left: 30rpx;font-weight: bold;" class="top_tip"  > 自提点地址：</view>
+        </van-col>
+        <van-col span="8">
+            <van-button round size="small" bindtap="copyText" data-text="{{spot.address.prefecture}} {{spot.address.address}}">复制地址</van-button>
+        </van-col>
+        <!-- <van-col span="8">
+            <van-button round size="small" bindtap="copyText" data-text="{{spot.address.prefecture}} {{spot.address.google_map}}">复制谷歌地图URL</van-button>
+        </van-col> -->
+    </van-row>
+    <view style="margin-left: 30rpx;" class="top_tip"  > 〒{{spot.address.post_code}}</view>
+    <view style="margin-left: 30rpx;margin-bottom: 30rpx;" class="top_tip"  > {{spot.address.prefecture}} {{spot.address.address}}</view>
+    <van-row>
+        <van-col span="16">
+            <view style="margin-left: 30rpx;font-weight: bold;" class="top_tip"  > 负责人电话：</view>
+        </van-col>
+        <van-col span="8">
+            <van-button round size="small" bindtap="copyText" data-text="{{spot.address.phone}}">复制电话</van-button>
+        </van-col>
+    </van-row>
+    <view style="margin-left: 30rpx;margin-bottom: 30rpx;" class="top_tip"  > {{spot.address.phone}}</view>
+    <!-- check -->
+    <van-row wx:if="{{spot.wechat}}">
+        <van-col span="16">
+            <view style="margin-left: 30rpx;font-weight: bold;" class="top_tip"> 负责人微信号：</view>
+        </van-col>
+        <van-col span="8">
+            <van-button round size="small" bindtap="copyText" data-text="{{spot.wechat}}">复制微信号</van-button>
+        </van-col>
+    </van-row>
+    <view style="margin-left: 30rpx;margin-bottom: 30rpx;" class="top_tip" wx:if="{{spot.wechat}}" > {{spot.wechat}}</view>
+    <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 营业时间：</view>
+    <view style="margin-left: 30rpx;" class="top_tip"  > {{spot.time}}</view>
+</view>
+

@@ -1,0 +1,12 @@
+/* pages/pickUpSpot/index.wxss */
+
+@import "../index/index.wxss";
+
+.mid_menu{
+    margin-bottom: 0rpx;
+}
+
+.top_tip{
+    color: black;
+    font-size: small;
+}

@@ -1,0 +1,196 @@
+<!--index.wxml-->
+<van-tabs active="{{ active }}" sticky="true" offset-top="0">
+    <van-tab title="公告" >
+    <view style="background-color:#ffffff;height: 30rpx;" ></view>
+    <image style="width: 100%;" webp="{{true}}" mode="widthFix" src="https://www.sharemart.shop/nihong/slide.webp"></image>
+    
+    <view class=" mid_menu" style="margin-bottom:40rpx;margin-top: 30rpx;">
+      <view style="margin-bottom: 10rpx;text-align: center;" class="top_tip">中国→日本 空运</view>
+      <view style="margin-left: 80rpx;"  wx:if="{{price}}">时价：{{price}} </view>
+      <view style="margin-left: 80rpx;"  wx:if="{{delivery_day}}"> 时效：{{delivery_day}}</view>
+      <view style="margin-top: 10rpx; text-align: center;" class="top_tip">报关手续费为4元</view>
+    </view>
+
+    <van-row >
+      <van-col span="12" style="text-align: center"><van-button plain round color="#EE0A24" bindtap="jumpPage" data-jump="calculationSimulation">运费试算</van-button></van-col>
+      <van-col span="12" style="text-align: center">
+        <van-button plain round color="#EE0A24"  bindtap="jumpPage" data-jump="official_account" data-param="{{enter_official_account}}">什么不能寄</van-button>
+      </van-col>
+    </van-row>
+
+    <view style="margin-top: 30rpx;">
+      <van-row >
+        <van-col span="12" offset="" style="text-align: center">
+          <van-button plain round color="#EE0A24" bindtap="customer_service">联系客服</van-button>
+        </van-col>
+        <van-col span="12" style="text-align: center">
+          <van-button plain round color="#EE0A24" bindtap="jumpPage" data-jump="pickUpSpots">查看自提点</van-button>
+        </van-col>
+      </van-row>
+    </view>
+
+    <van-divider contentPosition="center" >备注</van-divider>
+    <view  class="top_tip" style="margin-left: 60rpx;margin-top: 0rpx;">1) 价格请以付款日的时价为准。</view>
+    <view  class="top_tip" style="margin-left: 60rpx;margin-top: 10rpx;">2) 时效为运单号上网后正常情况下时效，受天气或</view>
+    <view  class="top_tip" style="margin-left: 60rpx;">自然灾害等客观因素影响。请以运单号跟踪时效为准。</view>
+    <view  class="top_tip" style="margin-top: 10rpx;margin-left: 60rpx;">3) 包邮到家需另付邮费，详情请咨询客服。</view>
+    <view  class="top_tip" style="margin-top: 10rpx;margin-left: 60rpx;">4) 下单前请阅读【什么不能寄】，确认注意事项。</view>    
+  </van-tab>
+  <van-tab title="开始集运" >
+    <!-- <van-row style="padding-top:30rpx;">
+      <van-col span="12" style="text-align: center"> -->
+        <view class="mid_menu"  style="text-align: center">
+          <view style="font-size: 20px;color: #EE0A24;font-weight: bold;">①</view>
+          <view>将购物车截图发给客服</view>
+          <view class="top_tip">仅用于检查禁运品及报关，匿名加密保护隐私。</view>
+          <view class="top_tip">留言前，请先确认公告页的【什么不能寄】</view>
+          <van-button round plain color="#EE0A24" bindtap="customer_service" customStyle="margin-top: 10rpx;">给客服留言</van-button>
+        </view>
+      <!-- </van-col>
+      <van-col span="12" style="text-align: center"> -->
+        <view class="mid_menu"  style="text-align: center">
+          <view style="font-size: 20px;color: #EE0A24;font-weight: bold;">②</view>
+          <text>下单至霓虹町的仓库</text>
+          <view  class="top_tip">{{description_2_1}}</view>
+          <view  class="top_tip">{{description_2_2}}</view>
+          <van-button round plain color="#EE0A24" bindtap="copyText" customStyle="margin-top: 10rpx;">复制最新地址</van-button>
+        </view>
+      <!-- </van-col>
+    </van-row> -->
+    <!-- <van-row style="padding-top:30rpx;">
+      <van-col span="12" style="text-align: center"> -->
+        <view class="mid_menu"  style="text-align: center">
+          <view style="font-size: 20px;color: #EE0A24;font-weight: bold;">③</view>
+          <text>添加快递单号</text>
+          <view  class="top_tip">请在所有包裹都被仓库签收后，一口气添加。</view>
+          <van-button round plain color="#EE0A24" bindtap="jumpPage" data-jump="addDelivery" customStyle="margin-top: 10rpx;">批量添加</van-button>
+        </view>
+      <!-- </van-col>
+      <van-col span="12" style="text-align: center"> -->
+        <view class="mid_menu"  style="text-align: center">
+          <view style="font-size: 20px;color: #EE0A24;font-weight: bold;">④</view>
+          <text>支付&取货</text>
+          <view  class="top_tip">关注公众号，接收支付&到货的智能提醒。</view>
+          <van-button round plain color="#EE0A24" bindtap="jumpPage" data-jump="official_account" data-param="{{enter_official_account}}" customStyle="margin-top: 10rpx;">进入公众号</van-button>
+          <!-- <van-button  plain type="primary" bindtap="jumpPage" data-jump="addDelivery">添加快递单号</van-button> -->
+        </view>
+      <!-- </van-col>
+    </van-row> -->
+
+    
+
+<!-- <van-divider
+  contentPosition="center"
+  customStyle="color: black; border-color: black; font-size:18px ;margin-left:50rpx ;margin-right:50rpx;"
+>
+  流程
+</van-divider> -->
+
+  <!-- <view class="mid_menu"  style="text-align: center">
+    <view style="font-size: 20px;">①</view>
+    <view>将购物车截图发给公众号</view>
+    <view class="top_tip">用于检查禁运品及海关申报</view>
+    <van-button  plain type="primary" bindtap="jumpPage" data-jump="official_account" data-param="{{enter_official_account}}">进入公众号</van-button>
+  </view>
+
+  <view class="mid_menu"  style="text-align: center">
+    <view style="font-size: 20px;">②</view>
+    <text>下单至霓虹町的仓库</text>
+    <view  class="top_tip">每周六发货，周四23:00前签收的当周发货</view>
+    <van-button  plain type="primary" bindtap="copyText">复制最新地址</van-button>
+  </view> -->
+
+
+  
+  </van-tab>
+  <van-tab title="我的订单" >
+    <view style="text-align: center;margin-top: 30rpx;" wx:if="{{my_delivery.length <1 }}">暂无订单</view>
+
+    <view class=" mid_menu" wx:if="{{my_delivery.length >0 }}" style="">
+      <view style="text-align: center;color:black;font-size: 35rpx;margin-bottom: 0rpx;"> 流程 </view>
+      <van-steps
+        steps="{{ steps }}"
+        active="{{ active_step }}"
+        inactiveIcon= 'circle'
+        activeIcon='circle'
+        inactive-color="black"
+        active-color="black"
+      />
+      <!-- <van-row >
+        <van-col span="6">①打包</van-col>
+        <van-col span="6">①支付</van-col>
+        <van-col span="6">①发货</van-col>
+        <van-col span="6">①取货</van-col>
+      </van-row> -->
+
+    </view>
+    <wxs src="../../my_library/string.wxs" module="tools" />
+    <view class=" mid_menu" style="margin-bottom:10rpx;margin-top: 10rpx;" wx:for="{{my_delivery}}" wx:key="*this" bindtap="jumpPage" data-jump="getDelivery" data-param="{{item._id}}">
+      <!-- <view style="margin-bottom: 10rpx;text-align: center;" class="top_tip">中国→日本 空运</view> -->
+      <!-- <van-steps
+            steps="{{ steps }}"
+            active="{{ tools.steps_index(item.state) }}"
+            inactiveIcon= 'circle'
+            activeIcon='success'
+            inca
+            active-color="#ee0a24;"
+          /> -->
+      <van-row>
+        <van-col span="20">
+          <view style="margin-left: 30rpx;" class="top_tip" > 状态：<text style="color:#ee0a24;">{{item.state}}</text></view>
+          <view style="margin-left: 30rpx;" class="top_tip" > 添加日期：{{tools.my_slice(item.added_date,0,10)}}</view>
+          <view style="margin-left: 30rpx;" class="top_tip" > 总重量：{{item.total_weight}}</view>
+          <view style="margin-left: 30rpx;" class="top_tip" > 总运费：{{item.amount_to_pay}}<text wx:if="{{!tools.my_equal(item.state,2)}}">元</text></view>
+          <view style="margin-left: 30rpx;" class="top_tip" > 自提点：{{item.pickup_spot}}</view>
+          <view style="margin-left: 30rpx;" class="top_tip" > 取货码：{{item.pickup_code}}</view>
+        </van-col>
+        <van-col span="4" >
+          <view class="middle" style="margin-top:10rpx;">
+            <van-icon name="arrow" color="grey" size="30px" ></van-icon>
+          </view>
+        </van-col>
+      </van-row>
+
+    </view>
+    <!-- <van-sidebar active-key="{{ activeKey }}">
+      <van-sidebar-item title="待报价" />
+      <van-sidebar-item title="待支付" />
+      <van-sidebar-item title="运输中" />
+      <van-sidebar-item title="待取货" />
+      <van-sidebar-item title="已签收" />
+    </van-sidebar> -->
+  </van-tab>
+
+</van-tabs>
+
+
+
+
+ 
+
+
+
+  <!-- <view class="power" wx:key="title" wx:for="{{powerList}}" wx:for-item="power">
+    <view class="power_info" data-index="{{index}}" bindtap="onClickPowerInfo">
+      <view class="power_info_text">
+        <view class="power_info_text_title">{{power.title}}</view>
+        <view class="power_info_text_tip">{{power.tip}}</view>
+      </view>
+      <image wx:if="{{!power.showItem}}" class="power_info_more" src="../../images/arrow.svg"></image>
+      <image wx:if="{{power.showItem}}" class="power_info_less" src="../../images/arrow.svg"></image>
+    </view>
+    <view wx:if="{{power.showItem}}">
+      <view wx:key="title" wx:for="{{power.item}}">
+        <view class="line"></view>
+        <view class="power_item" bindtap="jumpPage" data-page="{{item.page}}">
+          <view class="power_item_title">{{item.title}}</view>
+          <image class="power_item_icon" src="../../images/arrow.svg"></image>
+        </view>
+      </view>
+    </view>
+  </view> -->
+
+  <!-- <view class="environment" bindtap="onChangeShowEnvChoose">当前环境 {{ selectedEnv.alias }}</view> -->
+
+
+<!-- </view> -->

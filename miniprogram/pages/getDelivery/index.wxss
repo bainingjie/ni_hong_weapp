@@ -1,0 +1,8 @@
+/* pages/getDelivery/index.wxss */
+
+@import "../index/index.wxss";
+
+.top_tip{
+    font-size: 32rpx;
+    color:black;
+}

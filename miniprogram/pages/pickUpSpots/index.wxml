@@ -1,0 +1,25 @@
+<!--pages/pickUpSpots/index.wxml-->
+<!-- 
+<view wx:for="{{array}}">
+  {{index}}: {{item.message}}
+</view> -->
+
+<view style="font-weight: bold;text-align: center;margin-top: 40rpx;">合作自提点</view>
+<van-cell-group wx:for="{{prefecture_names}}" title="{{item}}" wx:if="{{prefectures[item].length>0}}" >
+  <!-- <van-cell
+  is-link
+  wx:for="{{prefectures[item]}}"
+  title="{{item.name}}"
+  link-type="navigateTo"
+  url="/pages/dashboard/index"
+  /> -->
+
+  <van-cell
+  wx:for="{{prefectures[item]}}"
+  title="{{item.name}}"
+  label="点击可复制谷歌地图链接(请粘贴到浏览器查看)"
+  bind:click="copyText"
+  data-url="{{item.address.google_map}}"
+  />
+  
+</van-cell-group>

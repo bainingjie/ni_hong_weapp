@@ -1,0 +1,84 @@
+
+<view wx:if="{{state==0}}" style="padding-top: 20rpx;">
+    <view class="mid_menu"  style="text-align: center">
+      <text>请确认所有包裹都被仓库签收后，
+      一口气添加快递单号。₍ᐢ⑅•ᴗ•⑅ᐢ₎♡</text> 
+    </view>
+
+
+    <!-- <view style="margin-left: 30rpx;margin-bottom: 10rpx;" class="weui-cells__title">自提点</view>  -->
+    <view class="weui-cells__title" style="color: black;">自提点</view> 
+    <van-cell title="{{pick_up_spot}}" is-link bind:click="showPopup" />
+    <van-popup show="{{ show }}" bind:close="onClose"   closeable
+      position="bottom"
+      lock-scroll="true"
+      custom-style="height: 65%;padding-top:50rpx;">
+      <view style="text-align:center;font-weight: bold;" >点击选择自提点</view> 
+      <van-cell-group wx:for="{{prefecture_names}}"  wx:key="*this" title="{{item}}" wx:if="{{prefectures[item].length>0}}" >
+        <van-cell
+        wx:for="{{prefectures[item]}}"
+        wx:key="*this"
+        title="{{item.name}}"
+        bind:click="setPickUpSpot"
+        data-name="{{item.name}}"
+        />
+      </van-cell-group>
+    </van-popup>
+
+    <view class="weui-cells__title" style="color: black;">手机号</view> 
+    <van-field
+        model:value="{{phone}}" 
+        placeholder="请填写"
+        border="{{ true }}"
+      ></van-field>
+    <view style="margin-top: 20rpx; margin-left: 15rpx;text-align: left;" class="top_tip">如果包裹存在任何问题，我们会直接与您联系。</view>
+
+  <view class="weui-cells__title" style="color: black;">添加快递单号</view> 
+
+  <van-cell-group wx:if="{{!show}}">
+      <van-field
+        value="{{tracking_number}}" 
+        bind:input='getInputVal'
+        placeholder="请填写"
+        border="{{ false }}"
+        use-button-slot
+      >
+      <van-button slot="button" plain="true" color="black" bindtap='add' size="small">添加</van-button>
+    </van-field>
+   </van-cell-group>    
+   <view style="margin-top: 20rpx; margin-left: 15rpx;text-align: left;" class="top_tip">请注意区分淘宝的【订单编号】与【快递单号】。</view>
+   <view style="margin-left: 15rpx;text-align: left;" class="top_tip">快递单号的查看方式：淘宝>>我的订单>>查看物流。</view>
+    <!-- <view class='add' bindtap='addInput'>增加</view> -->
+
+
+    <van-divider contentPosition="center" textColor="black">已添加的快递单号</van-divider>
+
+    <view wx:if="{{!show}}">
+      <van-cell wx:for='{{tracking_numbers}}' wx:key="*this" title="{{item}}" >
+        <van-icon slot="right-icon" name="close" class="custom-icon" bindtap='delInput' data-idx='{{index}}' />
+      </van-cell>
+   </view>    
+
+   <view style="text-align: center;margin-top: 20rpx;">
+    <view class="top_tip" style="margin-bottom: 20rpx;">共 {{tracking_numbers.length}} 件</view>
+    <van-button type="primary" plain="true" bindtap='submit' color="#EE0A24;">申请集运</van-button>
+   </view>
+</view>
+
+<view wx:if="{{state==1}}" style="text-align: center;">
+  <view>
+    <icon class="icon-box-img icon" type="success" size="53"></icon>
+    <view class="title">提交成功</view>
+    <!-- <view class="mid_menu"> -->
+      <view class="top_tip">我们会尽快打包称重并报价。</view>
+      <view class="top_tip">请关注公众号，方便您即时收到运费支付提示。</view>
+      <view  class="top_tip" style="margin-bottom:20rpx;">在支付运费后，我们会尽快安排发货。</view>
+      <van-button round plain color="green" bindtap="jumpPage" data-jump="official_account" data-param="{{official_account_url}}" customStyle="margin-top: 10rpx;">进入公众号</van-button>
+  </view>
+</view>
+
+<view wx:if="{{state==2}}">
+  添加失败，请联系客服。
+</view>
+  
+

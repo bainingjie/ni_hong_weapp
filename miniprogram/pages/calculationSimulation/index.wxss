@@ -1,0 +1,3 @@
+/* pages/calculation_simulation/index.wxss */
+
+@import "../index/index.wxss";
