@@ -71,7 +71,7 @@
     <view class="title">提交成功</view>
     <!-- <view class="mid_menu"> -->
       <view class="top_tip">我们会尽快打包称重并报价。</view>
-      <view class="top_tip">请关注公众号，方便您即时收到运费支付提示。</view>
+      <view class="top_tip">请关注公众号，方便您及时收到运费支付提示。</view>
       <view  class="top_tip" style="margin-bottom:20rpx;">在支付运费后，我们会尽快安排发货。</view>
       <van-button round plain color="green" bindtap="jumpPage" data-jump="official_account" data-param="{{official_account_url}}" customStyle="margin-top: 10rpx;">进入公众号</van-button>
   </view>

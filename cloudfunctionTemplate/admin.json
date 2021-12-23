@@ -1,0 +1,14 @@
+[
+  {
+    "name": "getAccessToken",
+    "value": {
+      "type": "getAccessToken"
+    }
+  },
+  {
+    "name": "updateUser",
+    "value": {
+      "type": "updateUser"
+    }
+  }
+]

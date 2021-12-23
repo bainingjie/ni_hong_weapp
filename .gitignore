@@ -1,2 +1,5 @@
 /node_modules
 /cloudfunctions/node_modules
+/cloudfunctions/quickstartFunctions/node_modules
+/cloudfunctions/admin/node_modules
+/cloudfunctions/payDeliveryCallback/node_modules
