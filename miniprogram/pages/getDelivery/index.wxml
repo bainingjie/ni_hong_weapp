@@ -63,7 +63,7 @@
 
 <view class=" mid_menu">
     <view style="margin-left: 30rpx;font-weight: bold;" class="top_tip" > 计费总重量:</view>
-    <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.total_weight}} </view>
+    <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.total_weight}}kg </view>
     <view style="margin-left: 30rpx;font-weight: bold;margin-top: 10rpx;" class="top_tip" > 快递单号清单</view>
     <view style="margin-left: 30rpx;" class="top_tip" wx:for="{{delivery.packages}}">{{item.tracking_number}}</view>
 </view>

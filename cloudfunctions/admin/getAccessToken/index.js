@@ -24,13 +24,14 @@ async function getAccessToken(){
 }
 exports.main = async (event, context) => {
     let token = await getAccessToken();
-    await db.collection('public').doc("c0ca0aed61c3d73301ffd88d515bcb72")
+    let resp = await db.collection('public').doc("c0ca0aed61c3d73301ffd88d515bcb72")
     .update({
       data: {
         accessToken:token,
         added_date:new Date()
       }
     });
+    console.log(resp)
     return {
         state:"done"
         // openid: wxContext.OPENID,

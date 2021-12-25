@@ -10,5 +10,23 @@
     "value": {
       "type": "updateUser"
     }
+  },
+  {
+    "name": "fillWeight",
+    "value": {
+      "type": "fillWeight"
+    }
+  },
+  {
+    "name": "sendMessage",
+    "value": {
+      "type": "sendMessage"
+    }
+  },
+  {
+    "name": "exportFile",
+    "value": {
+      "type": "exportFile"
+    }
   }
 ]
