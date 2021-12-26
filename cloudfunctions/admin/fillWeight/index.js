@@ -21,7 +21,7 @@ exports.main = async (event, context) => {
         weight_object[row[1]]=weight
       }
     }
-    console.log(weight_object)
+    // console.log(weight_object)
 
     let deliveries = await db.collection("delivery").where({
       total_weight:"待称重"

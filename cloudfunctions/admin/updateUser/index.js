@@ -36,25 +36,32 @@ async function getUnionIDs(ACCESS_TOKEN,config){
 exports.main = async (event, context) => {
     let res = await db.collection("public").doc("c0ca0aed61c3d73301ffd88d515bcb72").get();
     let token = res.data.accessToken
-    let openids = await getOpenIDs(token,res.data.next_openid);
+    let openids = await getOpenIDs(token,"");
     // console.log(openids)
-    console.log("openids.count",openids.count)
-    if(openids.count==0){
-        console.log("没有更多关注者啦");
-        return 0;
-    }
-    let next_openid = openids.next_openid;
+
+    // let next_openid = openids.next_openid;
     openids = openids.data.openid;
     
     let config = { user_list:[]};
-
-    for (id of openids){
-        config.user_list.push({
-            openid:id
-        });
+    let res2 = await db.collection("official_account_user").get()
+    let old_ids = []
+    for (let usr of res2.data){
+        old_ids.push(usr.openid)
+    }
+    console.log(old_ids)
+    console.log(openids)
+    for (let id of openids){
+        if (!(old_ids.includes(id))){
+            config.user_list.push({
+                openid:id
+            });
+        }
     }
     // console.log("config",config);
-
+    if(config.user_list==0){
+        console.log("没有更多关注者啦");
+        return 0;
+    }
     let user_info_list = await getUnionIDs(token,config);
     // console.log(user_info_list)
     let count = 0;
@@ -70,12 +77,12 @@ exports.main = async (event, context) => {
         count += 1;
     }
     console.log(count," users are added");
-    await db.collection('public').doc("c0ca0aed61c3d73301ffd88d515bcb72")
-    .update({
-      data: {
-        next_openid:next_openid
-      }
-    });
+    // await db.collection('public').doc("c0ca0aed61c3d73301ffd88d515bcb72")
+    // .update({
+    //   data: {
+    //     next_openid:next_openid
+    //   }
+    // });
     return {
         state:"done"
     }

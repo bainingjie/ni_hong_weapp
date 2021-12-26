@@ -50,7 +50,7 @@ exports.main = async (event, context) => {
               pickup_spot:event.pick_up_spot,
               packages:data_array,
               phone:event.phone,
-              state:"待打包称重",//待打包称重，待报价，待支付，待发货，运输中，待取货，已取货
+              state:"待打包称重",//待打包称重，待报价，待支付，待发货，运输中，已到达
               is_quote_message_sent:false,
               is_pickup_message_sent:false,
 

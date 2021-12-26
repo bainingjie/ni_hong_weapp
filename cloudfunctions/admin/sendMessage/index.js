@@ -46,13 +46,13 @@ async function sendMessage(ACCESS_TOKEN,delivery){
                       "color":"#173177"
                   },
                   "remark":{
-                      "value":`计费总重量为${delivery.total_weight}kg。付款后，订单状态将被更新为“待发货”，我们将尽快安排发货。☺️`,
+                      "value":`计费总重量为${delivery.total_weight}kg。`,
                       "color":"#173177"
                   }
           }
       };
       let response = await axios.post(`https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${ACCESS_TOKEN}`, config);
-
+      console.log(response)
       if(response.data.errcode==0){
         await db.collection("delivery").doc(delivery._id).update({
           data:{

@@ -62,8 +62,21 @@
 </view>
 
 <view class=" mid_menu">
-    <view style="margin-left: 30rpx;font-weight: bold;" class="top_tip" > 计费总重量:</view>
-    <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.total_weight}}kg </view>
-    <view style="margin-left: 30rpx;font-weight: bold;margin-top: 10rpx;" class="top_tip" > 快递单号清单</view>
-    <view style="margin-left: 30rpx;" class="top_tip" wx:for="{{delivery.packages}}">{{item.tracking_number}}</view>
+    <van-row>
+            <van-col span="16"  style="font-weight: bold;" class="top_tip" ><text style="padding-left:30rpx;">计费总重量:</text></van-col>
+            <van-col span="8"  wx:if="{{delivery.real_total_weight}}" style="font-weight: bold;" class="top_tip" ><text>总重量:</text></van-col>
+    </van-row>
+    <van-row>
+            <van-col span="16"  class="top_tip" ><text style="padding-left:30rpx;">{{delivery.total_weight}}kg</text></van-col>
+            <van-col span="8"  wx:if="{{delivery.real_total_weight}}" class="top_tip" ><text>{{delivery.real_total_weight}}kg</text></van-col>
+    </van-row>
+    <view style="margin-top: 20rpx;margin-bottom: 20rpx;"></view>
+    <van-row>
+            <van-col span="16"  style="font-weight: bold;" class="top_tip" ><text style="padding-left:30rpx;">快递单号</text></van-col>
+            <van-col span="8"  wx:if="{{delivery.real_total_weight}}" style="font-weight: bold;" class="top_tip" ><text>重量</text></van-col>
+    </van-row>
+    <van-row  wx:for="{{delivery.packages}}" wx:key="*this">
+            <van-col span="16"   class="top_tip" ><text style="padding-left:30rpx;">{{item.tracking_number}}</text></van-col>
+            <van-col span="8"  wx:if="{{item.weight}}" class="top_tip" ><text>{{item.weight}}kg</text></van-col>
+    </van-row>
 </view>

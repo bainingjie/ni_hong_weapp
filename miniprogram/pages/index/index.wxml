@@ -139,7 +139,7 @@
         <van-col span="20">
           <view style="margin-left: 30rpx;" class="top_tip" > 状态：<text style="color:#ee0a24;">{{item.state}}</text></view>
           <view style="margin-left: 30rpx;" class="top_tip" > 添加日期：{{tools.my_slice(item.added_date,0,10)}}</view>
-          <view style="margin-left: 30rpx;" class="top_tip" > 总重量：{{item.total_weight}}kg</view>
+          <view style="margin-left: 30rpx;" class="top_tip" > 计费总重量：{{item.total_weight}}kg</view>
           <view style="margin-left: 30rpx;" class="top_tip" > 总运费：{{item.amount_to_pay}}<text wx:if="{{!tools.my_equal(item.state,2)}}">元</text></view>
           <view style="margin-left: 30rpx;" class="top_tip" > 自提点：{{item.pickup_spot}}</view>
           <view style="margin-left: 30rpx;" class="top_tip" > 取货码：{{item.pickup_code}}</view>

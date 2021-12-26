@@ -28,5 +28,11 @@
     "value": {
       "type": "exportFile"
     }
+  },
+  {
+    "name": "fillTrackingNumber",
+    "value": {
+      "type": "fillTrackingNumber"
+    }
   }
 ]
