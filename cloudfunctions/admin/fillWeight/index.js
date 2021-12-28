@@ -10,18 +10,18 @@ const {parse} = require('csv-parse/sync');
 exports.main = async (event, context) => {
   try{
     let weight_file = await cloud.downloadFile({
-      fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/weigth.csv'
+      fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/weight - シート1.csv'
     })
     const res = parse(weight_file.fileContent)
     res.shift();
     let weight_object={}
     for (row of res){
-      let weight = Number(row[10]);
+      let weight = Number(row[9]);
       if(weight != 0){
-        weight_object[row[1]]=weight
+        weight_object[row[0]]=weight
       }
     }
-    // console.log(weight_object)
+    console.log(weight_object)
 
     let deliveries = await db.collection("delivery").where({
       total_weight:"待称重"

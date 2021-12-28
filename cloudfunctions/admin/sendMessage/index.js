@@ -46,7 +46,7 @@ async function sendMessage(ACCESS_TOKEN,delivery){
                       "color":"#173177"
                   },
                   "remark":{
-                      "value":`计费总重量为${delivery.total_weight}kg。`,
+                      "value":`计费总重量为${delivery.total_weight}kg。付费后，订单状态会被更新为"待发货"。`,
                       "color":"#173177"
                   }
           }
@@ -54,13 +54,18 @@ async function sendMessage(ACCESS_TOKEN,delivery){
       let response = await axios.post(`https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${ACCESS_TOKEN}`, config);
       console.log(response)
       if(response.data.errcode==0){
-        await db.collection("delivery").doc(delivery._id).update({
+        console.log("delivery_id ",delivery._id," 成功发送模板消息")
+        response = await db.collection("delivery").doc(delivery._id).update({
           data:{
             is_quote_message_sent:true
           }
         })
+        if(response.stats.updated !=1){
+          console.log("delivery_id ",delivery._id," is_quote_message_sent 更新失败")
+        }
+        console.log(response)
       }else{
-        console.log("delivery_id",delivery._id)
+        console.log("delivery_id",delivery._id," 发送模板消息失败")
         console.log(response)
         console.log("=====")
       }

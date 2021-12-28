@@ -1,24 +1,24 @@
 [
   {
-    "name": "getAccessToken",
+    "name": "(2)getAccessToken",
     "value": {
       "type": "getAccessToken"
     }
   },
   {
-    "name": "updateUser",
+    "name": "(3)updateUser",
     "value": {
       "type": "updateUser"
     }
   },
   {
-    "name": "fillWeight",
+    "name": "(1)fillWeight(需更新fileID)",
     "value": {
       "type": "fillWeight"
     }
   },
   {
-    "name": "sendMessage",
+    "name": "(4)sendMessage",
     "value": {
       "type": "sendMessage"
     }
