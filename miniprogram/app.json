@@ -6,7 +6,9 @@
         "pages/official_account/index",
         "pages/pickUpSpots/index",
         "pages/getDelivery/index",
-        "pages/pickUpSpot/index"
+        "pages/pickUpSpot/index",
+        "pages/productList/index",
+        "pages/product/index"
     ],
     "window": {
         "backgroundColor": "#f6f6f6",
@@ -36,6 +38,8 @@
         "van-picker": "@vant/weapp/picker/index",
         "van-popup": "@vant/weapp/popup/index",
         "van-icon": "@vant/weapp/icon/index",
-        "van-steps": "@vant/weapp/steps/index"
+        "van-steps": "@vant/weapp/steps/index",
+        "van-tabbar": "@vant/weapp/tabbar/index",
+        "van-tabbar-item": "@vant/weapp/tabbar-item/index"
     }
 }

@@ -1,0 +1,28 @@
+<!--pages/product/index.wxml-->
+
+<image style="width: 100%;" webp="{{true}}" mode="widthFix" src="{{product.sku[type_index].image}}"></image>
+<text style="font-weight: bold;margin:20rpx 20rpx 0rpx 20rpx;font-size: x-large;">{{product.text.name}}</text>
+<wxs src="../../my_library/string.wxs" module="tools" />
+<text style="font-size: small;margin:10rpx 20rpx 10rpx 20rpx;color: rgb(119, 118, 118);">{{tools.n_correction(product.text.subtitle)}}</text>
+<text style="margin:0rpx 20rpx 0rpx 20rpx;font-size: x-large;color: #F67C74;">JPY {{product.sku[type_index].price}}</text>
+<view wx:if="{{sku_length>1}}">
+    <van-divider custom-style="margin: 20rpx 20rpx" />
+    <text style="margin:20rpx;font-weight: bold;font-size: small;">种类</text>
+    <view class="tags_view" >
+        <view wx:for="{{product.sku}}" class="{{index==type_index ? 'selected_tag' : 'tags'}}" bindtap="tag_clicked" data-index="{{index}}">{{item.name}}</view>
+    </view>
+</view>
+<!-- <van-divider custom-style="margin: 20rpx 20rpx" /> -->
+<text style="margin:20rpx;font-weight: bold;font-size: small;">自提点</text>
+<text style="font-size: small;margin-left:  20rpx;"><text style="color: rgb(119, 118, 118);">预计1月11日-1月24日配送至自提点。点击查看</text></text>
+<view style="text-align: center;margin-top: 30rpx;margin-bottom: 10rpx;">
+    <van-button round color="linear-gradient(to right, #F67C74, #F01426)" custom-style="width:80%" bindtap="" data-buy="">下单买它</van-button>
+</view>
+<van-divider custom-style="margin: 20rpx 20rpx" />
+<text style="font-size: small;margin-left:  20rpx;margin-bottom: 20rpx; color: rgb(119, 118, 118);">微信支付・无额外费用・7天无忧退款</text>
+
+<!-- <van-divider custom-style="margin: 20rpx 20rpx"  /> -->
+<!-- <text>去支付：确认sku，自提点，手机号, 汇率</text> -->
+
+
+<image style="width: 100%;" webp="{{true}}" lazy-load="{{true}}" mode="widthFix" wx:for="{{product.pictures}}" src="{{item}}"></image>

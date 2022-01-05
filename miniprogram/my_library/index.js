@@ -12,5 +12,6 @@ function copyText(text){
 
 
 
+
 module.exports. jumpPage =  jumpPage;
 module.exports. copyText =  copyText;

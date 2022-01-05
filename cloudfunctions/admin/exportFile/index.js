@@ -5,12 +5,18 @@ const path = require('path')
 const {stringify} = require("csv-stringify/sync");
 const db = cloud.database();
 // const {parse} = require('csv-parse/sync');
-
+const _ = db.command
 cloud.init()
 
 exports.main = async (event, context) => {
+  // let deliveries = await db.collection("delivery").where({
+  //   state:_.or(["待发货","待支付"])
+  // }).get();
+  // let deliveries = await db.collection("delivery").where({
+  //   state:"待发货"
+  // }).get();
   let deliveries = await db.collection("delivery").where({
-    state:"待发货"
+    state:"待支付"
   }).get();
   let data = []
   console.log(deliveries)
@@ -28,7 +34,7 @@ exports.main = async (event, context) => {
   const csvData = stringify(data, { header: true });
   // fs.writeFileSync("./sample.csv", csvData);
   await cloud.uploadFile({
-    cloudPath: 'test.csv',
+    cloudPath: 'export_unpaid.csv',
     fileContent: csvData,
   })
 

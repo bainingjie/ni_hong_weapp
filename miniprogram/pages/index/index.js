@@ -4,6 +4,7 @@ const { envList } = require('../../envList.js');
 
 Page({
   data: {
+    bottom_tabs_active_index:1,
     price:'',
     delivery_day:'',
     pay_day:'',

@@ -15,6 +15,7 @@ async function sendMessage(ACCESS_TOKEN,delivery){
         console.log("delivery_id: ",delivery._id,", user is not following official account")
         return 1;
       }
+
       let config={
           "touser":user.data[0].openid,
           "template_id":"M8wO6z5hbfuMvT43MK2HgSkbKBt_z4Bc9U3Fr9RNLf0",
@@ -42,7 +43,7 @@ async function sendMessage(ACCESS_TOKEN,delivery){
                       "color":"#173177"
                   },
                   "keyword4": {
-                      "value":"请在周五23点前完成付款⸜( •⌄• )⸝",
+                      "value":"请在周五23点前完成付款",
                       "color":"#173177"
                   },
                   "remark":{
@@ -51,6 +52,43 @@ async function sendMessage(ACCESS_TOKEN,delivery){
                   }
           }
       };
+      let admin_config ={
+        "touser":"oeWiL54aqo92Cc1UONS58t812UV4",
+        "template_id":"M8wO6z5hbfuMvT43MK2HgSkbKBt_z4Bc9U3Fr9RNLf0",
+        "url":"http://weixin.qq.com/download",
+        "miniprogram":{
+          "appid":"wxf3ecc758c5fb4028",
+          "pagepath":`/pages/getDelivery/index?param=${delivery._id}`
+          // "pagepath":"index?foo=bar"
+        },          
+        "data":{
+                "first": {
+                    "value":"您有一笔订单未付款",
+                    "color":"#173177"
+                },
+                "keyword1":{
+                    "value":"霓虹町指南-集运",
+                    "color":"#173177"
+                },
+                "keyword2": {
+                    "value":delivery._id,
+                    "color":"#173177"
+                },
+                "keyword3": {
+                    "value":`${delivery.amount_to_pay}元`,
+                    "color":"#173177"
+                },
+                "keyword4": {
+                    "value":"请在周五23点前完成付款",
+                    "color":"#173177"
+                },
+                "remark":{
+                    "value":`计费总重量为${delivery.total_weight}kg。付费后，订单状态会被更新为"待发货"。⸜( •⌄• )⸝`,
+                    "color":"#173177"
+                }
+        }
+    };
+      await axios.post(`https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${ACCESS_TOKEN}`, admin_config);
       let response = await axios.post(`https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${ACCESS_TOKEN}`, config);
       console.log(response)
       if(response.data.errcode==0){

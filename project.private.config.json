@@ -43,8 +43,8 @@
                     "scene": null
                 },
                 {
-                    "name": "pages/updateRecord/index",
-                    "pathName": "pages/updateRecord/index",
+                    "name": "pages/product/index",
+                    "pathName": "pages/product/index",
                     "query": "",
                     "scene": null
                 },

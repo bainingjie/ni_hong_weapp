@@ -12,14 +12,21 @@ function my_equal(a,type){
   }
 }
 
-// wxs 只支持es5语法，不支持arrow function,也不持支findindex
+// wxs 只支持语法，不支持arrow function,也不持支findindex
 function steps_index(text){
   var states=["待打包称重",'待支付','待发货', '运输中','待取货','已取货'];
   return states.indexOf(text);
 }
+
+function n_correction(text){
+  var new_text = text.split('&hc').join('\n')
+  return new_text;
+}
+
 module.exports = {
 my_slice: my_slice,
 my_equal: my_equal,
-steps_index:steps_index
+steps_index:steps_index,
+n_correction:n_correction
 }
-  
+
