@@ -47,7 +47,7 @@ async function sendMessage(ACCESS_TOKEN,delivery){
                       "color":"#173177"
                   },
                   "remark":{
-                      "value":`计费总重量为${delivery.total_weight}kg。付费后，订单状态会被更新为"待发货"。`,
+                      "value":`计费总重量为${delivery.total_weight}kg。付费后，订单状态会被更新为"待发货"。⸜( •⌄• )⸝`,
                       "color":"#173177"
                   }
           }

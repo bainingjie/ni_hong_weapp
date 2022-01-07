@@ -32,6 +32,10 @@ Page({
       }
     ],
   },
+  bottomTabbarClicked(event) {
+    // event.detail 的值为当前选中项的索引
+    this.setData({ bottom_tabs_active_index: event.detail });
+  },
   onLoad(options) {
     // this.setData({
     //   envId: options.envId

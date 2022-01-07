@@ -164,7 +164,7 @@
 </van-tabs>
 
 
-<van-tabbar active="{{ bottom_tabs_active_index }}" placeholder="{{true}}" active-color="#ee0a24" bind:change="" custom-style="padding-top:50rpx">
+<van-tabbar active="{{ bottom_tabs_active_index }}" placeholder="{{true}}" active-color="#ee0a24" bind:change="bottomTabbarClicked" custom-style="padding-top:50rpx">
   <van-tabbar-item icon="bag-o">精选商城</van-tabbar-item>
   <van-tabbar-item icon="logistics">转运</van-tabbar-item>
   <van-tabbar-item icon="contact">我的</van-tabbar-item>
