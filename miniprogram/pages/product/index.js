@@ -98,5 +98,18 @@ Page({
             title: this.data.product.text.name,
             // path: '/pages/index/index',
             }
+    },
+    setPickUpSpot(e){
+      this.setData({
+        pick_up_spot:e.target.dataset.name
+      })
+      this.onClose();
+    },
+
+    showPopup() {
+      this.setData({ show: true });
+    },
+    onClose() {
+      this.setData({ show: false });
     }
 })

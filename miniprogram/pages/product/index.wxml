@@ -15,6 +15,23 @@
 <!-- <van-divider custom-style="margin: 20rpx 20rpx" /> -->
 <text style="margin:20rpx;font-weight: bold;font-size: small;">自提点</text>
 <text style="font-size: small;margin-left:  20rpx;"><text style="color: rgb(119, 118, 118);">预计1月11日-1月24日配送至自提点。点击查看</text></text>
+<view class="weui-cells__title" style="color: black;">自提点</view> 
+    <van-cell title="{{pick_up_spot}}" is-link bind:click="showPopup" />
+    <van-popup show="{{ show }}" bind:close="onClose"   closeable
+      position="bottom"
+      lock-scroll="true"
+      custom-style="height: 65%;padding-top:50rpx;">
+      <view style="text-align:center;font-weight: bold;" >点击选择自提点</view> 
+      <van-cell-group wx:for="{{prefecture_names}}"  wx:key="*this" title="{{item}}" wx:if="{{prefectures[item].length>0}}" >
+        <van-cell
+        wx:for="{{prefectures[item]}}"
+        wx:key="*this"
+        title="{{item.name}}"
+        bind:click="setPickUpSpot"
+        data-name="{{item.name}}"
+        />
+      </van-cell-group>
+    </van-popup>
 <view style="text-align: center;margin-top: 30rpx;margin-bottom: 10rpx;">
     <van-button round color="linear-gradient(to right, #F67C74, #F01426)" custom-style="width:80%" bindtap="" data-buy="">下单买它</van-button>
 </view>
