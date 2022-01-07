@@ -1,5 +1,4 @@
 <!--pages/product/index.wxml-->
-
 <image style="width: 100%;" webp="{{true}}" mode="widthFix" src="{{product.sku[type_index].image}}"></image>
 <text style="font-weight: bold;margin:20rpx 20rpx 0rpx 20rpx;font-size: x-large;">{{product.text.name}}</text>
 <wxs src="../../my_library/string.wxs" module="tools" />
@@ -11,6 +10,7 @@
     <view class="tags_view" >
         <view wx:for="{{product.sku}}" class="{{index==type_index ? 'selected_tag' : 'tags'}}" bindtap="tag_clicked" data-index="{{index}}">{{item.name}}</view>
     </view>
+<gotop></gotop>
 </view>
 <!-- <van-divider custom-style="margin: 20rpx 20rpx" /> -->
 <text style="margin:20rpx;font-weight: bold;font-size: small;">自提点</text>
@@ -32,6 +32,7 @@
         />
       </van-cell-group>
     </van-popup>
+    
 <view style="text-align: center;margin-top: 30rpx;margin-bottom: 10rpx;">
     <van-button round color="linear-gradient(to right, #F67C74, #F01426)" custom-style="width:80%" bindtap="" data-buy="">下单买它</van-button>
 </view>

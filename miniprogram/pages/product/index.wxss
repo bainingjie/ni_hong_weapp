@@ -1,5 +1,7 @@
 /* pages/product/index.wxss */
 
+@import "../index/index.wxss";
+
 page {
     padding-top: 0rpx;
     background-color: #ffffff;
