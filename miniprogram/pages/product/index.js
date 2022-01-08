@@ -23,6 +23,35 @@ Page({
     official_account_url: "",
     type_index: 0,
   },
+  pay() {
+    let that = this;
+    //console.log(this.data.product);
+    //console.log(this.data.product.sku[this.type_index]);
+    wx.cloud.callFunction({
+      name: 'quickstartFunctions',
+      data: {
+        type: 'payTrade',
+        //type:1, //type是0代表集运，1代表商城交易
+        //delivery_id: this.data.delivery._id,
+        amount_to_pay: this.data.product.sku[this.data.type_index].price
+      },
+      success: res => {
+        console.log(res)
+        const payment = res.result.payment
+        wx.requestPayment({
+          ...payment,
+          success(res) {
+            console.log('pay success', res)
+            that.getADelivery(that.data.delivery._id)
+          },
+          fail(err) {
+            console.error('pay fail', err)
+          }
+        })
+      },
+      fail: console.error,
+    })
+  },
   tag_clicked(e) {
     // console.log(e.currentTarget.dataset.index);
     this.setData({
