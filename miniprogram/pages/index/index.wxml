@@ -52,8 +52,25 @@
           <view style="font-size: 20px;color: #EE0A24;font-weight: bold;">②</view>
           <text>下单至霓虹町的仓库</text>
           <view  class="top_tip">{{description_2_1}}</view>
-          <view  class="top_tip">{{description_2_2}}</view>
-          <van-button round plain color="#EE0A24" bindtap="copyText" customStyle="margin-top: 10rpx;">复制最新地址</van-button>
+          <view  class="top_tip" style="margin-bottom: 30rpx;">{{description_2_2}}</view>
+          <van-divider custom-style="margin: 30rpx 30rpx;"></van-divider> 
+          <van-row>
+            <van-col span="16" style="font-size: small;color: #888888;"><view style="margin-top: 15rpx;">{{address[0]}}</view></van-col>
+            <van-col span="8"><van-button round plain color="black" bindtap="copyText" data-text="{{address[0]}}" size="small"  custom-style="margin:10rpx">复制收件人</van-button></van-col>
+          </van-row>
+          <van-row>
+            <van-col span="16" style="font-size: small;color: #888888;"><view style="margin-top: 15rpx;">{{address[1]}}</view></van-col>
+            <van-col span="8"><van-button round plain color="black" bindtap="copyText" data-text="{{address[1]}}" size="small" custom-style="margin:10rpx">复制电话</van-button></van-col>
+          </van-row>
+          <van-row>
+            <van-col span="16" style="font-size: small;color: #888888;"><view style="margin-top: 15rpx;">{{address[2]}}</view></van-col>
+            <van-col span="8"><van-button round plain color="black" bindtap="copyText" data-text="{{address[2]}}" size="small" custom-style="margin:10rpx">复制邮编</van-button></van-col>
+          </van-row>
+          <van-row>
+            <van-col span="16" style="font-size: small;color: #888888;"><view style="margin-top: 15rpx;">{{address[3]}}</view></van-col>
+            <van-col span="8"><van-button round plain color="black" bindtap="copyText" data-text="{{address[3]}}" size="small" custom-style="margin:10rpx">复制地址</van-button></van-col>
+          </van-row>
+          <!-- <van-button round plain color="#EE0A24" bindtap="copyText" customStyle="margin-top: 10rpx;">复制最新地址</van-button> -->
         </view>
       <!-- </van-col>
     </van-row> -->
@@ -142,6 +159,7 @@
           <view style="margin-left: 30rpx;" class="top_tip" > 计费总重量：{{item.total_weight}}kg</view>
           <view style="margin-left: 30rpx;" class="top_tip" > 总运费：{{item.amount_to_pay}}<text wx:if="{{!tools.my_equal(item.state,2)}}">元</text></view>
           <view style="margin-left: 30rpx;" class="top_tip" > 自提点：{{item.pickup_spot}}</view>
+          <view style="margin-left: 30rpx;" class="top_tip" wx:if="{{item.pickup_date}}"> 取货时间：{{item.pickup_date}} {{item.pickup_time}}</view>
           <view style="margin-left: 30rpx;" class="top_tip" > 取货码：{{item.pickup_code}}</view>
         </van-col>
         <van-col span="4" >

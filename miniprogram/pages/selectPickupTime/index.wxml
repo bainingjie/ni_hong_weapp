@@ -1,0 +1,32 @@
+<!--pages/selectPickupTime/index.wxml-->
+
+<view wx:if="{{state==0}}">
+    <van-picker  show-toolbar title="请选择自提的时间" confirm-button-text="" cancel-button-text="" columns="{{ columns }}" bind:change="onChange" />
+
+
+    <view style="text-align: center;margin:20rpx;">
+        <text>自提点：{{delivery.pickup_spot}}</text>
+        <van-button type="primary" plain="true" round bindtap='submit' custom-style="width:70%;margin-top:10rpx">确定</van-button>
+    </view>
+
+    <van-divider></van-divider>
+    <view style="text-align: center;margin-top:50rpx;" class="top_tip">
+        <view>如有疑问，请:</view>
+        <view><van-button plain round  bindtap="copyText" data-text="{{delivery._id}}"custom-style="margin-top:20rpx" size="small">1.点击复制订单号</van-button></view>
+        <view><van-button plain round  bindtap="customer_service" custom-style="margin-top:20rpx" size="small">2.点击咨询客服</van-button></view>
+    </view>
+</view>
+
+<view wx:if="{{state==1}}" style="text-align: center;">
+  <view>
+    <icon class="icon-box-img icon" type="success" size="53"></icon>
+    <view class="title">提交成功</view>
+    <!-- <view class="mid_menu"> -->
+      <view class="top_tip">如有变动，请及时联系客服。</view>
+  </view>
+</view>
+
+<view wx:if="{{state==2}}">
+  提交失败，请联系客服。
+  <view><van-button plain round  bindtap="customer_service" >客服</van-button></view>
+</view>

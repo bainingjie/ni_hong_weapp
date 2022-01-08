@@ -12,17 +12,18 @@ exports.main = async (event, context) => {
   // let deliveries = await db.collection("delivery").where({
   //   state:_.or(["待发货","待支付"])
   // }).get();
-  // let deliveries = await db.collection("delivery").where({
-  //   state:"待发货"
-  // }).get();
   let deliveries = await db.collection("delivery").where({
-    state:"待支付"
+    state:"待发货"
   }).get();
+  // let deliveries = await db.collection("delivery").where({
+  //   state:"待支付"
+  // }).get();
   let data = []
   console.log(deliveries)
   for (let delivery of deliveries.data){
     for(let package of delivery.packages){
       data.push({
+        state:delivery.state,
         delivery_id:delivery._id,
         tracking_number:package.tracking_number,
         weight:package.weight,
@@ -34,7 +35,7 @@ exports.main = async (event, context) => {
   const csvData = stringify(data, { header: true });
   // fs.writeFileSync("./sample.csv", csvData);
   await cloud.uploadFile({
-    cloudPath: 'export_unpaid.csv',
+    cloudPath: 'export_paid.csv',
     fileContent: csvData,
   })
 

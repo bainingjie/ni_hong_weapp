@@ -8,7 +8,8 @@
         "pages/getDelivery/index",
         "pages/pickUpSpot/index",
         "pages/productList/index",
-        "pages/product/index"
+        "pages/product/index",
+        "pages/selectPickupTime/index"
     ],
     "window": {
         "backgroundColor": "#f6f6f6",

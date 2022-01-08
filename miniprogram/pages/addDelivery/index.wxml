@@ -7,7 +7,7 @@
 
 
     <!-- <view style="margin-left: 30rpx;margin-bottom: 10rpx;" class="weui-cells__title">自提点</view>  -->
-    <view class="weui-cells__title" style="color: black;">自提点</view> 
+    <view class="weui-cells__title" style="color: black;">1.自提点</view> 
     <van-cell title="{{pick_up_spot}}" is-link bind:click="showPopup" />
     <van-popup show="{{ show }}" bind:close="onClose"   closeable
       position="bottom"
@@ -25,7 +25,7 @@
       </van-cell-group>
     </van-popup>
 
-    <view class="weui-cells__title" style="color: black;">手机号</view> 
+    <view class="weui-cells__title" style="color: black;">2.手机号</view> 
     <van-field
         model:value="{{phone}}" 
         placeholder="请填写"
@@ -33,7 +33,7 @@
       ></van-field>
     <view style="margin-top: 20rpx; margin-left: 15rpx;text-align: left;" class="top_tip">如果包裹存在任何问题，我们会直接与您联系。</view>
 
-  <view class="weui-cells__title" style="color: black;">添加快递单号</view> 
+  <view class="weui-cells__title" style="color: black;">3.添加快递单号</view> 
 
   <van-cell-group wx:if="{{!show}}">
       <van-field
@@ -46,7 +46,7 @@
       <van-button slot="button" plain="true" color="black" bindtap='add' size="small">添加</van-button>
     </van-field>
    </van-cell-group>    
-   <view style="margin-top: 20rpx; margin-left: 15rpx;text-align: left;" class="top_tip">请注意区分淘宝的【订单编号】与【快递单号】。</view>
+   <view style="margin-top: 20rpx; margin-left: 15rpx;text-align: left;color:#EE0A24;;" class="top_tip">请注意区分淘宝的【订单编号】与【快递单号】。</view>
    <view style="margin-left: 15rpx;text-align: left;" class="top_tip">快递单号的查看方式：淘宝>>我的订单>>查看物流。</view>
     <!-- <view class='add' bindtap='addInput'>增加</view> -->
 
@@ -61,7 +61,7 @@
 
    <view style="text-align: center;margin-top: 20rpx;">
     <view class="top_tip" style="margin-bottom: 20rpx;">共 {{tracking_numbers.length}} 件</view>
-    <van-button type="primary" plain="true" bindtap='submit' color="#EE0A24;">申请集运</van-button>
+    <van-button type="primary" plain="true" bindtap='submit' color="#EE0A24;" custom-style="width:70%">申请集运</van-button>
    </view>
 </view>
 

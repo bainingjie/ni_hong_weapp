@@ -10,8 +10,16 @@ function copyText(text){
   })
 }
 
-
+function customer_service(){
+  wx.openCustomerServiceChat({
+    extInfo: {url: 'https://work.weixin.qq.com/kfid/kfc4b923529ee456844'},
+    corpId: 'ww4df7b908b4170ed8',
+    success(res) {
+    }
+  })
+}
 
 
 module.exports. jumpPage =  jumpPage;
 module.exports. copyText =  copyText;
+module.exports. customer_service = customer_service;

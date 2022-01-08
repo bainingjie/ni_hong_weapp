@@ -58,6 +58,9 @@
     <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.pickup_spot}}</view>
     <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 取货码：</view>
     <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.pickup_code}}</view>
+    <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"  wx:if="{{delivery.pickup_date}}" > 取货时间：</view>
+    <view style="margin-left: 30rpx;" class="top_tip"  wx:if="{{delivery.pickup_date}}"> {{delivery.pickup_date}} {{delivery.pickup_time}}</view>
+    <van-button round size="small" bindtap="jumpPage" data-jump="selectPickupTime" data-param="{{delivery._id}}">选择自提时间</van-button>
     <view  class="top_tip" style="margin-left: 30rpx;font-size: 28rpx;margin-top: 30rpx;color: rgba(0, 0, 0, 0.5);"> 取货时请记得自带手提袋/包~ ⸜( •⌄• )⸝</view>
 </view>
 
