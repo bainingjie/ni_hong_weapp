@@ -1,0 +1,2 @@
+<!--pages/part/gotop/gotop.wxml-->
+<view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">回到顶部</view>
