@@ -10,6 +10,19 @@ function copyText(text) {
   })
 }
 
+function bottomTabbarClicked(event) {
+  // event.detail 的值为当前选中项的索引
+  // console.log(event)
+  if(event.detail==2){
+    wx.navigateTo({
+      url: `/pages/myPage/index`,
+    });
+  }else if(event.detail==1){
+    wx.navigateTo({
+      url: `/pages/index/index`,
+    });
+  }
+}
 
 function customer_service(){
   wx.openCustomerServiceChat({
@@ -43,4 +56,4 @@ module.exports. customer_service = customer_service;
 module.exports.jumpPage = jumpPage;
 module.exports.copyText = copyText;
 module.exports.prefectures_function = prefectures_function;
-
+module.exports.bottomTabbarClicked = bottomTabbarClicked;

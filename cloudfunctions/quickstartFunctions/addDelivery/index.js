@@ -44,6 +44,7 @@ exports.main = async (event, context) => {
             // data 字段表示需新增的 JSON 数据
             data: {
               // _id: 'todo-identifiant-aleatoire', // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
+              type:0, //0是集运，1是商城交易 
               open_id: wxContext.OPENID,
               union_id: wxContext.UNIONID,
               added_date: new Date(),
@@ -53,6 +54,7 @@ exports.main = async (event, context) => {
               state:"待打包称重",//待打包称重，待报价，待支付，待发货，运输中，已到达
               is_quote_message_sent:false,
               is_pickup_message_sent:false,
+              is_pickup_remind_sent:false,
 
               tracking_number:"待发货",
               pickup_code:"待发货",

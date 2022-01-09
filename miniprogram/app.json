@@ -9,7 +9,8 @@
         "pages/pickUpSpot/index",
         "pages/productList/index",
         "pages/product/index",
-        "pages/selectPickupTime/index"
+        "pages/selectPickupTime/index",
+        "pages/myPage/index"
     ],
     "window": {
         "backgroundColor": "#f6f6f6",
@@ -21,6 +22,20 @@
     "sitemapLocation": "sitemap.json",
     "useExtendedLib": {
         "weui": true
+    },
+    "tabBar": {
+        "custom": true,
+        "list": [
+            {
+                "pagePath": "pages/product/index"
+            },
+            {
+                "pagePath": "pages/index/index"
+            },
+            {
+                "pagePath":  "pages/myPage/index"
+            }
+        ]
     },
     "usingComponents": {
         "van-button": "@vant/weapp/button/index",

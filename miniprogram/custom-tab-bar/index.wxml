@@ -1,0 +1,8 @@
+<!--pages/custom-tab-tab/index.wxml-->
+
+<van-tabbar active="{{ bottom_tabs_active_index }}" placeholder="{{true}}" active-color="#ee0a24" bind:change="onChange" custom-style="padding-top:50rpx">
+    <van-tabbar-item wx:for="{{ list }}" wx:key="index" icon="{{ item.icon }}">{{
+    item.text
+  }}</van-tabbar-item>
+
+</van-tabbar>

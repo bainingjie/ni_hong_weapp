@@ -9,6 +9,7 @@ exports.main = async (event, context) => {
      let response = await db.collection('payment').add({
       // data 字段表示需新增的 JSON 数据
       data: {
+        type:0,
         delivery_id:event.delivery_id,
         is_paid:false,
         totalFee:event.amount_to_pay

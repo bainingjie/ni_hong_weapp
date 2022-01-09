@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    state:0,// 0是商品界面，1是支付成功界面，2是支付失败界面。
     product: null,
     sku_length: 0,
     subtitle: "",
@@ -21,19 +22,33 @@ Page({
     phone: "",
     state: 0, //0:初始 1:添加成功 2：添加失败
     official_account_url: "",
-    type_index: 0,
+    type_index: 0, // sku_index
   },
   pay() {
     let that = this;
     //console.log(this.data.product);
     //console.log(this.data.product.sku[this.type_index]);
+
+    if (this.data.pick_up_spot == "请选择自提点" ) {
+      wx.showToast({
+        title: '请选择自提点',
+        icon: 'error',
+        duration: 1500
+      })
+      return 1;
+    }
+
     wx.cloud.callFunction({
       name: 'quickstartFunctions',
       data: {
         type: 'payTrade',
         //type:1, //type是0代表集运，1代表商城交易
         //delivery_id: this.data.delivery._id,
-        amount_to_pay: this.data.product.sku[this.data.type_index].price
+        product_id:this.data.product._id,
+        sku_index:this.data.type_index,
+        amount_to_pay: this.data.product.sku[this.data.type_index].price,
+        pick_up_spot:this.data.pick_up_spot,
+        currency:this.data.product.sku[this.data.type_index].currency
       },
       success: res => {
         console.log(res)
@@ -42,14 +57,21 @@ Page({
           ...payment,
           success(res) {
             console.log('pay success', res)
-            that.getADelivery(that.data.delivery._id)
+            that.setData({
+              state:1
+            })
           },
           fail(err) {
             console.error('pay fail', err)
           }
         })
       },
-      fail: console.error,
+      fail:err=>{
+        console.error
+        that.setData({
+          state:2
+        })
+      } 
     })
   },
   tag_clicked(e) {

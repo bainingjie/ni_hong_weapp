@@ -17,34 +17,20 @@ Page({
     description_2_2:'',
     share_title:"",
     // active_step:0,
-    steps: [
-      {
-        text: '打包',
-      },
-      {
-        text: '支付',
-      },
-      {
-        text: '发货',
-      },
-      {
-        text: '取货',
-      }
-    ],
+
   },
   bottomTabbarClicked(event) {
-    // event.detail 的值为当前选中项的索引
-    this.setData({ bottom_tabs_active_index: event.detail });
+    my_library.bottomTabbarClicked(event);
   },
   onLoad(options) {
     // this.setData({
     //   envId: options.envId
     // });
     this.getPublic();
-    this.getDelivery();
+
   },
   onShow() {
-    this.getDelivery();
+    this.getTabBar().init();
   },
   customer_service:function(){
     my_library.customer_service();
@@ -53,36 +39,10 @@ Page({
     my_library.copyText(e.currentTarget.dataset.text);
   },
   jumpPage(e) {
-    console.log(`/pages/${e.currentTarget.dataset.jump}/index?param=${e.currentTarget.dataset.param}`);
-    wx.navigateTo({
-      url: `/pages/${e.currentTarget.dataset.jump}/index?param=${e.currentTarget.dataset.param}`,
-    });
+    my_library.jumpPage(e);
   },
 
-  getDelivery() {
-    wx.showLoading({
-      title: '',
-    });
-   wx.cloud.callFunction({
-      name: 'quickstartFunctions',
-      data: {
-        type: 'getDelivery'
-      }
-    }).then((resp) => {
-      // console.log(resp);
-      this.setData({
-        my_delivery: resp.result.data,
-      });
-      // console.log(this.data);
-     wx.hideLoading();
-   }).catch((e) => {
-      console.log(e);
-      this.setData({
-        showUploadTip: true
-      });
-     wx.hideLoading();
-   });
-  },
+
   getPublic() {
     wx.showLoading({
       title: '',

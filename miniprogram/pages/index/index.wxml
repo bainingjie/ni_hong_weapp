@@ -54,20 +54,25 @@
           <view  class="top_tip">{{description_2_1}}</view>
           <view  class="top_tip" style="margin-bottom: 30rpx;">{{description_2_2}}</view>
           <van-divider custom-style="margin: 30rpx 30rpx;"></van-divider> 
+          <!-- <van-button round plain color="black" bindtap="copyText" data-text="{{address[0]}}" size="small"  custom-style="margin:10rpx">点击复制收件人: {{address[0]}}</van-button>
+          <view><van-button round plain color="black" bindtap="copyText" data-text="{{address[1]}}" size="small" custom-style="margin:10rpx">点击复制电话: {{address[1]}}</van-button></view>
+          <view><van-button round plain color="black" bindtap="copyText" data-text="{{address[2]}}" size="small" custom-style="margin:10rpx">点击复制邮编: {{address[2]}}</van-button></view>
+          <view><van-button round plain color="black" bindtap="copyText" data-text="{{address[3]}}" custom-style="margin:10rpx">点击复制地址: {{address[3]}}</van-button></view> -->
+
           <van-row>
-            <van-col span="16" style="font-size: small;color: #888888;"><view style="margin-top: 15rpx;">{{address[0]}}</view></van-col>
+            <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[0]}}</view></van-col>
             <van-col span="8"><van-button round plain color="black" bindtap="copyText" data-text="{{address[0]}}" size="small"  custom-style="margin:10rpx">复制收件人</van-button></van-col>
           </van-row>
           <van-row>
-            <van-col span="16" style="font-size: small;color: #888888;"><view style="margin-top: 15rpx;">{{address[1]}}</view></van-col>
+            <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[1]}}</view></van-col>
             <van-col span="8"><van-button round plain color="black" bindtap="copyText" data-text="{{address[1]}}" size="small" custom-style="margin:10rpx">复制电话</van-button></van-col>
           </van-row>
           <van-row>
-            <van-col span="16" style="font-size: small;color: #888888;"><view style="margin-top: 15rpx;">{{address[2]}}</view></van-col>
+            <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[2]}}</view></van-col>
             <van-col span="8"><van-button round plain color="black" bindtap="copyText" data-text="{{address[2]}}" size="small" custom-style="margin:10rpx">复制邮编</van-button></van-col>
           </van-row>
           <van-row>
-            <van-col span="16" style="font-size: small;color: #888888;"><view style="margin-top: 15rpx;">{{address[3]}}</view></van-col>
+            <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[3]}}</view></van-col>
             <van-col span="8"><van-button round plain color="black" bindtap="copyText" data-text="{{address[3]}}" size="small" custom-style="margin:10rpx">复制地址</van-button></van-col>
           </van-row>
           <!-- <van-button round plain color="#EE0A24" bindtap="copyText" customStyle="margin-top: 10rpx;">复制最新地址</van-button> -->
@@ -120,73 +125,16 @@
 
   
   </van-tab>
-  <van-tab title="我的订单" >
-    <view style="text-align: center;margin-top: 30rpx;" wx:if="{{my_delivery.length <1 }}">暂无订单</view>
 
-    <view class=" mid_menu" wx:if="{{my_delivery.length >0 }}" style="">
-      <view style="text-align: center;color:black;font-size: 35rpx;margin-bottom: 0rpx;"> 流程 </view>
-      <van-steps
-        steps="{{ steps }}"
-        active="{{ active_step }}"
-        inactiveIcon= 'circle'
-        activeIcon='circle'
-        inactive-color="black"
-        active-color="black"
-      />
-      <!-- <van-row >
-        <van-col span="6">①打包</van-col>
-        <van-col span="6">①支付</van-col>
-        <van-col span="6">①发货</van-col>
-        <van-col span="6">①取货</van-col>
-      </van-row> -->
-
-    </view>
-    <wxs src="../../my_library/string.wxs" module="tools" />
-    <view class=" mid_menu" style="margin-bottom:10rpx;margin-top: 10rpx;" wx:for="{{my_delivery}}" wx:key="*this" bindtap="jumpPage" data-jump="getDelivery" data-param="{{item._id}}">
-      <!-- <view style="margin-bottom: 10rpx;text-align: center;" class="top_tip">中国→日本 空运</view> -->
-      <!-- <van-steps
-            steps="{{ steps }}"
-            active="{{ tools.steps_index(item.state) }}"
-            inactiveIcon= 'circle'
-            activeIcon='success'
-            inca
-            active-color="#ee0a24;"
-          /> -->
-      <van-row>
-        <van-col span="20">
-          <view style="margin-left: 30rpx;" class="top_tip" > 状态：<text style="color:#ee0a24;">{{item.state}}</text></view>
-          <view style="margin-left: 30rpx;" class="top_tip" > 添加日期：{{tools.my_slice(item.added_date,0,10)}}</view>
-          <view style="margin-left: 30rpx;" class="top_tip" > 计费总重量：{{item.total_weight}}kg</view>
-          <view style="margin-left: 30rpx;" class="top_tip" > 总运费：{{item.amount_to_pay}}<text wx:if="{{!tools.my_equal(item.state,2)}}">元</text></view>
-          <view style="margin-left: 30rpx;" class="top_tip" > 自提点：{{item.pickup_spot}}</view>
-          <view style="margin-left: 30rpx;" class="top_tip" wx:if="{{item.pickup_date}}"> 取货时间：{{item.pickup_date}} {{item.pickup_time}}</view>
-          <view style="margin-left: 30rpx;" class="top_tip" > 取货码：{{item.pickup_code}}</view>
-        </van-col>
-        <van-col span="4" >
-          <view class="middle" style="margin-top:10rpx;">
-            <van-icon name="arrow" color="grey" size="30px" ></van-icon>
-          </view>
-        </van-col>
-      </van-row>
-
-    </view>
-    <!-- <van-sidebar active-key="{{ activeKey }}">
-      <van-sidebar-item title="待报价" />
-      <van-sidebar-item title="待支付" />
-      <van-sidebar-item title="运输中" />
-      <van-sidebar-item title="待取货" />
-      <van-sidebar-item title="已签收" />
-    </van-sidebar> -->
-  </van-tab>
 
 </van-tabs>
 
 
-<van-tabbar active="{{ bottom_tabs_active_index }}" placeholder="{{true}}" active-color="#ee0a24" bind:change="bottomTabbarClicked" custom-style="padding-top:50rpx">
+<!-- <van-tabbar active="{{ bottom_tabs_active_index }}" placeholder="{{true}}" active-color="#ee0a24" bind:change="bottomTabbarClicked" custom-style="padding-top:50rpx">
   <van-tabbar-item icon="bag-o">精选商城</van-tabbar-item>
   <van-tabbar-item icon="logistics">转运</van-tabbar-item>
   <van-tabbar-item icon="contact">我的</van-tabbar-item>
-</van-tabbar>
+</van-tabbar> -->
 
 
 
@@ -214,3 +162,4 @@
 
 
 <!-- </view> -->
+<view style="padding-bottom: 130rpx;"></view>
