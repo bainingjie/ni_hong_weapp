@@ -40,7 +40,7 @@ exports.main = async (event, context) => {
       "outTradeNo" : response._id,
       "spbillCreateIp" : "127.0.0.1",
       "subMchId" : "1614594513", //商户号
-      "totalFee" : 100,
+      "totalFee" : totalFee*100,
       "envId": "testbai-6gjgkia55f6d4918",
       "functionName": "payDeliveryCallback"
     })

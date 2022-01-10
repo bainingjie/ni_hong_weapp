@@ -12,17 +12,17 @@
     <van-divider></van-divider>
     <view style="text-align: center;margin-top:50rpx;" class="top_tip">
         <view>如有疑问，请:</view>
-        <view><van-button plain round  bindtap="copyText" data-text="{{delivery._id}}"custom-style="margin-top:20rpx" size="small">1.点击复制订单号</van-button></view>
-        <view><van-button plain round  bindtap="customer_service" custom-style="margin-top:20rpx" size="small">2.点击咨询客服</van-button></view>
+        <view><van-button plain round  bindtap="copyText" data-text="{{delivery._id}}"custom-style="margin-top:20rpx" size="small">step1 复制订单号(请点击此处)</van-button></view>
+        <view><van-button plain round  bindtap="customer_service" custom-style="margin-top:20rpx" size="small">step2 粘贴并发送订单号(请点击此处)</van-button></view>
     </view>
 </view>
 
-<view wx:if="{{state==1}}" style="text-align: center;">
+<view wx:if="{{state==1}}" style="text-align: center;margin-top: 30rpx;">
   <view>
     <icon class="icon-box-img icon" type="success" size="53"></icon>
     <view class="title">提交成功</view>
     <!-- <view class="mid_menu"> -->
-      <view class="top_tip">如有变动，请及时联系客服。</view>
+      <view class="top_tip">如有变动，请及时联系客服哦。(ㅅ •͈ᴗ•͈)</view>
   </view>
 </view>
 

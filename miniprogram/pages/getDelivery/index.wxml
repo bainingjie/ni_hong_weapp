@@ -4,13 +4,7 @@
 
 <view wx:if="{{delivery.type==0}}"> 
     <view class=" mid_menu">
-        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 商品：</view>
-        <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.product_name}}</view>
-        <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.sku_name}}</view>
-        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 状态：</view>
-        <view style="margin-left: 30rpx;" class="top_tip" > <text style="color:#ee0a24;">{{delivery.state}}</text></view>
-        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 添加日期：</view>
-        <view style="margin-left: 30rpx;" class="top_tip" wx:if="{{delivery.added_date}}"> {{tools.my_slice(delivery.added_date,0,10)}}</view>
+
         <van-row>
             <van-col span="16">
                 <view style="margin-left: 30rpx;font-weight: bold;" class="top_tip"  > 订单ID：</view>
@@ -21,6 +15,10 @@
         </van-row>
         <view style="margin-left: 30rpx;" class="top_tip"  > {{delivery._id}}</view>
 
+        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 添加日期：</view>
+        <view style="margin-left: 30rpx;" class="top_tip" wx:if="{{delivery.added_date}}"> {{tools.my_slice(delivery.added_date,0,10)}}</view>
+        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 状态：</view>
+        <view style="margin-left: 30rpx;" class="top_tip" > <text style="color:#ee0a24;">{{delivery.state}}</text></view>
         <van-row>
             <van-col span="16">
                 <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"  > 总运费:</view>
@@ -34,7 +32,7 @@
             </van-col>
         </van-row>
         
-        <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.amount_to_pay}}<text wx:if="{{!tools.my_equal(delivery.state,2)}}">元</text> </view>
+        <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.amount_to_pay}}<text wx:if="{{!tools.my_equal(delivery.state,2)}}"> 元</text> </view>
 
         <van-row>
             <van-col span="16">
@@ -59,6 +57,21 @@
             </van-col>
         </van-row>
         <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.pickup_spot}}</view>
+
+        <view wx:if="{{tools.my_equal(delivery.state,3)}}">
+            <van-row>
+                <van-col span="16">
+                    <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"  > 取货时间：</view>
+                </van-col>
+                <van-col span="8">
+                    <view style="margin-top: 20rpx;">
+                        <van-button round size="small" color="red" plain bindtap="jumpPage" data-jump="selectPickupTime"  data-param="{{delivery._id}}">选择取货时间</van-button>
+                    </view>
+                </van-col>
+            </van-row>
+        </view>
+        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" wx:if="{{delivery.pickup_date}}"> 取货时间：</view>
+        <view style="margin-left: 30rpx;" class="top_tip" wx:if="{{delivery.pickup_date}}"> {{delivery.pickup_date}} {{delivery.pickup_time}}</view>
         <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 取货码：</view>
         <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.pickup_code}}</view>
         <view  class="top_tip" style="margin-left: 30rpx;font-size: 28rpx;margin-top: 30rpx;color: rgba(0, 0, 0, 0.5);"> 取货时请记得自带手提袋/包~ ⸜( •⌄• )⸝</view>
@@ -70,8 +83,8 @@
                 <van-col span="8"  wx:if="{{delivery.real_total_weight}}" style="font-weight: bold;" class="top_tip" ><text>总重量:</text></van-col>
         </van-row>
         <van-row>
-                <van-col span="16"  class="top_tip" ><text style="padding-left:30rpx;">{{delivery.total_weight}}kg</text></van-col>
-                <van-col span="8"  wx:if="{{delivery.real_total_weight}}" class="top_tip" ><text>{{delivery.real_total_weight}}kg</text></van-col>
+                <van-col span="16"  class="top_tip" ><text style="padding-left:30rpx;">{{delivery.total_weight}} kg</text></van-col>
+                <van-col span="8"  wx:if="{{delivery.real_total_weight}}" class="top_tip" ><text>{{delivery.real_total_weight}} kg</text></van-col>
         </van-row>
         <view style="margin-top: 20rpx;margin-bottom: 20rpx;"></view>
         <van-row>
@@ -89,6 +102,16 @@
 
 <view wx:if="{{delivery.type==1}}"> 
     <view class=" mid_menu">
+
+        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 商品：</view>
+        <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.product_name}}</view>
+        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 种类：</view>
+        <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.sku_name}}</view>
+        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 状态：</view>
+        <view style="margin-left: 30rpx;" class="top_tip" > <text style="color:#ee0a24;">{{delivery.state}}</text></view>
+        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 添加日期：</view>
+        <view style="margin-left: 30rpx;margin-bottom: 30rpx;" class="top_tip" wx:if="{{delivery.added_date}}"> {{tools.my_slice(delivery.added_date,0,10)}}</view>
+
         <van-row>
             <van-col span="16">
                 <view style="margin-left: 30rpx;font-weight: bold;" class="top_tip"  > 订单ID：</view>
@@ -97,12 +120,8 @@
                 <van-button round size="small" bindtap="copyText" data-text="{{delivery._id}}">复制订单ID</van-button>
             </van-col>
         </van-row>
-
         <view style="margin-left: 30rpx;" class="top_tip"  > {{delivery._id}}</view>
-        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 添加日期：</view>
-        <view style="margin-left: 30rpx;" class="top_tip" wx:if="{{delivery.added_date}}"> {{tools.my_slice(delivery.added_date,0,10)}}</view>
-        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 状态：</view>
-        <view style="margin-left: 30rpx;" class="top_tip" > <text style="color:#ee0a24;">{{delivery.state}}</text></view>
+
     </view>
 
     <view class=" mid_menu">

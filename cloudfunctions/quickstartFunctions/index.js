@@ -6,6 +6,7 @@ const getPickUpSpots = require('./getPickUpSpots/index');
 const getDelivery = require('./getDelivery/index');
 const getADelivery = require('./getADelivery/index');
 const getProduct = require('./getProduct/index');
+const getProducts = require('./getProducts/index');
 const selectPickupTime = require('./selectPickupTime/index')
 const payTrade = require('./payTrade/index');
 
@@ -28,6 +29,8 @@ exports.main = async (event, context) => {
       return await getADelivery.main(event, context);
     case 'getProduct':
       return await getProduct.main(event, context);
+    case 'getProducts':
+      return await getProducts.main(event, context);
     case "selectPickupTime":
       return await selectPickupTime.main(event, context);
     case 'payTrade':

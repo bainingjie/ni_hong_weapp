@@ -68,7 +68,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getADelivery(options.param)
+
   },
 
   /**
@@ -82,6 +82,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+
+    // 获取当前小程序的页面栈
+    let pages = getCurrentPages();
+    // 数组中索引最大的页面--当前页面
+    // console.log(pages)	
+    let currentPage = pages[pages.length-1];
+    this.getADelivery(currentPage.options.param)
   },
 
   /**

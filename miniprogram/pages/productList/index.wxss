@@ -1,1 +1,15 @@
-/* pages/productList/index.wxss */
+/* pages/shop/index.wxss */
+
+@import "../index/index.wxss";
+.mid_menu{
+
+    margin-top: 15rpx;
+    margin-bottom: 15rpx;
+    margin-left: 10rpx;
+    margin-right: 10rpx;
+
+    background-color: white;
+    border-radius: 30rpx;
+    padding: 0rpx;
+    padding-bottom: 10rpx ;
+}

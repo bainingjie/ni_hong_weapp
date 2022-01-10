@@ -27,13 +27,13 @@
         "custom": true,
         "list": [
             {
-                "pagePath": "pages/product/index"
+                "pagePath": "pages/productList/index"
             },
             {
                 "pagePath": "pages/index/index"
             },
             {
-                "pagePath":  "pages/myPage/index"
+                "pagePath": "pages/myPage/index"
             }
         ]
     },

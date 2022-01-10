@@ -80,7 +80,7 @@ Page({
       type_index: e.currentTarget.dataset.index
     })
   },
-  getProduct() {
+  getProduct(product_id) {
     wx.showLoading({
       title: '',
     });
@@ -88,7 +88,7 @@ Page({
       name: 'quickstartFunctions',
       data: {
         type: 'getProduct',
-        id: ""
+        product_id: product_id
       }
     }).then((resp) => {
       console.log(resp);
@@ -121,7 +121,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getProduct();
+    console.log(options.param)
+    this.getProduct(options.param);
     wx.showLoading({
       title: '',
     });

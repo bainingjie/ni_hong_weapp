@@ -13,7 +13,7 @@
 </view> -->
 
 <wxs src="../../my_library/string.wxs" module="tools" />
-<view style="text-align: center;margin: 30rpx;" wx:if="{{my_delivery.length >0 }}">我的订单</view>
+<view style="text-align: center;margin-top: 30rpx;margin-bottom: 10rpx;" wx:if="{{my_delivery.length >0 }}">我的订单</view>
 <view class=" mid_menu" style="margin-bottom:10rpx;margin-top: 10rpx;" wx:for="{{my_delivery}}" wx:key="*this" bindtap="jumpPage" data-jump="getDelivery" data-param="{{item._id}}">
     <!-- <view style="margin-bottom: 10rpx;text-align: center;" class="top_tip">中国→日本 空运</view> -->
     <!-- <van-steps

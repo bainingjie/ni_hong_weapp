@@ -1,14 +1,14 @@
-<view wx:if="{{state==1}}" style="text-align: center;">
+<view wx:if="{{state==1}}" style="text-align: center;margin-top: 30rpx;">
   <view>
     <icon class="icon-box-img icon" type="success" size="53"></icon>
     <view class="title">下单成功</view>
     <!-- <view class="mid_menu"> -->
       <view class="top_tip">请关注公众号。到货后，我们会用公众号提醒您取货。</view>
-      <view class="top_tip">请输入手机号。</view>
+      <!-- <view class="top_tip">请输入手机号。</view> -->
   </view>
 </view>
 
-<view wx:if="{{state==2}}">
+<view wx:if="{{state==2}}" style="margin-top: 30rpx;">
   下单失败，请联系客服。
 </view>
 
@@ -19,7 +19,7 @@
     <view style="font-size: small;margin:10rpx 20rpx 10rpx 40rpx;color: rgb(119, 118, 118);" wx:if="{{product.text.subtitle}}">
         <text>{{tools.n_correction(product.text.subtitle)}}</text>
     </view>
-    <view style="margin:0rpx 20rpx 0rpx 40rpx;font-size: x-large;color: #F67C74;">JPY {{product.sku[type_index].price}}</view>
+    <view style="margin:0rpx 20rpx 0rpx 40rpx;font-size: x-large;color: #F67C74;" wx:if="{{product.sku[type_index].price}}">JPY ¥{{product.sku[type_index].price}}</view>
     <view wx:if="{{sku_length>1}}">
         <van-divider custom-style="margin: 10rpx 30rpx" />
         <text style="margin:10rpx 40rpx;font-weight: bold;font-size: small;">种类</text>
@@ -48,7 +48,7 @@
         </van-cell-group>
     </van-popup>
     <view>
-        <text style="font-size: small;margin-left:  40rpx;margin-top: 0rpx;"><text style="color: rgb(119, 118, 118);">预计1月11日-1月24日配送至自提点</text></text>
+        <text style="font-size: small;margin-left:  40rpx;margin-top: 0rpx;"><text style="color: rgb(119, 118, 118);">预计1月20日-1月31日配送至自提点</text></text>
     </view>
     <van-divider custom-style="margin: 20rpx 30rpx"></van-divider>
     <view style="text-align: center;margin-top: 30rpx;margin-bottom: 10rpx;">

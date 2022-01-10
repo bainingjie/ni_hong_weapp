@@ -7,7 +7,7 @@ Component({
       list: [{
           icon: 'send-gift-o',
           text: '精选商城',
-          url: '/pages/product/index'
+          url: '/pages/productList/index'
         },
         {
           icon: 'logistics',

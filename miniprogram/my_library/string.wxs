@@ -9,6 +9,8 @@ function my_equal(a,type){
       return a=="待发货";
     case 2:
       return a=="待打包称重";
+    case 3:
+      return a=="待选择取货时间"
   }
 }
 

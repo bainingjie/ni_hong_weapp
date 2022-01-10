@@ -14,6 +14,14 @@ Page({
         columns: []
     },
     submit:function(){
+        if (this.data.date == null || this.data.time == null ) {
+          wx.showToast({
+            title: '请选择取货时间',
+            icon: 'error',
+            duration: 1500
+          })
+          return 1;
+        }
         wx.cloud.callFunction({
             name: 'quickstartFunctions',
             data: {

@@ -11,13 +11,14 @@ exports.main = async (event, context) => {
     try {        
         await db.collection('delivery').doc(event.id).update({
             data:{
+                state:"待配送至自提点",
                 pickup_date:event.date,
                 pickup_time:event.time
             }
         })
 
         return {
-        success: true,
+          success: true,
         }
     }catch (e) {
         return {
