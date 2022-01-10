@@ -10,3 +10,14 @@
 
 - [云开发文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html)
 
+## state
+集运：
+待称重打包-待支付-待发货-运输中-待选择取货时间-待配送至自提点-已配送
+商城：
+待发货-运输中-待选择取货时间-待配送至自提点-已配送
+
+## admin
+更新运单号&取货码
+更新times&选择取货时间
+更新状态为配送完成
+
