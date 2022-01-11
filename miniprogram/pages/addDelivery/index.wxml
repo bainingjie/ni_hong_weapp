@@ -70,10 +70,16 @@
     <icon class="icon-box-img icon" type="success" size="53"></icon>
     <view class="title">提交成功</view>
     <!-- <view class="mid_menu"> -->
-      <view class="top_tip">我们会尽快打包称重并报价。</view>
-      <view class="top_tip">请关注公众号，方便您及时收到运费支付提示。</view>
-      <view  class="top_tip" style="margin-bottom:20rpx;">在支付运费后，我们会尽快安排发货。</view>
-      <van-button round plain color="green" bindtap="jumpPage" data-jump="official_account" data-param="{{official_account_url}}" customStyle="margin-top: 10rpx;">进入公众号</van-button>
+      <view class="top_tip" style="text-align: center;">我们会尽快打包称重并报价。</view>
+      <view class="top_tip" style="text-align: center;">
+        <text style="color:red;">
+        记得关注公众号哦~
+        公众号会通知您支付和取货。◝(⑅•ᴗ•⑅)◜</text>
+      </view>
+      <view style="text-align: center;margin-top: 30rpx;">
+          <image style="width: 65%;"  mode="widthFix" show-menu-by-longpress="{{true}}" bindload ="imageLoaded" src="https://www.sharemart.shop/nihong/qrcode_for_official_code.jpg"></image>
+      </view>
+      <view class="top_tip" style="text-align: center;"> 长按图片进入公众号。</view>
   </view>
 </view>
 

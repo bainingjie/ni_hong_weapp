@@ -92,7 +92,9 @@ Page({
           this.setData({
             delivery: delivery,
             times:times,
-            columns:col
+            columns:col,
+            date:Object.keys(times)[0],
+            time:times[Object.keys(times)[0]],
           });
           // console.log(this.data);
          wx.hideLoading();

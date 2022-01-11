@@ -1,10 +1,32 @@
 <view wx:if="{{state==1}}" style="text-align: center;margin-top: 30rpx;">
   <view>
+    <view class="title">最后一步！</view>
+    <!-- <view class="mid_menu"> -->
+    <view style="margin-top: 20rpx; margin-left: 15rpx;text-align: left;color: black;"  class="top_tip">手机号</view>
+    <van-field
+        model:value="{{phone}}" 
+        placeholder="请填写手机号"
+        border="{{ true }}"
+      ></van-field>
+    <view style="margin-top: 20rpx; margin-left: 15rpx;text-align: left;" class="top_tip">需要您的手机号作为取货码</view>
+  </view>
+  <van-button round plain  bindtap="submit" customStyle="margin-top: 10rpx;">提交</van-button>
+</view>
+
+<view wx:if="{{state==3}}" style="text-align: center;margin-top: 30rpx;">
+  <view>
     <icon class="icon-box-img icon" type="success" size="53"></icon>
     <view class="title">下单成功</view>
-    <!-- <view class="mid_menu"> -->
-      <view class="top_tip">请关注公众号。到货后，我们会用公众号提醒您取货。</view>
-      <!-- <view class="top_tip">请输入手机号。</view> -->
+    <view class="top_tip" style="text-align: center;">
+        <text style="color:red;">记得关注公众号哦~◝(⑅•ᴗ•⑅)◜
+        到货后，公众号会给您推送取货通知。</text>
+    </view>
+    
+    <view style="text-align: center;">
+        <image style="width: 65%;"  mode="widthFix" show-menu-by-longpress="{{true}}" bindload ="imageLoaded" src="https://www.sharemart.shop/nihong/qrcode_for_official_code.jpg"></image>
+    </view>
+    <view class="top_tip" style="text-align: center;"> 长按图片进入公众号。</view>
+
   </view>
 </view>
 

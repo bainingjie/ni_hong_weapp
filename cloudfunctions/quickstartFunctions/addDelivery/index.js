@@ -6,7 +6,7 @@ cloud.init({
 });
 const db = cloud.database();
 const _ = db.command
-
+const log = cloud.logger()
 exports.main = async (event, context) => {
     try {
         const wxContext = await cloud.getWXContext();
@@ -16,10 +16,8 @@ exports.main = async (event, context) => {
         })
         .get();
         // console.log(user);
-        // const log = cloud.logger()
-        // log.info({
-        //   user:user
-        // })
+        
+
         if(user.data.length == 0){
           await db.collection('user').add({
             // data 字段表示需新增的 JSON 数据
@@ -40,7 +38,7 @@ exports.main = async (event, context) => {
             });
         }
         
-        await db.collection('delivery').add({
+        let add_response = await db.collection('delivery').add({
             // data 字段表示需新增的 JSON 数据
             data: {
               // _id: 'todo-identifiant-aleatoire', // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
@@ -66,11 +64,13 @@ exports.main = async (event, context) => {
           });
           
           let response = await db.collection('public').doc('287a53aa61adee4100ba68a821f0aae3').get();
-
+          // log.info({
+          //   add_response:add_response
+          // })
           var resData = {
             "msgtype": "text",
             "text": {
-                "content": "有客户下单啦~",
+                "content": `有客户申请了集运\ndelivery_id:${add_response._id}`,
             }
            };
 

@@ -2,7 +2,7 @@
 <van-tabs active="{{ active }}" sticky="true" offset-top="0">
     <van-tab title="公告" >
     <view style="background-color:#ffffff;height: 30rpx;" ></view>
-    <image style="width: 100%;" webp="{{true}}" mode="widthFix" src="https://www.sharemart.shop/nihong/slide.webp"></image>
+    <image style="width: 100%;" webp="{{true}}" mode="widthFix" bindload="imageLoaded" src="https://www.sharemart.shop/nihong/slide.webp"></image>
     
     <view class=" mid_menu" style="margin-bottom:40rpx;margin-top: 30rpx;">
       <view style="margin-bottom: 10rpx;text-align: center;" class="top_tip">中国→日本 空运</view>

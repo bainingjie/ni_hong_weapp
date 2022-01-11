@@ -9,7 +9,7 @@ const getProduct = require('./getProduct/index');
 const getProducts = require('./getProducts/index');
 const selectPickupTime = require('./selectPickupTime/index')
 const payTrade = require('./payTrade/index');
-
+const addPhone = require('./addPhone/index');
 // 云函数入口函数
 exports.main = async (event, context) => {
   switch (event.type) {
@@ -35,6 +35,8 @@ exports.main = async (event, context) => {
       return await selectPickupTime.main(event, context);
     case 'payTrade':
       return await payTrade.main(event, context);
+    case 'addPhone':
+      return await addPhone.main(event, context);
     default:
       console.log("switch语法的index.js也需要增量上传。");
   }

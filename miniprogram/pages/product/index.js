@@ -14,15 +14,58 @@ Page({
     prefecture_names: null,
     prefectures: null,
     pick_up_spot: "请选择自提点",
-    // trimmed_prefectures:null,
-    // prefecture_columns: null,
-    // name_columns: null,
-    tracking_number: "",
-    tracking_numbers: [],
-    phone: "",
+    phone: null,
     state: 0, //0:初始 1:添加成功 2：添加失败
     official_account_url: "",
     type_index: 0, // sku_index
+    payment_id:null
+  },
+  submit: function () {
+    var phone = this.data.phone
+    if (phone.length > 0) {
+      wx.showLoading({
+        title: '',
+      });
+      wx.cloud.callFunction({
+        name: 'quickstartFunctions',
+        config: {
+          env: "testbai-6gjgkia55f6d4918"
+        },
+        data: {
+          type: 'addPhone',
+          // payment_id:
+          phone: this.data.phone,
+          payment_id:this.data.payment_id
+        }
+      }).then((resp) => {
+        //  console.log(resp);
+        wx.hideLoading();
+        if (resp.result.success) {
+          this.setData({
+            state: 3,
+          })
+          wx.showLoading({
+            title: '',
+          });
+        } else {
+          this.setData({
+            state: 2
+          })
+        }
+      }).catch((e) => {
+        console.log(e);
+        this.setData({
+          state: 2
+        })
+        wx.hideLoading();
+      });
+    } else {
+      wx.showToast({
+        title: '请填写手机号',
+        icon: 'error',
+        duration: 1500
+      })
+    }
   },
   pay() {
     let that = this;
@@ -52,7 +95,10 @@ Page({
       },
       success: res => {
         console.log(res)
-        const payment = res.result.payment
+        const payment = res.result.res.payment
+        this.setData({
+          payment_id:res.result.payment_id
+        })
         wx.requestPayment({
           ...payment,
           success(res) {
@@ -117,10 +163,16 @@ Page({
   onClose() {
     this.setData({ show: false });
   },
+  imageLoaded(){
+    wx.hideLoading();
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // this.setData({
+    //   state:3
+    // })
     console.log(options.param)
     this.getProduct(options.param);
     wx.showLoading({
@@ -152,6 +204,7 @@ Page({
       console.log(e);
       wx.hideLoading();
     });
+
   },
 
   /**

@@ -3,6 +3,7 @@ cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 })
 const db = cloud.database();
+const log = cloud.logger()
   
 exports.main = async (event, context) => {
   try{
@@ -16,7 +17,11 @@ exports.main = async (event, context) => {
     }
     // console.log("totalFee", totalFee)
     const wxContext = await cloud.getWXContext();
-
+    let is_admin= (wxContext.OPENID === "onlNR5CLE8pj91ZhS1PkZaDv9OfU")
+    // log.info({
+    //   open_id:wxContext.OPENID,
+    //   is_admin:is_admin
+    // })
     let response = await db.collection('payment').add({
       // data 字段表示需新增的 JSON 数据
       data: {
@@ -40,12 +45,12 @@ exports.main = async (event, context) => {
       "outTradeNo" : response._id,
       "spbillCreateIp" : "127.0.0.1",
       "subMchId" : "1614594513", //商户号
-      "totalFee" : totalFee*100,
+      "totalFee" : is_admin?100:totalFee*100,
       "envId": "testbai-6gjgkia55f6d4918",
       "functionName": "payDeliveryCallback"
     })
     console.log("res",res)
-    return res
+    return {res:res,payment_id:response._id}
   }catch(e){
     console.log(e)
     return e

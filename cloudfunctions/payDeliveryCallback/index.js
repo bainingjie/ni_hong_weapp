@@ -110,11 +110,11 @@ exports.main = async (event, context) => {
             var resData = {
               "msgtype": "text",
               "text": {
-                  "content": "有客户在商城下单啦~",
+                  "content": `有客户在商城下单啦~\ndelivery_id:${delivery_response._id}\nproduct_name:${product_response.data.name}`,
               }
              };
   
-             let group_resp = await request({
+             await request({
               url: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=182aec95-9e36-4f6b-9fb4-2087d5f31dca",
               method: "POST",
               headers: {
@@ -122,8 +122,6 @@ exports.main = async (event, context) => {
               },
               body: JSON.stringify(resData)
             });
-  
-
           }
         }
 
