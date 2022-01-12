@@ -1,6 +1,6 @@
 <view wx:if="{{state==1}}" style="text-align: center;margin-top: 30rpx;">
   <view>
-    <view class="title">最后一步！</view>
+    <view class="title">还差最后一步！</view>
     <!-- <view class="mid_menu"> -->
     <view style="margin-top: 20rpx; margin-left: 15rpx;text-align: left;color: black;"  class="top_tip">手机号</view>
     <van-field
@@ -70,7 +70,7 @@
         </van-cell-group>
     </van-popup>
     <view>
-        <text style="font-size: small;margin-left:  40rpx;margin-top: 0rpx;"><text style="color: rgb(119, 118, 118);">预计1月20日-1月31日配送至自提点</text></text>
+        <text style="font-size: small;margin-left:  40rpx;margin-top: 0rpx;"><text style="color: rgb(119, 118, 118);">预计{{product.delivery_span}}配送至自提点</text></text>
     </view>
     <van-divider custom-style="margin: 20rpx 30rpx"></van-divider>
     <view style="text-align: center;margin-top: 30rpx;margin-bottom: 10rpx;">

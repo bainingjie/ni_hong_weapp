@@ -42,47 +42,73 @@ exports.main = async (event, context) => {
     // let next_openid = openids.next_openid;
     openids = openids.data.openid;
     
+
+    
     let config = { user_list:[]};
     let res2 = await db.collection("official_account_user").get()
-    let old_ids = []
-    for (let usr of res2.data){
-        old_ids.push(usr.openid)
+
+    const MAX_LIMIT = 100;
+    // 先取出集合记录总数
+    const countResult = await db.collection('official_account_user').count()
+    const total = countResult.total
+    // 计算需分几次取
+    const batchTimes = Math.ceil(total / 100)
+    // 承载所有读操作的 promise 的数组
+    const tasks = []
+    for (let i = 0; i < batchTimes; i++) {
+        const promise = db.collection('todos').skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
+        tasks.push(promise)
     }
-    console.log(old_ids)
-    console.log(openids)
-    for (let id of openids){
-        if (!(old_ids.includes(id))){
-            config.user_list.push({
-                openid:id
-            });
+    // 等待所有
+    let promise_resposne = (await Promise.all(tasks)).reduce((acc, cur) => {
+        return {
+        data: acc.data.concat(cur.data),
+        errMsg: acc.errMsg,
         }
-    }
-    // console.log("config",config);
-    if(config.user_list==0){
-        console.log("没有更多关注者啦");
-        return 0;
-    }
-    let user_info_list = await getUnionIDs(token,config);
-    // console.log(user_info_list)
-    let count = 0;
-    for (user of user_info_list){
-        await db.collection('official_account_user').add({
-            data: {
-                headimgurl:user.headimgurl,
-                nickname:user.nickname,
-                openid:user.openid,
-                unionid:user.unionid
-            }
-        })
-        count += 1;
-    }
-    console.log(count," users are added");
-    // await db.collection('public').doc("c0ca0aed61c3d73301ffd88d515bcb72")
-    // .update({
-    //   data: {
-    //     next_openid:next_openid
-    //   }
-    // });
+    })
+
+    console.log(promise_resposne)
+
+    // let old_ids = []
+    // for (let usr of res2.data){
+    //     old_ids.push(usr.openid)
+    // }
+    // console.log(old_ids)
+    // console.log(openids)
+    // for (let id of openids){
+    //     if (!(old_ids.includes(id))){
+    //         config.user_list.push({
+    //             openid:id
+    //         });
+    //     }
+    // }
+    // // console.log("config",config);
+    // if(config.user_list==0){
+    //     console.log("没有更多关注者啦");
+    //     return 0;
+    // }
+    // let user_info_list = await getUnionIDs(token,config);
+    // // console.log(user_info_list)
+    // let count = 0;
+    // let response = null
+    // for (user of user_info_list){
+    //     response = await db.collection('official_account_user').add({
+    //         data: {
+    //             headimgurl:user.headimgurl,
+    //             nickname:user.nickname,
+    //             openid:user.openid,
+    //             unionid:user.unionid
+    //         }
+    //     })
+    //     count += 1;
+    // }
+    // console.log(count," users are added");
+    // // await db.collection('public').doc("c0ca0aed61c3d73301ffd88d515bcb72")
+    // // .update({
+    // //   data: {
+    // //     next_openid:next_openid
+    // //   }
+    // // });
     return {
         state:"done"
     }

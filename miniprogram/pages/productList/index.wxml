@@ -11,7 +11,7 @@
     </van-col>
   </van-row>
 </view>
-<view style="width: 100%;text-align: center;margin-top: 30rpx;"  class="top_tip">
+<view style="width: 100%;text-align: center;margin-top: 30rpx;"  class="top_tip" wx:if="{{is_ready}}">
   一大波好货正在赶来，敬请期待◝(⑅•ᴗ•⑅)◜..°♡
 </view>
 

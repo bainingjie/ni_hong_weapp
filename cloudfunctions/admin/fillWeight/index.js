@@ -3,6 +3,7 @@ const cloud = require('wx-server-sdk')
 cloud.init()
 const db = cloud.database();
 const {parse} = require('csv-parse/sync');
+const _ = db.command;
 
 // const parser = require('csv-parse/lib/sync');
 /*　get access token。can be used multiple time before it expires. */ 
@@ -25,6 +26,7 @@ exports.main = async (event, context) => {
     console.log(weight_object)
 
     let deliveries = await db.collection("delivery").where({
+      union_id: _.not(_.eq("o9mwV6KEtsjhOWbqGas2BnhZqzGc")),
       total_weight:"待称重"
     }).get()
     deliveries = deliveries.data
