@@ -34,7 +34,9 @@ exports.main = async (event, context) => {
       // data 字段表示需新增的 JSON 数据
       data: {
         // _id: 'todo-identifiant-aleatoire', // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
-        open_id: wxContext.FROM_OPENID,
+
+        open_id: wxContext.OPENID,
+        union_id: wxContext.UNIONID,
         added_date: new Date(),
         name: event.name,
         name_kana: event.name_kana,
