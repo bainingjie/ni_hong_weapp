@@ -10,6 +10,8 @@ Page({
     product: null,
     sku_length: 0,
     subtitle: "",
+    delivery:"",
+
     show: false,
     prefecture_names: null,
     prefectures: null,
@@ -141,7 +143,8 @@ Page({
       this.setData({
         product: resp.result.data,
         sku_length: resp.result.data.sku.length,
-        subtitle: resp.result.data.text.subtitle.split('&hc').join('\n')
+        subtitle: resp.result.data.text.subtitle.split('&hc').join('\n'),
+        delivery:resp.result.delivery
       });
       // console.log(this.data);
       wx.hideLoading();

@@ -31,37 +31,42 @@
         placeholder="请填写"
         border="{{ true }}"
       ></van-field>
-    <view style="margin-top: 20rpx; margin-left: 15rpx;text-align: left;" class="top_tip">如果包裹存在任何问题，我们会直接与您联系。</view>
+    <view style="margin-top: 10rpx; margin-left: 15rpx;text-align: left;" class="top_tip">如果包裹存在任何问题，我们会直接与您联系。</view>
 
-  <view class="weui-cells__title" style="color: black;">3.添加快递单号</view> 
-
-  <van-cell-group wx:if="{{!show}}">
+  <view class="weui-cells__title" style="color: black;">3.填写快递单号</view> 
+  <van-cell-group wx:if="{{!show}}" >
       <van-field
         value="{{tracking_number}}" 
         bind:input='getInputVal'
-        placeholder="请填写"
+        placeholder="请填写一个快递单号"
+        border="{{ true }}"
+      ></van-field>
+      <van-field
+        model:value="{{package_content}}" 
+        placeholder="此快递里的全部商品(如：卫衣，化妆刷，螺狮粉)"
         border="{{ false }}"
-        use-button-slot
       >
-      <van-button slot="button" plain="true" color="black" bindtap='add' size="small">添加</van-button>
     </van-field>
    </van-cell-group>    
-   <view style="margin-top: 20rpx; margin-left: 15rpx;text-align: left;color:#EE0A24;;" class="top_tip">请注意区分淘宝的【订单编号】与【快递单号】。</view>
-   <view style="margin-left: 15rpx;text-align: left;" class="top_tip">快递单号的查看方式：淘宝>>我的订单>>查看物流。</view>
-    <!-- <view class='add' bindtap='addInput'>增加</view> -->
+   <view class="top_tip" style="margin-left: 15rpx;color:#EE0A24;text-align: left;" >请注意区分淘宝的【订单编号】与【快递单号】。</view>
+  <view style="margin-left: 15rpx;text-align: left;" class="top_tip">快递单号的查看方式：淘宝>>我的订单>>查看物流。</view>
+
+   <view style="text-align: center;margin-top: 10rpx;">
+      <van-button round  plain="true" bindtap='add' >添加这件快递</van-button>
+   </view>
 
 
     <van-divider contentPosition="center" textColor="black">已添加的快递单号</van-divider>
 
     <view wx:if="{{!show}}">
-      <van-cell wx:for='{{tracking_numbers}}' wx:key="*this" title="{{item}}" >
+      <van-cell wx:for='{{tracking_numbers}}' wx:key="*this" title="{{item.number}}  ({{item.content}})" >
         <van-icon slot="right-icon" name="close" class="custom-icon" bindtap='delInput' data-idx='{{index}}' />
       </van-cell>
    </view>    
 
    <view style="text-align: center;margin-top: 20rpx;">
     <view class="top_tip" style="margin-bottom: 20rpx;">共 {{tracking_numbers.length}} 件</view>
-    <van-button type="primary" plain="true" bindtap='submit' color="#EE0A24;" custom-style="width:70%">申请集运</van-button>
+    <van-button type="primary" plain="true" bindtap='submit' color="#EE0A24;" custom-style="width:70%">提交</van-button>
    </view>
 </view>
 

@@ -1,9 +1,9 @@
 <!--index.wxml-->
-<van-tabs active="{{ active }}" sticky="true" offset-top="0">
-    <van-tab title="公告" >
+<van-tabs active="{{ active }}" bind:change="tabClicked"sticky="true" offset-top="0">
+    <van-tab title="{{tab0_title}}" >
     <view style="background-color:#ffffff;height: 30rpx;" ></view>
     <image style="width: 100%;" webp="{{true}}" mode="widthFix" bindload="imageLoaded" src="https://www.sharemart.shop/nihong/slide.webp"></image>
-    
+
     <view class=" mid_menu" style="margin-bottom:40rpx;margin-top: 30rpx;">
       <view style="margin-bottom: 10rpx;text-align: center;" class="top_tip">中国→日本 空运</view>
       <view style="margin-left: 80rpx;"  wx:if="{{price}}">时价：{{price}} </view>
@@ -11,23 +11,30 @@
       <view style="margin-top: 10rpx; text-align: center;" class="top_tip">报关手续费为4元</view>
     </view>
 
-    <van-row >
-      <van-col span="12" style="text-align: center"><van-button plain round color="#EE0A24" bindtap="jumpPage" data-jump="calculationSimulation">运费试算</van-button></van-col>
-      <van-col span="12" style="text-align: center">
-          <van-button plain round color="#EE0A24" bindtap="jumpPage" data-jump="pickUpSpots">查看自提点</van-button>
-      </van-col>
+    <view style="margin-top: 10rpx; margin-bottom: 30rpx; text-align: center;color:black;font-weight: bold;" class="top_tip">
+      <text>春节放假安排:
+      1月19日截单，2月8号起恢复发货。</text>
+    </view>
 
+
+    <van-row >
+      <van-col span="12" style="text-align: center"><van-button plain round  bindtap="jumpPage" data-jump="calculationSimulation">运费试算</van-button></van-col>
+      <van-col span="12" style="text-align: center">
+          <van-button plain round  bindtap="jumpPage" data-jump="pickUpSpots">查看自提点</van-button>
+      </van-col>
     </van-row>
 
-    <view style="margin-top: 30rpx;">
-      <van-row >
+  
+    <view style="margin-top: 30rpx;text-align: center;">
+      <van-button plain round color="#EE0A24" custom-style="width:75%" bindtap="startClicked">开始集运</van-button>
+      <!-- <van-row >
         <van-col span="12" offset="" style="text-align: center">
           <van-button plain round color="#EE0A24" bindtap="customer_service">联系客服</van-button>
         </van-col>
         <van-col span="12" style="text-align: center">
           <van-button plain round color="#EE0A24"  bindtap="jumpPage" data-jump="official_account" data-param="{{enter_official_account}}">什么不能寄</van-button>
         </van-col>  
-      </van-row>
+      </van-row> -->
     </view>
 
     <van-divider contentPosition="center" >备注</van-divider>
@@ -35,17 +42,25 @@
     <view  class="top_tip" style="margin-left: 60rpx;margin-top: 10rpx;">2) 时效为运单号上网后正常情况下时效，受天气或</view>
     <view  class="top_tip" style="margin-left: 60rpx;">自然灾害等客观因素影响。请以运单号跟踪时效为准。</view>
     <view  class="top_tip" style="margin-top: 10rpx;margin-left: 60rpx;">3) 包邮到家需另付邮费，详情请咨询客服。</view>
-    <view  class="top_tip" style="margin-top: 10rpx;margin-left: 60rpx;">4) 下单前请阅读【什么不能寄】，确认注意事项。</view>    
+    <!-- <view  class="top_tip" style="margin-top: 10rpx;margin-left: 60rpx;">4) 下单前请阅读【什么不能寄】，确认注意事项。</view>     -->
   </van-tab>
-  <van-tab title="开始集运" >
+  <van-tab title="{{tab1_title}}" >
     <!-- <van-row style="padding-top:30rpx;">
       <van-col span="12" style="text-align: center"> -->
         <view class="mid_menu"  style="text-align: center">
           <view style="font-size: 20px;color: #EE0A24;font-weight: bold;">①</view>
-          <view>将购物车截图发给客服</view>
-          <view class="top_tip">仅用于检查禁运品及报关，匿名加密保护隐私。</view>
-          <view class="top_tip">留言前，请先确认公告页的【什么不能寄】</view>
-          <van-button round plain color="#EE0A24" bindtap="customer_service" customStyle="margin-top: 10rpx;">给客服留言</van-button>
+          <view>确认商品都能空运</view>
+          <view class="top_tip">常见不可寄：纯液体、化妆品、可充电的电器、</view>
+          <view class="top_tip">电池、压力锅、自热火锅等。</view>
+          <van-row>
+            <van-col span="12">
+              <van-button plain round  color="black" bindtap="jumpPage" customStyle="margin-top: 10rpx;" data-jump="official_account" data-param="{{enter_official_account}}">什么不能寄</van-button>
+            </van-col>
+            <van-col span="12">
+              <van-button round plain  color="black" bindtap="customer_service" customStyle="margin-top: 10rpx;">咨询客服</van-button>
+            </van-col>
+          </van-row>
+          
         </view>
       <!-- </van-col>
       <van-col span="12" style="text-align: center"> -->
@@ -62,19 +77,19 @@
 
           <van-row>
             <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[0]}}</view></van-col>
-            <van-col span="8"><van-button round plain color="black" bindtap="copyText" data-text="{{address[0]}}" size="small"  custom-style="margin:10rpx">复制收件人</van-button></van-col>
+            <van-col span="8"><van-button round plain  bindtap="copyText" data-text="{{address[0]}}" size="small"  custom-style="margin:10rpx">复制收件人</van-button></van-col>
           </van-row>
           <van-row>
             <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[1]}}</view></van-col>
-            <van-col span="8"><van-button round plain color="black" bindtap="copyText" data-text="{{address[1]}}" size="small" custom-style="margin:10rpx">复制电话</van-button></van-col>
+            <van-col span="8"><van-button round plain bindtap="copyText" data-text="{{address[1]}}" size="small" custom-style="margin:10rpx">复制电话</van-button></van-col>
           </van-row>
           <van-row>
             <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[2]}}</view></van-col>
-            <van-col span="8"><van-button round plain color="black" bindtap="copyText" data-text="{{address[2]}}" size="small" custom-style="margin:10rpx">复制邮编</van-button></van-col>
+            <van-col span="8"><van-button round plain bindtap="copyText" data-text="{{address[2]}}" size="small" custom-style="margin:10rpx">复制邮编</van-button></van-col>
           </van-row>
           <van-row>
             <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[3]}}</view></van-col>
-            <van-col span="8"><van-button round plain color="black" bindtap="copyText" data-text="{{address[3]}}" size="small" custom-style="margin:10rpx">复制地址</van-button></van-col>
+            <van-col span="8"><van-button round plain bindtap="copyText" data-text="{{address[3]}}" size="small" custom-style="margin:10rpx">复制地址</van-button></van-col>
           </van-row>
           <!-- <van-button round plain color="#EE0A24" bindtap="copyText" customStyle="margin-top: 10rpx;">复制最新地址</van-button> -->
         </view>
@@ -86,7 +101,7 @@
           <view style="font-size: 20px;color: #EE0A24;font-weight: bold;">③</view>
           <text>添加快递单号</text>
           <view  class="top_tip">请在所有包裹都被仓库签收后，一口气添加。</view>
-          <van-button round plain color="#EE0A24" bindtap="jumpPage" data-jump="addDelivery" customStyle="margin-top: 10rpx;">批量添加</van-button>
+          <van-button round plain color="black" bindtap="jumpPage" data-jump="addDelivery" customStyle="margin-top: 10rpx;">批量添加</van-button>
         </view>
       <!-- </van-col>
       <van-col span="12" style="text-align: center"> -->
@@ -94,7 +109,7 @@
           <view style="font-size: 20px;color: #EE0A24;font-weight: bold;">④</view>
           <text>支付&取货</text>
           <view  class="top_tip">关注公众号，接收支付&到货的智能提醒。</view>
-          <van-button round plain color="#EE0A24" bindtap="jumpPage" data-jump="official_account" data-param="{{enter_official_account}}" customStyle="margin-top: 10rpx;">进入公众号</van-button>
+          <van-button round plain color="black" bindtap="jumpPage" data-jump="official_account" data-param="{{enter_official_account}}" customStyle="margin-top: 10rpx;">进入公众号</van-button>
           <!-- <van-button  plain type="primary" bindtap="jumpPage" data-jump="addDelivery">添加快递单号</van-button> -->
         </view>
       <!-- </van-col>

@@ -17,10 +17,29 @@ Page({
     description_2_2:'',
     share_title:"",
     // active_step:0,
-
+    tab0_title:"公告",
+    tab1_title:"开始集运"
   },
   bottomTabbarClicked(event) {
     my_library.bottomTabbarClicked(event);
+  },
+  tabClicked(event) {
+    console.log(event.detail.name)
+    if(event.detail.name == 0){
+      this.setData({
+        active:0
+      })
+    }else if (event.detail.name == 1){
+      this.setData({
+        active:1
+      })
+    }
+  },
+  startClicked() {
+    console.log(this.data.active)
+    this.setData({
+      active:1
+    })
   },
   onLoad(options) {
     // this.setData({

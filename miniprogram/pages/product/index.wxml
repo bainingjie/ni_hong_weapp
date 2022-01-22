@@ -33,7 +33,6 @@
 <view wx:if="{{state==2}}" style="margin-top: 30rpx;">
   下单失败，请联系客服。
 </view>
-
 <view wx:if="{{state==0}}">
     <image style="width: 100%;" webp="{{true}}" mode="widthFix" src="{{product.sku[type_index].image}}"></image>
     <view style="font-weight: bold;margin:20rpx 20rpx 0rpx 40rpx;font-size: x-large;">{{product.text.name}}</view>
@@ -70,7 +69,7 @@
         </van-cell-group>
     </van-popup>
     <view>
-        <text style="font-size: small;margin-left:  40rpx;margin-top: 0rpx;"><text style="color: rgb(119, 118, 118);">预计{{product.delivery_span}}配送至自提点</text></text>
+        <text style="font-size: small;margin-left:  40rpx;margin-top: 0rpx;"><text style="color: rgb(119, 118, 118);">预计{{delivery}}配送至自提点</text></text>
     </view>
     <van-divider custom-style="margin: 20rpx 30rpx"></van-divider>
     <view style="text-align: center;margin-top: 30rpx;margin-bottom: 10rpx;">

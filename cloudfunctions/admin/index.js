@@ -6,6 +6,7 @@ const sendMessage = require('./sendMessage/index');
 const exportFile = require('./exportFile/index');
 const test_copyDelivery = require('./test_copyDelivery/index');
 const selectPickupTime = require('./selectPickupTime/index');
+const findOrphans = require('./findOrphans/index');
 // 云函数入口函数
 exports.main = async (event, context) => {
   switch (event.type) {
@@ -23,8 +24,10 @@ exports.main = async (event, context) => {
       return await exportFile.main(event,context);
     case "test_copyDelivery":
       return await test_copyDelivery.main(event,context);
-      case "selectPickupTime":
-        return await selectPickupTime.main(event,context);
+    case "selectPickupTime":
+      return await selectPickupTime.main(event,context);
+    case "findOrphans":
+      return await findOrphans.main(event,context);
     default:
         console.log("switch语法的index.js也需要增量上传。");
   }

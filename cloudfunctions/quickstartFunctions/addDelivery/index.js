@@ -32,10 +32,18 @@ exports.main = async (event, context) => {
 
         let data_array = [];
         for(tracking_number of event.tracking_numbers){
-            data_array.push({
+          if(typeof tracking_number === 'string'){
+              data_array.push({
                 tracking_number:tracking_number,
                 weight:null
+              });
+          }else{
+            data_array.push({
+              tracking_number:tracking_number.number,
+              content:tracking_number.content,
+              weight:null
             });
+          }
         }
         
         let add_response = await db.collection('delivery').add({

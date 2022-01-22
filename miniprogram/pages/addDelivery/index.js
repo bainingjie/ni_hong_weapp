@@ -13,6 +13,7 @@ Page({
     // prefecture_columns: null,
     // name_columns: null,
     tracking_number: "",
+    package_content:"",
     tracking_numbers: [],
     phone: "",
     state: 0, //0:初始 1:添加成功 2：添加失败
@@ -46,17 +47,24 @@ Page({
   },
   //添加input
   add: function () {
-    if (this.data.tracking_number.length > 0) {
+    if (this.data.tracking_number.length > 0 && this.data.package_content.length > 0) {
       var tracking_numbers = this.data.tracking_numbers;
       // console.log(old[old.length-1]);
-      tracking_numbers.push(this.data.tracking_number);
+      tracking_numbers.push({number:this.data.tracking_number,content:this.data.package_content});
       this.setData({
         tracking_numbers,
-        tracking_number: ""
+        tracking_number: "",
+        package_content:""
       })
-    } else {
+    } else if(this.data.tracking_number.length == 0) {
       wx.showToast({
         title: '无效单号',
+        icon: 'error',
+        duration: 1500
+      })
+    }else if(this.data.package_content.length == 0) {
+      wx.showToast({
+        title: '请填写商品内容',
         icon: 'error',
         duration: 1500
       })
@@ -112,9 +120,22 @@ Page({
         })
         wx.hideLoading();
       });
-    } else {
+
+    } else if(phone.length==0) {
       wx.showToast({
-        title: '请填写完整',
+        title: '请填写手机号',
+        icon: 'error',
+        duration: 1500
+      })
+    }else if(pick_up_spot == "请选择自提点") {
+      wx.showToast({
+        title: '请选择自提点',
+        icon: 'error',
+        duration: 1500
+      })
+    }else if(tracking_numbers.length ==0) {
+      wx.showToast({
+        title: '请添加快递单号',
         icon: 'error',
         duration: 1500
       })

@@ -3,15 +3,16 @@
   <van-row>
     <van-col span="12" wx:for="{{products}}" wx:key="*this" >
       <view class=" mid_menu" bindtap="jumpPage" data-jump="product" data-param="{{item._id}}">
-        <image style="width: 100%;border-radius: 30rpx 30rpx 0rpx 0rpx;" webp="{{true}}" mode="widthFix" src="{{item.sku[0].image}}"></image>
-        <view style="margin-left: 10rpx;color: black;" class="top_tip">{{item.text.name}}</view>
+        <image style="width: 100%;border-radius: 30rpx 30rpx 0rpx 0rpx;" webp="{{true}}" mode="aspectFill" src="{{item.sku[0].image}}"></image>
+        <view style="margin-left: 10rpx;color: black;font-weight: bold;" class="top_tip">{{item.text.name}}</view>
         <view style="margin-left: 10rpx;" class="top_tip">{{item.text.card_description}}</view>
-        <view style="margin-left: 10rpx;color:#FF7B3E;" class="top_tip">JPY ¥{{item.sku[0].price}}</view>
+        <view style="margin-left: 10rpx;margin-bottom: 10rpx;color:#FF7B3E;" class="top_tip">JPY ¥{{item.sku[0].price}}</view>
       </view>
     </van-col>
+
   </van-row>
 </view>
 <view style="width: 100%;text-align: center;margin-top: 30rpx;"  class="top_tip" wx:if="{{is_ready}}">
   一大波好货正在赶来，敬请期待◝(⑅•ᴗ•⑅)◜..°♡
 </view>
-
+<view style="padding-bottom: 130rpx;"></view>
