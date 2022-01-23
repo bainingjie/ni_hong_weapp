@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "csv-parse": "^5.0.4",
     "node-xlsx": "^0.21.0",
     "wx-server-sdk": "~2.5.3"
   }

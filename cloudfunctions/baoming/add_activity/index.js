@@ -11,73 +11,61 @@ const _ = db.command;
 exports.main = async (event, context) => {
   try{
     let weight_file = await cloud.downloadFile({
-      fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/weight.csv'
+      fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/活动模板.csv'
     })
     const res = parse(weight_file.fileContent)
-    console.log(res)
-    res.shift();
-    let weight_object={}
+    let file = []
+    let row_max=-1
+    let col_max=0
     for (row of res){
-      let weight = Number(row[9]);
-      if(weight != 0){
-        weight_object[row[0]]=weight
-      }
+        col_max=row.length
+        file.push(row)
+        row_max+=1
     }
-    console.log(weight_object)
-
-    let deliveries = await db.collection("delivery").where({
-      union_id: _.not(_.eq("o9mwV6KEtsjhOWbqGas2BnhZqzGc")),
-      total_weight:"待称重"
-    }).get()
-    deliveries = deliveries.data
-    console.log(deliveries)
-    let price_response = await db.collection("public").doc("287a53aa61adee4100ba68a821f0aae3").get();
-
-    for (let delivery of deliveries){
-      let not_found_count=0;
-      let is_weight_updated=false;
-      for(let package of delivery.packages){
-        if(package.weight==null){
-          if(package.tracking_number in weight_object){
-            is_weight_updated=true;
-            package.weight = Number(weight_object[package.tracking_number])
-          }else{
-            not_found_count += 1;
-            console.log(package.tracking_number)
-          }
+    console.log("size",row_max,col_max)
+    let object ={}
+    object.title=file[1][0]
+    object.subtitle=file[1][1]
+    object.period=file[1][2]
+    description=""
+    for(let i = 1;i<=row_max;i++){
+        if(file[i][3]){
+            console.log(file[i][3])
+            description += file[i][3]
+            description += "&hc"
+        }else{
+            break
         }
-      }
-
-      let real_total_weight=0
-      let total_weight = 0
-      if(not_found_count == 0){
-        for (let package of delivery.packages){
-          // console.log(real_total_weight,package.weight)
-          real_total_weight += Math.round(package.weight * 100) / 100
-        }
-        if((Math.ceil(real_total_weight)-real_total_weight)<0.5){
-          total_weight = Math.ceil(real_total_weight)
-        }else if ((Math.ceil(real_total_weight)-real_total_weight)>=0.5){
-          total_weight = Math.floor(real_total_weight)+0.5
-        }
-      }
-      // console.log(real_total_weight)
-      // console.log(total_weight*30+4)
-
-  
-      if(is_weight_updated){
-        await db.collection("delivery").doc(delivery._id).update({
-          data: {
-            packages:delivery.packages,
-            real_total_weight:real_total_weight?real_total_weight:"待称重",
-            total_weight:total_weight?total_weight:"待称重",
-            state:total_weight?"待支付":"待打包称重",
-            amount_to_pay:total_weight?total_weight*price_response.data.price_500g*2+4:"待称重"
-          }
-        })
-      }
     }
-
+    object.description = description
+    object.template=file[1][4]
+    let contents = []
+    for(let i = 5;i<=col_max;i=i+2){
+        let content ={}
+        if(!file[3][i]){
+            break
+        }
+        content.title = file[3][i]
+        content.title_red=file[1][i]=="否"?false:true
+        content.content_red=file[1][i+1]=="否"?false:true
+        content.content=""
+        for(let j = 3;j<=row_max;j++){
+            if(file[j][i+1]){
+                content.content += file[j][i+1]
+                content.content += "&hc"
+            }else{
+                break
+            }
+        }
+        contents.push(content)
+    }    
+    object.contents = contents
+    object.added_date = new Date()
+    object.is_active = true
+    console.log(object)
+    await db.collection("baoming_activity").add({
+        data:object
+    })
     return {
       state:"success"
     }
