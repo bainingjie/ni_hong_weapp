@@ -15,11 +15,8 @@ exports.main = async (event, context) => {
     let response = await db.collection('baoming').doc(event.baoming_id).update({
       // data 字段表示需新增的 JSON 数据
       data: {
-        name: event.name,
-        name_kana: event.name_kana,
-        phone: event.phone,
-        xingbie: event.xingbie,
-        size: event.size
+        template:event.template,
+        last_revised_date: new Date()
       }
     });
     return {

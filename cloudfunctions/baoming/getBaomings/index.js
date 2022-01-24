@@ -12,7 +12,8 @@ exports.main = async (event, context) => {
     const wxContext = await cloud.getWXContext();
     let response = await db.collection('baoming').where({
         open_id: wxContext.FROM_OPENID
-    }).get();
+    }).orderBy('added_date','desc').get();
+
     return {
       success: true,
       data: response

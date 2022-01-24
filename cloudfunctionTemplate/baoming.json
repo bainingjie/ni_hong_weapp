@@ -4,5 +4,18 @@
     "value": {
       "type": "add_activity"
     }
+  },
+  {
+    "name": "add_template",
+    "value": {
+      "type": "add_template"
+    }
+  },
+  {
+    "name": "admin_excel",
+    "value": {
+      "type": "admin_excel",
+      "activity_id": "5b049cc861ee7994087b558555ef22ff"
+    }
   }
 ]

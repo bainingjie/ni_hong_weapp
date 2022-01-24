@@ -2,6 +2,7 @@
 const cloud = require('wx-server-sdk')
 cloud.init()
 const db = cloud.database();
+// const {parse} = require('csv-parse');
 const {parse} = require('csv-parse/sync');
 const _ = db.command;
 

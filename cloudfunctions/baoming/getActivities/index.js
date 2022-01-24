@@ -9,7 +9,7 @@ const _ = db.command
 const log = cloud.logger()
 exports.main = async (event, context) => {
   try {
-    let response = await db.collection('baoming_activity').get();
+    let response = await db.collection('baoming_activity').orderBy('added_date','desc').get();
     return {
       success: true,
       data: response
