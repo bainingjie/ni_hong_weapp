@@ -11,6 +11,7 @@ exports.main = async (event, context) => {
   try {
 
     let response = await db.collection('baoming').doc(event.baoming_id).get()
+    let activity = await db.collection('baoming_activity').doc(response.data.activity_id).get()
     let admins = [
       "osJee5Fm4h9JM5j7OiJoHU-pHDAs", //白
       "osJee5HJA5CCivHTN4UeUkIgWWEk",//张哥 
@@ -27,6 +28,7 @@ exports.main = async (event, context) => {
     return {
       success: true,
       data: response,
+      activity:activity,
       is_admin:is_admin
     }
     // return await db.collection('public').doc('287a53aa61adee4100ba68a821f0aae3').get();

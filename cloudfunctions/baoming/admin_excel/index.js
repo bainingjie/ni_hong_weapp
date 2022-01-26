@@ -23,7 +23,7 @@ exports.main = async (event, context) => {
       select_result.push(out);
     }
     let json_data = select_result[0].data; //前100个data的array
-    let biaotou = [];
+    let biaotou = ["ID"];
     for (let i of json_data[0].template.questions) {
       biaotou.push(i.title);
     }
@@ -32,7 +32,9 @@ exports.main = async (event, context) => {
     console.log(json_data)
     console.log(biaotou)
     let hang = [];
+    let row_count = 1;
     for (let x of json_data) {
+      hang.push(row_count)
       for (let y of x.template.questions) {
         let element = y.answer;
         if (element == null) {
@@ -42,6 +44,7 @@ exports.main = async (event, context) => {
       }
       excel_data.push(hang);
       hang = [];
+      row_count ++;
     }
     let tmp = await excel.build([{ name: "data", data: excel_data }]);
     let cloud_path = await cloud.uploadFile({ cloudPath: "data.xlsx", fileContent: tmp });
