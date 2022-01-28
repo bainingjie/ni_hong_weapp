@@ -45,7 +45,7 @@
         <van-divider custom-style="margin: 10rpx 30rpx" />
         <text style="margin:10rpx 40rpx;font-weight: bold;font-size: small;">种类</text>
         <view class="tags_view" >
-            <view wx:for="{{product.sku}}" wx:key="*this" class="{{index==type_index ? 'selected_tag' : 'tags'}}" bindtap="tag_clicked" data-index="{{index}}">{{item.name}}</view>
+            <view wx:for="{{product.sku}}" wx:key="*this" wx:if="{{item.is_active}}"  class="{{index==type_index ? 'selected_tag' : 'tags'}}" bindtap="tag_clicked" data-index="{{index}}">{{item.name}}</view>
         </view>
     <gotop bind:myevent />
     </view>
@@ -81,5 +81,5 @@
     <!-- <van-divider custom-style="margin: 20rpx 20rpx" /> -->
     <!-- <van-divider custom-style="margin: 20rpx 20rpx"  /> -->
     <!-- <text>去支付：确认sku，自提点，手机号, 汇率</text> -->
-    <image style="width: 100%;" webp="{{true}}" lazy-load="{{true}}" mode="widthFix" wx:for="{{product.pictures}}" wx:key="*this" src="{{item}}"></image>
+    <image style="width: 100%;margin-top:-17rpx;" webp="{{true}}" lazy-load="{{true}}" mode="widthFix" wx:for="{{product.pictures}}" wx:key="*this" src="{{item}}"></image>
 </view>

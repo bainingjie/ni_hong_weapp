@@ -142,10 +142,12 @@ Page({
       console.log(resp);
       this.setData({
         product: resp.result.data,
+        type_index:resp.result.data.start_index,
         sku_length: resp.result.data.sku.length,
         subtitle: resp.result.data.text.subtitle.split('&hc').join('\n'),
         delivery:resp.result.delivery
       });
+
       // console.log(this.data);
       wx.hideLoading();
     }).catch((e) => {
