@@ -41,6 +41,7 @@ exports.main = async (event, context) => {
             data_array.push({
               tracking_number:tracking_number.number,
               content:tracking_number.content,
+              note:tracking_number.note,
               weight:null
             });
           }

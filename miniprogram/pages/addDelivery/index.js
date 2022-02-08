@@ -14,6 +14,7 @@ Page({
     // name_columns: null,
     tracking_number: "",
     package_content:"",
+    package_note:"",
     tracking_numbers: [],
     phone: "",
     state: 0, //0:初始 1:添加成功 2：添加失败
@@ -50,11 +51,12 @@ Page({
     if (this.data.tracking_number.length > 0 && this.data.package_content.length > 0) {
       var tracking_numbers = this.data.tracking_numbers;
       // console.log(old[old.length-1]);
-      tracking_numbers.push({number:this.data.tracking_number,content:this.data.package_content});
+      tracking_numbers.push({number:this.data.tracking_number,content:this.data.package_content,note:this.data.package_note});
       this.setData({
         tracking_numbers,
         tracking_number: "",
-        package_content:""
+        package_content:"",
+        package_note:""
       })
     } else if(this.data.tracking_number.length == 0) {
       wx.showToast({
@@ -64,7 +66,7 @@ Page({
       })
     }else if(this.data.package_content.length == 0) {
       wx.showToast({
-        title: '请填写商品内容',
+        title: '请填写包裹内容',
         icon: 'error',
         duration: 1500
       })

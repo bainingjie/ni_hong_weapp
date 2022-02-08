@@ -16,6 +16,11 @@ exports.main = async (event, context) => {
     const res = parse(weight_file.fileContent)
     console.log(res)
     res.shift();
+
+    // id,weight,content,price,state 
+
+
+
     let weight_object={}
     for (row of res){
       let weight = Number(row[9]);
@@ -27,8 +32,10 @@ exports.main = async (event, context) => {
 
     let deliveries = await db.collection("delivery").where({
       union_id: _.not(_.eq("o9mwV6KEtsjhOWbqGas2BnhZqzGc")),
-      total_weight:"待称重"
+      /* total_weight:"待称重" */
+      state: _.not(_.eq("已配送")),
     }).get()
+
     deliveries = deliveries.data
     console.log(deliveries)
     let price_response = await db.collection("public").doc("287a53aa61adee4100ba68a821f0aae3").get();
@@ -40,10 +47,10 @@ exports.main = async (event, context) => {
         if(package.weight==null){
           if(package.tracking_number in weight_object){
             is_weight_updated=true;
-            package.weight = Number(weight_object[package.tracking_number])
+            package.weight = weight_object[package.tracking_number].toFixed(2);
           }else{
             not_found_count += 1;
-            console.log(package.tracking_number)
+            console.log("NOT FOUND:",package.tracking_number)
           }
         }
       }
@@ -53,29 +60,36 @@ exports.main = async (event, context) => {
       if(not_found_count == 0){
         for (let package of delivery.packages){
           // console.log(real_total_weight,package.weight)
-          real_total_weight += Math.round(package.weight * 100) / 100
+          real_total_weight += Number(package.weight)
         }
-        if((Math.ceil(real_total_weight)-real_total_weight)<0.5){
+        real_total_weight = Number(real_total_weight).toFixed(2)
+
+        if((real_total_weight-Math.floor(real_total_weight))<0.1){
+          total_weight = Math.floor(real_total_weight)
+        }else if((Math.ceil(real_total_weight)-real_total_weight)<0.5){
           total_weight = Math.ceil(real_total_weight)
         }else if ((Math.ceil(real_total_weight)-real_total_weight)>=0.5){
           total_weight = Math.floor(real_total_weight)+0.5
         }
       }
+
+
       // console.log(real_total_weight)
       // console.log(total_weight*30+4)
 
   
-      if(is_weight_updated){
+      // if(is_weight_updated){
+        console.log(delivery._id)
         await db.collection("delivery").doc(delivery._id).update({
           data: {
             packages:delivery.packages,
             real_total_weight:real_total_weight?real_total_weight:"待称重",
             total_weight:total_weight?total_weight:"待称重",
-            state:total_weight?"待支付":"待打包称重",
+            state:total_weight?"待支付":delivery.state,
             amount_to_pay:total_weight?total_weight*price_response.data.price_500g*2+4:"待称重"
           }
         })
-      }
+      // }
     }
 
     return {

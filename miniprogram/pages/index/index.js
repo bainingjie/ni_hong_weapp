@@ -42,11 +42,13 @@ Page({
     })
   },
   onLoad(options) {
-    // this.setData({
-    //   envId: options.envId
-    // });
-    this.getPublic();
 
+    this.getPublic();
+    if("process" in options){
+      this.setData({
+        active:1
+      });
+    }
   },
   onShow() {
     this.getTabBar().init();

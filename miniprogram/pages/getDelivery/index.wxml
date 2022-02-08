@@ -79,22 +79,26 @@
 
     <view class=" mid_menu">
         <van-row>
-                <van-col span="16"  style="font-weight: bold;" class="top_tip" ><text style="padding-left:30rpx;">计费总重量:</text></van-col>
-                <van-col span="8"  wx:if="{{delivery.real_total_weight}}" style="font-weight: bold;" class="top_tip" ><text>总重量:</text></van-col>
+                <van-col span="16"  style="font-weight: bold;" class="top_tip" ><text style="padding-left:30rpx;">计费总重量 (kg):</text></van-col>
+                <!-- <van-col span="8"  wx:if="{{delivery.real_total_weight}}" style="font-weight: bold;" class="top_tip" ><text>总重量:</text></van-col> -->
         </van-row>
         <van-row>
-                <van-col span="16"  class="top_tip" ><text style="padding-left:30rpx;">{{delivery.total_weight}} kg</text></van-col>
-                <van-col span="8"  wx:if="{{delivery.real_total_weight}}" class="top_tip" ><text>{{delivery.real_total_weight}} kg</text></van-col>
+                <van-col span="16"  class="top_tip" ><text style="padding-left:30rpx;">{{delivery.total_weight}} </text></van-col>
+                <!-- <van-col span="8"  wx:if="{{delivery.real_total_weight}}" class="top_tip" ><text>{{delivery.real_total_weight}} kg</text></van-col> -->
         </van-row>
         <view style="margin-top: 20rpx;margin-bottom: 20rpx;"></view>
         <van-row>
                 <van-col span="16"  style="font-weight: bold;" class="top_tip" ><text style="padding-left:30rpx;">快递单号</text></van-col>
                 <van-col span="8"  wx:if="{{delivery.real_total_weight}}" style="font-weight: bold;" class="top_tip" ><text>重量</text></van-col>
         </van-row>
-        <van-row  wx:for="{{delivery.packages}}" wx:key="*this">
+        <view wx:for="{{delivery.packages}}" wx:key="*this" class="top_tip">
+            <van-row >
                 <van-col span="16"   class="top_tip" ><text style="padding-left:30rpx;">{{item.tracking_number}}</text></van-col>
                 <van-col span="8"  wx:if="{{item.weight}}" class="top_tip" ><text>{{item.weight}}kg</text></van-col>
-        </van-row>
+            </van-row>
+            <view style="padding-left:30rpx;" wx:if="{{item.content}}">{{item.content}}</view>
+            <view style="padding-left:30rpx;" wx:if="{{item.note}}">{{item.note}}</view>
+        </view>
     </view>
 </view>
 
