@@ -18,16 +18,42 @@ exports.main = async (event, context) => {
     res.shift();
 
     // id,weight,content,price,state 
+    // state:0,1(delivered)
 
-
+    let packages = await db.collection("chinese_packages").where({
+      state: 0,
+    }).get()
+    packages = packages.data
 
     let weight_object={}
+    let file_packages=[]
     for (row of res){
-      let weight = Number(row[9]);
-      if(weight != 0){
-        weight_object[row[0]]=weight
+      if(row[0].length>5){
+        
+        let weight = Number(row[9]);
+        if(weight != 0){
+          weight_object[row[0]]=weight
+        }
+        // check existance 
+        // なぜか重複追加される
+        let exist = packages.find(package => package.tracking_number == row[0]);
+        if(!exist && (Number(row[9])>0)){
+          let package = {}
+          package.tracking_number = row[0]
+          package.weight = Number(row[9])
+          package.state = 0
+          package.content = row[5]
+          package.unit_price = row[7]
+          package.number =  row[6]
+          await db.collection('chinese_packages').add({
+            data: package
+          })
+        }
       }
     }
+
+    // let weight_object=[]
+
     console.log(weight_object)
 
     let deliveries = await db.collection("delivery").where({
@@ -35,6 +61,7 @@ exports.main = async (event, context) => {
       /* total_weight:"待称重" */
       state: _.not(_.eq("已配送")),
     }).get()
+
 
     deliveries = deliveries.data
     console.log(deliveries)
@@ -78,7 +105,7 @@ exports.main = async (event, context) => {
       // console.log(total_weight*30+4)
 
   
-      // if(is_weight_updated){
+      if(is_weight_updated){
         console.log(delivery._id)
         await db.collection("delivery").doc(delivery._id).update({
           data: {
@@ -89,7 +116,7 @@ exports.main = async (event, context) => {
             amount_to_pay:total_weight?total_weight*price_response.data.price_500g*2+4:"待称重"
           }
         })
-      // }
+      }
     }
 
     return {
