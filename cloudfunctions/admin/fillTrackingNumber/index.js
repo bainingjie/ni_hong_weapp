@@ -9,21 +9,18 @@ const {parse} = require('csv-parse/sync');
 
 exports.main = async (event, context) => {
   /* number fileID row[N]:*/ 
-  let number = "EB759597891CN" 
   try{
     let delivery_file = await cloud.downloadFile({
-        fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/1_15.csv'
+        fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/sent.csv'
       })
     const res = parse(delivery_file.fileContent)
     res.shift();
-    let ids =[]
-    // console.log(res)
-    for (row of res){
-        // console.log(row[0])
-        ids.push(row[1]);
-    }
-    for(let item of ids){
+
+    for(row of res){
       // console.log(item)
+      let item = row[3]
+      let number = row[7]
+      let pickup = "A"+row[0]
       let response = await db.collection('delivery').where({
         'packages.tracking_number':item
       }).get();
@@ -36,6 +33,9 @@ exports.main = async (event, context) => {
         // console.log(packages)
         await db.collection('delivery').doc(response.data[0]._id).update({
           data:{
+            state:"运输中",
+            tracking_number:number,
+            pickup_code:pickup,
             packages:packages
           }
         })

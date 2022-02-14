@@ -37,6 +37,7 @@ exports.main = async (event, context) => {
     let res = await db.collection("public").doc("c0ca0aed61c3d73301ffd88d515bcb72").get();
     let token = res.data.accessToken
     let openids = await getOpenIDs(token,"");
+    console.log(openids)
     openids = openids.data.openid;
     
     let config = { user_list:[]};

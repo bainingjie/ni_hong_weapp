@@ -2,7 +2,7 @@
 <van-tabs active="{{ active }}" bind:change="tabClicked"sticky="true" offset-top="0">
     <van-tab title="{{tab0_title}}" >
     <view style="background-color:#ffffff;height: 30rpx;" ></view>
-    <image style="width: 100%;" webp="{{true}}" mode="widthFix" bindload="imageLoaded" src="https://www.sharemart.shop/nihong/slide.webp"></image>
+    <image style="width: 100%;" webp="{{true}}" mode="widthFix"  src="https://www.sharemart.shop/nihong/slide.webp"></image>
 
     <view class=" mid_menu" style="margin-bottom:40rpx;margin-top: 30rpx;">
       <view style="margin-bottom: 10rpx;text-align: center;" class="top_tip">中国→日本 空运</view>
@@ -64,7 +64,7 @@
         </view>
       <!-- </van-col>
       <van-col span="12" style="text-align: center"> -->
-        <view class="mid_menu"  style="text-align: center">
+        <view class="mid_menu"  style="text-align: center;margin-top: 30rpx;">
           <view style="font-size: 20px;color: #EE0A24;font-weight: bold;">②</view>
           <text>下单至霓虹町的仓库</text>
           <view  class="top_tip">{{description_2_1}}</view>
@@ -97,7 +97,7 @@
     </van-row> -->
     <!-- <van-row style="padding-top:30rpx;">
       <van-col span="12" style="text-align: center"> -->
-        <view class="mid_menu"  style="text-align: center">
+        <view class="mid_menu"  style="text-align: center;margin-top: 30rpx;">
           <view style="font-size: 20px;color: #EE0A24;font-weight: bold;">③</view>
           <text>添加快递单号&选择自提点</text>
           <view  class="top_tip">请在所有包裹都被仓库签收后，一口气添加。</view>
@@ -105,7 +105,7 @@
         </view>
       <!-- </van-col>
       <van-col span="12" style="text-align: center"> -->
-        <view class="mid_menu"  style="text-align: center;padding-bottom: 20rpx;">
+        <view class="mid_menu"  style="text-align: center;padding-bottom: 20rpx;margin-top: 30rpx;">
           <view style="font-size: 20px;color: #EE0A24;font-weight: bold;">④</view>
           <text>支付&取货</text>
           <view  class="top_tip">关注公众号，接收支付&到货的智能提醒。</view>

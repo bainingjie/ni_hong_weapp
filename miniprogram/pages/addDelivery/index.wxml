@@ -30,6 +30,7 @@
         model:value="{{phone}}" 
         placeholder="请填写"
         border="{{ true }}"
+        required="{{true}}"
       ></van-field>
     <view style="margin-top: 10rpx; margin-left: 15rpx;text-align: left;" class="top_tip">如果包裹存在任何问题，我们会直接与您联系。</view>
 
@@ -38,25 +39,28 @@
       <van-field
         value="{{tracking_number}}" 
         bind:input='getInputVal'
-        placeholder="(必填) 快递单号 (例:75839440148343）"
+        placeholder="快递单号 (例:75839440148343）"
         border="{{ true }}"
+        required="{{true}}"
       ></van-field>
       <van-field
         model:value="{{package_content}}" 
-        placeholder="(必填) 包裹内容 (例:卫衣，化妆刷，螺狮粉)"
+        placeholder="包裹内容 (例:卫衣，化妆刷，螺狮粉)"
         border="{{ false }}"
+        required="{{true}}"
       ></van-field>
       <van-field
         model:value="{{package_note}}" 
-        placeholder="(选填) 备注 (例:怕挤压/易碎需加固，需取出液体赠品)"
+        placeholder="备注 (怕挤/易碎需加固，需取出液体/电池赠品)"
         border="{{ false }}"
       >
     </van-field>
    </van-cell-group>    
-   <view class="top_tip" style="margin-left: 15rpx;text-align: left;font-weight: bold;" >请注意区分淘宝的【订单编号】与【快递单号】。</view>
+   <view class="top_tip" style="margin-left: 15rpx;text-align: left;font-weight: bold;color: red;" >请注意区分淘宝的【订单编号】与【快递单号】。</view>
   <view style="margin-left: 15rpx;text-align: left;" class="top_tip">快递单号的查看方式：淘宝>>我的订单>>查看物流。</view>
+  <view style="margin-left: 15rpx;text-align: left;font-weight: bold;color: red;" class="top_tip">如需取出卸妆油等液体赠品，鼠标里的电池等，请务必备注~</view>
 
-   <view style="text-align: center;margin-top: 10rpx;">
+   <view style="text-align: center;margin-top: 20rpx;">
       <van-button round  plain="true" bindtap='add' >添加这件快递</van-button>
    </view>
 
@@ -71,7 +75,7 @@
 
    <view style="text-align: center;margin-top: 20rpx;">
     <view class="top_tip" style="margin-bottom: 20rpx;">共 {{tracking_numbers.length}} 件</view>
-    <van-button type="primary" plain="true" bindtap='submit' color="#EE0A24;" custom-style="width:70%;font-weight:bold">提交</van-button>
+    <van-button type="primary" plain="true" bindtap='submit' color="#EE0A24;" round custom-style="width:70%;font-weight:bold">提交</van-button>
    </view>
 </view>
 

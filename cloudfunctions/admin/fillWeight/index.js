@@ -20,11 +20,32 @@ exports.main = async (event, context) => {
     // id,weight,content,price,state 
     // state:0,1(delivered)
 
-    let packages = await db.collection("chinese_packages").where({
-      state: 0,
-    }).get()
-    packages = packages.data
+    // let packages = await db.collection("chinese_packages").where({
+    //   state: 0,
+    // }).get()
+    const MAX_LIMIT = 100;
+    // 先取出集合记录总数
+    const countResult = await db.collection('chinese_packages').count()
+    const total = countResult.total
+    // 计算需分几次取
+    const batchTimes = Math.ceil(total / 100)
+    // 承载所有读操作的 promise 的数组
+    const tasks = []
+    for (let i = 0; i < batchTimes; i++) {
+        const promise = db.collection("chinese_packages").skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
+        tasks.push(promise)
+    }
+    // 等待所有
+    let promise_response = (await Promise.all(tasks)).reduce((acc, cur) => {
+        return {
+        data: acc.data.concat(cur.data),
+        errMsg: acc.errMsg,
+        }
+    })
 
+
+    let packages = promise_response.data
+    console.log(packages)
     let weight_object={}
     let file_packages=[]
     for (row of res){
@@ -36,8 +57,15 @@ exports.main = async (event, context) => {
         }
         // check existance 
         // なぜか重複追加される
-        let exist = packages.find(package => package.tracking_number == row[0]);
+        let exist = packages.find(package => {
+          if (package.tracking_number == row[0]){
+            return true
+         }else{
+           return false
+         }
+        });
         if(!exist && (Number(row[9])>0)){
+          // console.log(exist,row[0])
           let package = {}
           package.tracking_number = row[0]
           package.weight = Number(row[9])
