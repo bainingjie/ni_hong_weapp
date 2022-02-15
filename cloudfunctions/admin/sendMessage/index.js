@@ -47,7 +47,7 @@ async function sendMessage(ACCESS_TOKEN,delivery){
                       "color":"#173177"
                   },
                   "remark":{
-                      "value":`计费总重量为${delivery.total_weight}kg。包裹会先寄达日本的仓库，之后配送至自提点。待商品到达后，此公众号会自动通知您取件⸜( •⌄• )⸝`,
+                      "value":`计费总重量为${delivery.total_weight}kg。待包裹寄达日本仓后，此公众号会自动通知您取件~⸜( •⌄• )⸝`,
                       "color":"#173177"
                   }
           }
@@ -83,7 +83,7 @@ async function sendMessage(ACCESS_TOKEN,delivery){
                     "color":"#173177"
                 },
                 "remark":{
-                    "value":`计费总重量为${delivery.total_weight}kg。包裹会先寄达日本的仓库，之后配送至自提点。待商品到达后，此公众号会自动通知您取件⸜( •⌄• )⸝`,
+                    "value":`计费总重量为${delivery.total_weight}kg。待包裹寄达日本仓后，此公众号会自动通知您取件~⸜( •⌄• )⸝`,
                     "color":"#173177"
                 }
         }

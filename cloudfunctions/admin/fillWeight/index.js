@@ -119,7 +119,9 @@ exports.main = async (event, context) => {
         }
         real_total_weight = Number(real_total_weight).toFixed(2)
 
-        if((real_total_weight-Math.floor(real_total_weight))<0.1){
+        if(real_total_weight<0.5){
+          total_weight = 0.5
+        }else if((real_total_weight-Math.floor(real_total_weight))<0.1){
           total_weight = Math.floor(real_total_weight)
         }else if((Math.ceil(real_total_weight)-real_total_weight)<0.5){
           total_weight = Math.ceil(real_total_weight)

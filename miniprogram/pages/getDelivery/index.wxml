@@ -43,7 +43,7 @@
         </van-row>
 
         <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.tracking_number}}</view>
-        <view  class="top_tip" style="margin-left: 30rpx;font-size: 28rpx;color: rgba(0, 0, 0, 0.5);margin-top: 20rpx;"> 国际运单号可在17track.net或日本邮政官网上追踪。物流信息的更新有时会有1-2天的延迟，属于正常现象请放心~</view>
+        <view  class="top_tip" style="margin-left: 30rpx;font-size: 28rpx;color: rgba(0, 0, 0, 0.5);margin-top: 20rpx;"> 运单号可在17track.net或日本邮政官网上追踪，信息更新有时会有1-2天的延迟，属于正常现象。包裹到达后，会有公众号的自动通知，请放心~</view>
         <!-- <view  class="top_tip" style="margin-left: 30rpx;font-size: 28rpx;color: rgba(0, 0, 0, 0.5);"> 物流信息的更新有时会有1-2天的延迟，属于正常现象请放心~</view> -->
         
 

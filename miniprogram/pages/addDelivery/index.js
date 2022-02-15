@@ -85,9 +85,10 @@ Page({
 
   submit: function () {
     var tracking_numbers = this.data.tracking_numbers;
+    var tracking_number = this.data.tracking_number;
     var pick_up_spot = this.data.pick_up_spot;
     var phone = this.data.phone
-    if (tracking_numbers.length > 0 && pick_up_spot != "请选择自提点" && phone.length > 0) {
+    if (tracking_numbers.length > 0 && pick_up_spot != "请选择自提点" && phone.length > 0 && tracking_number.length==0) {
       wx.showLoading({
         title: '',
       });
@@ -138,6 +139,12 @@ Page({
     }else if(tracking_numbers.length ==0) {
       wx.showToast({
         title: '请添加快递单号',
+        icon: 'error',
+        duration: 1500
+      })
+    }else if(tracking_number.length > 0) {
+      wx.showToast({
+        title: '请添加这件快递',
         icon: 'error',
         duration: 1500
       })
