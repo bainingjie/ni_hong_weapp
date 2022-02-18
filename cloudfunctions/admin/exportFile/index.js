@@ -26,15 +26,15 @@ exports.main = async (event, context) => {
   // }
   // console.log(weight_objects)
 
+  // let deliveries = await db.collection("delivery").where({
+  //   state: _.and(_.neq("已配送"),_.neq("运输中"))
+  // }).get();
+  // console.log(deliveries)
+
   let deliveries = await db.collection("delivery").where({
-    state: _.and(_.neq("已配送"),_.neq("运输中"))
+    state: _.neq("已配送")
   }).get();
   console.log(deliveries)
-  // let deliveries = await db.collection("delivery").where({
-  //   state:"待支付"
-    // state:"待发货"
-  // }).get();
-
 
   
   let data = []
@@ -51,16 +51,19 @@ exports.main = async (event, context) => {
     count += 1
     for(let package of delivery.packages){
       data.push({
-        count: "B"+ count.toString(),
+        count: "C"+count.toString(),
         state:delivery.state,
         delivery_id:delivery._id,
         tracking_number:package.tracking_number,
         weight:package.weight,
         content:package.content,
         note:package.note,
+        package_pickup_code:("pickup_code" in package)?package.pickup_code:"", 
         international_tracking_number:package.international_tracking_number,
         pickup_spot:delivery.pickup_spot,
-        amount:delivery.amount_to_pay
+        pickup_code:delivery.pickup_code,
+        amount:delivery.amount_to_pay,
+        real_total_weight:delivery.real_total_weight
       })
       // let content = ""
       // if("content" in package){

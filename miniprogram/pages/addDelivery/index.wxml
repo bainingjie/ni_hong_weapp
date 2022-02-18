@@ -56,9 +56,9 @@
       >
     </van-field>
    </van-cell-group>    
-   <view class="top_tip" style="margin-left: 15rpx;text-align: left;font-weight: bold;color: red;" >请注意区分淘宝的【订单编号】与【快递单号】。</view>
+   <view class="top_tip" style="margin-left: 15rpx;text-align: left;color: red;" >请注意区分淘宝的【订单编号】与【快递单号】。</view>
   <view style="margin-left: 15rpx;text-align: left;" class="top_tip">快递单号的查看方式：淘宝>>我的订单>>查看物流。</view>
-  <view style="margin-left: 15rpx;text-align: left;font-weight: bold;color: red;" class="top_tip">如需取出卸妆油等液体赠品，鼠标里的电池等，请务必备注~</view>
+  <view style="margin-left: 15rpx;text-align: left;color: red;" class="top_tip">如需取出卸妆油等液体赠品，鼠标里的电池等，请备注。</view>
 
    <view style="text-align: center;margin-top: 20rpx;">
       <van-button round  plain="true" bindtap='add' >添加这件快递</van-button>

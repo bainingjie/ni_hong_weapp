@@ -105,7 +105,7 @@ exports.main = async (event, context) => {
             package.weight = weight_object[package.tracking_number].toFixed(2);
           }else{
             not_found_count += 1;
-            console.log("NOT FOUND:",package.tracking_number)
+            console.log("NOT FOUND:",package.tracking_number," delivery_id: ",delivery._id)
           }
         }
       }
@@ -136,7 +136,7 @@ exports.main = async (event, context) => {
 
   
       if(is_weight_updated){
-        console.log(delivery._id)
+        // console.log(delivery._id)
         await db.collection("delivery").doc(delivery._id).update({
           data: {
             packages:delivery.packages,
