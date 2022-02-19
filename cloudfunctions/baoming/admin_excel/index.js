@@ -10,18 +10,18 @@ exports.main = async (event, context) => {
   try {
     console.log(event)
     //查询数据数量
-    const count = await db.collection("baoming").where({activity_id:event.activity_id}).count();
+    const count = await db.collection("baoming").where({ activity_id: event.activity_id }).count();
     console.log(count)
     const data_num = count.total;
     const select_result = [];
     if (data_num > max) {//若数据总量大于查询上限，循环读取
       const select_num = Math.ceil(data_num / 100);
       for (let i = 0; i < select_num; i++) {
-        const out = await db.collection("baoming").where({activity_id:event.activity_id}).skip(i * max).limit(max).get();
+        const out = await db.collection("baoming").where({ activity_id: event.activity_id }).skip(i * max).limit(max).get();
         select_result.push(out);
       }
     } else {
-      const out = await db.collection("baoming").where({activity_id:event.activity_id}).limit(max).get();
+      const out = await db.collection("baoming").where({ activity_id: event.activity_id }).limit(max).get();
       select_result.push(out);
     }
     let json_data = select_result[0].data;
@@ -46,10 +46,14 @@ exports.main = async (event, context) => {
         }
         hang.push(element)
       }
-      hang.push(x.receipt_url);
+      let url = x.receipt_url
+      if (url == null) {
+        url = "";
+      }
+      hang.push(url);
       excel_data.push(hang);
       hang = [];
-      row_count ++;
+      row_count++;
     }
     let tmp = await excel.build([{ name: "data", data: excel_data }]);
     let cloud_path = await cloud.uploadFile({ cloudPath: "data.xlsx", fileContent: tmp });
