@@ -4,15 +4,17 @@ cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 });
 const db = cloud.database();
+//单次读取100条上限
 const max = 100;
 exports.main = async (event, context) => {
   try {
     console.log(event)
+    //查询数据数量
     const count = await db.collection("baoming").where({activity_id:event.activity_id}).count();
     console.log(count)
     const data_num = count.total;
     const select_result = [];
-    if (data_num > max) {
+    if (data_num > max) {//若数据总量大于查询上限，循环读取
       const select_num = Math.ceil(data_num / 100);
       for (let i = 0; i < select_num; i++) {
         const out = await db.collection("baoming").where({activity_id:event.activity_id}).skip(i * max).limit(max).get();
@@ -22,11 +24,13 @@ exports.main = async (event, context) => {
       const out = await db.collection("baoming").where({activity_id:event.activity_id}).limit(max).get();
       select_result.push(out);
     }
-    let json_data = select_result[0].data; //前100个data的array
+    let json_data = select_result[0].data;
     let biaotou = ["ID"];
+    //循环读取数据，添加表头
     for (let i of json_data[0].template.questions) {
       biaotou.push(i.title);
     }
+    biaotou.push("付款凭证截图超链接");
     let excel_data = [];
     excel_data.push(biaotou);
     console.log(json_data)
@@ -42,6 +46,7 @@ exports.main = async (event, context) => {
         }
         hang.push(element)
       }
+      hang.push(x.receipt_url);
       excel_data.push(hang);
       hang = [];
       row_count ++;
