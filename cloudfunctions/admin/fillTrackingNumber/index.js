@@ -20,10 +20,11 @@ exports.main = async (event, context) => {
     const res = parse(delivery_file.fileContent)
     res.shift();
 
+    let deliveries = ["41ae62ef620b4df705e4b9ca6c7c4f62","41ae62ef620b541305e9edd85c37ea98","41ae62ef620cc51506856fee356b8058"]
     for(row of res){
       // console.log(item)
       let item = row[1] //国内快递单号
-      let number = "上海" //国际运单号
+      let number = "EB760802431CN" //国际运单号
       let pickup = row[0] //取货码
       let response = await db.collection('delivery').where({
         'packages.tracking_number':item
@@ -36,13 +37,25 @@ exports.main = async (event, context) => {
         packages[index].international_tracking_number = number
         packages[index].pickup_code = pickup
         // console.log(packages)
-        await db.collection('delivery').doc(response.data[0]._id).update({
-          data:{
-            /*state:"运输中",
-            tracking_number:number,*/
-            packages:packages
-          }
-        })
+
+        if(!deliveries.includes(response.data[0]._id)){
+          deliveries.push(response.data[0]._id)
+          await db.collection('delivery').doc(response.data[0]._id).update({
+            data:{
+              state:"运输中",
+              tracking_number:number,
+              /*packages:packages*/
+            }
+          })
+        }
+
+        // await db.collection('delivery').doc(response.data[0]._id).update({
+        //   data:{
+        //     /*state:"运输中",
+        //     tracking_number:number,*/
+        //     packages:packages
+        //   }
+        // })
       }else{
         console.log(item,number," application not found")
       }

@@ -15,7 +15,8 @@ exports.main = async (event, context) => {
     let admins = [
       "osJee5Fm4h9JM5j7OiJoHU-pHDAs", //白
       "osJee5HJA5CCivHTN4UeUkIgWWEk",//张哥 
-      "osJee5J4-GM7dver1rHqe4VlojfM"
+      "osJee5J4-GM7dver1rHqe4VlojfM",
+      "osJee5IOvlEc9cVcOIW_c-uRDGe0"//xry
     ]
     const wxContext = await cloud.getWXContext();
     log.info({
