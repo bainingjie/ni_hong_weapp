@@ -49,9 +49,18 @@ exports.main = async (event, context) => {
       //   amount_to_pay:delivery.amount_to_pay
       // })
     count += 1
+    // data.push({
+    //   count: "C"+count.toString(),
+    //   state:delivery.state,
+    //   delivery_id:delivery._id,
+    //   pickup_spot:delivery.pickup_spot,
+    //   pickup_code:delivery.pickup_code,
+    //   amount:delivery.amount_to_pay,
+
+    // })
     for(let package of delivery.packages){
       data.push({
-        count: "C"+count.toString(),
+        count: "D"+count.toString(),
         state:delivery.state,
         delivery_id:delivery._id,
         tracking_number:package.tracking_number,

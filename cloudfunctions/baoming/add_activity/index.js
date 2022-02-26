@@ -2,8 +2,8 @@
 const cloud = require('wx-server-sdk')
 cloud.init()
 const db = cloud.database();
-const {parse} = require('csv-parse');
-// const {parse} = require('csv-parse/sync');
+// const {parse} = require('csv-parse');
+const {parse} = require('csv-parse/sync');
 const _ = db.command;
 
 // const parser = require('csv-parse/lib/sync');
@@ -14,7 +14,9 @@ exports.main = async (event, context) => {
     let weight_file = await cloud.downloadFile({
       fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/活动模板.csv'
     })
+    console.log(weight_file)
     const res = parse(weight_file.fileContent)
+    console.log(res)
     let file = []
     let row_max=-1
     let col_max=0

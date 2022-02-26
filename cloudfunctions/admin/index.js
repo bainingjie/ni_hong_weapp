@@ -4,7 +4,7 @@ const fillWeight = require('./fillWeight/index');
 const fillTrackingNumber = require('./fillTrackingNumber/index');
 const sendMessage = require('./sendMessage/index');
 const exportFile = require('./exportFile/index');
-const test_copyDelivery = require('./test_copyDelivery/index');
+const export_arrival = require('./export_arrival/index');
 const selectPickupTime = require('./selectPickupTime/index');
 const findOrphans = require('./findOrphans/index');
 // 云函数入口函数
@@ -22,8 +22,8 @@ exports.main = async (event, context) => {
       return await sendMessage.main(event, context);   
     case 'exportFile':
       return await exportFile.main(event,context);
-    case "test_copyDelivery":
-      return await test_copyDelivery.main(event,context);
+    case "export_arrival":
+      return await export_arrival.main(event,context);
     case "selectPickupTime":
       return await selectPickupTime.main(event,context);
     case "findOrphans":

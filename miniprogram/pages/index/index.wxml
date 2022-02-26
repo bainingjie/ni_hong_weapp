@@ -26,7 +26,7 @@
 
   
     <view style="margin-top: 30rpx;text-align: center;">
-      <van-button plain round color="#EE0A24" custom-style="width:75%" bindtap="startClicked">开始集运</van-button>
+      <van-button plain round color="#EE0A24" custom-style="width:75%" bindtap="startClicked">查看集运流程</van-button>
       <!-- <van-row >
         <van-col span="12" offset="" style="text-align: center">
           <van-button plain round color="#EE0A24" bindtap="customer_service">联系客服</van-button>

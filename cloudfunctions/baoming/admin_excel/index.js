@@ -46,9 +46,12 @@ exports.main = async (event, context) => {
         }
         hang.push(element)
       }
-      let url = x.receipt_url
-      if (url == null) {
-        url = "";
+      let url =""
+      if ("receipt_url" in x) {
+        for(let item of x.receipt_url){
+          url += item
+          url += " , "
+        }
       }
       hang.push(url);
       excel_data.push(hang);

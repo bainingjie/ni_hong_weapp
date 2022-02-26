@@ -8,16 +8,35 @@ const _ = db.command
 const log = cloud.logger();
 exports.main = async (event, context) => {
   try {
+    log.info({
+      event:event
+    })
     const fileList = [event.url]
     const result = await cloud.getTempFileURL({
       fileList: fileList
     })
     let real_url = result.fileList[0].tempFileURL;
+
+    let baoming = await db.collection('baoming').doc(event.id).get()
+    log.info({
+      baoming:baoming
+    })
+    let file_array = []
+    if("receipt_url" in baoming.data){
+      log.info({
+        receipt_url:true
+      })
+      file_array=baoming.data.receipt_url
+      file_array.push(real_url)
+    }else{
+      file_array.push(real_url)
+    }
+
     let response = await db.collection('baoming').doc(event.id).update({
       // data 字段表示需新增的 JSON 数据
       data: {
         is_receipt_uploaded: true,
-        receipt_url: real_url
+        receipt_url: file_array
       }
     });
     return {
