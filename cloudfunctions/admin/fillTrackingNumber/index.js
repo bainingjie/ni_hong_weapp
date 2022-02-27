@@ -14,17 +14,17 @@ exports.main = async (event, context) => {
     //     fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/sent.csv'
     //   })
     let delivery_file = await cloud.downloadFile({
-      fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/shang.csv'
+      fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/temp/2_25_tokyo.csv'
     })
       
     const res = parse(delivery_file.fileContent)
     res.shift();
 
-    let deliveries = ["41ae62ef620b4df705e4b9ca6c7c4f62","41ae62ef620b541305e9edd85c37ea98","41ae62ef620cc51506856fee356b8058"]
+    let deliveries = []
     for(row of res){
       // console.log(item)
       let item = row[1] //国内快递单号
-      let number = "EB760802431CN" //国际运单号
+      let number = "EB761243257CN" //国际运单号
       let pickup = row[0] //取货码
       let response = await db.collection('delivery').where({
         'packages.tracking_number':item
@@ -38,24 +38,26 @@ exports.main = async (event, context) => {
         packages[index].pickup_code = pickup
         // console.log(packages)
 
-        if(!deliveries.includes(response.data[0]._id)){
-          deliveries.push(response.data[0]._id)
-          await db.collection('delivery').doc(response.data[0]._id).update({
-            data:{
-              state:"运输中",
-              tracking_number:number,
-              /*packages:packages*/
-            }
-          })
-        }
+        // if(!deliveries.includes(response.data[0]._id)){
+        //   deliveries.push(response.data[0]._id)
+        //   await db.collection('delivery').doc(response.data[0]._id).update({
+        //     data:{
+        //       state:"运输中",
+        //       tracking_number:number,
+        //       pickup_code:pickup
+        //       /*packages:packages*/
+        //     }
+        //   })
+        // }
 
-        // await db.collection('delivery').doc(response.data[0]._id).update({
-        //   data:{
-        //     /*state:"运输中",
-        //     tracking_number:number,*/
-        //     packages:packages
-        //   }
-        // })
+        await db.collection('delivery').doc(response.data[0]._id).update({
+          data:{
+            state:"运输中",
+            tracking_number:number,
+            pickup_code:pickup,
+            packages:packages
+          }
+        })
       }else{
         console.log(item,number," application not found")
       }

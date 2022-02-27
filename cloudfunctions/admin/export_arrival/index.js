@@ -10,7 +10,8 @@ const _ = db.command
 cloud.init()
 exports.main = async (event, context) => {
     let delivery = await db.collection("delivery").where({
-        'packages.international_tracking_number':_.or([_.eq("EB760495872CN"),_.eq("EB760807045CN"),_.eq("EB760494510CN"),_.eq("EB760807045CN")])
+        /*'packages.international_tracking_number':_.or([_.eq("EB760495872CN"),_.eq("EB760807045CN"),_.eq("EB760494510CN"),_.eq("EB760807045CN")])*/
+        'packages.international_tracking_number':"EB760495872CN"
     }).get()
     deliveries = delivery.data
     let data = []
@@ -35,7 +36,7 @@ exports.main = async (event, context) => {
     const csvData = stringify(data, { header: true });
     // fs.writeFileSync("./sample.csv", csvData);
     await cloud.uploadFile({
-      cloudPath: 'arrival/2_26.csv',
+      cloudPath: 'arrival/EB760495872CN.csv',
       fileContent: csvData,
     })
 }

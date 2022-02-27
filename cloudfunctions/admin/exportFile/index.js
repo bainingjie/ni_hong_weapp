@@ -72,7 +72,8 @@ exports.main = async (event, context) => {
         pickup_spot:delivery.pickup_spot,
         pickup_code:delivery.pickup_code,
         amount:delivery.amount_to_pay,
-        real_total_weight:delivery.real_total_weight
+        real_total_weight:delivery.real_total_weight,
+        delivery_tracking_number:delivery.tracking_number,
       })
       // let content = ""
       // if("content" in package){

@@ -12,7 +12,7 @@ exports.main = async (event, context) => {
       let delivery_response = await db.collection('delivery').doc(event.id).get();
       let resData = {};
       if("pickup_date" in delivery_response.data){
-        let text = `有顾客修改了取货时间~\ndelivery_id:${event.id}\n修改前：${delivery_response.data.pickup_date} ${delivery_response.data.pickup_time} \n修改后：${event.date} ${event.time} \n`;
+        let text = `有顾客修改了取货时间~\ndelivery_id:${event.id}\n修改前：${delivery_response.data.pickup_date} ${delivery_response.data.pickup_time} \n修改后：${event.date} ${event.time} \n取货地点：${delivery_response.data.pickup_spot} \n取货码： ${delivery_response.data.pickup_code} \n`;
         resData = {
           "msgtype": "text",
           "text": {
@@ -24,7 +24,7 @@ exports.main = async (event, context) => {
         resData = {
           "msgtype": "text",
           "text": {
-              "content": `有顾客选择了取货时间~\ndelivery_id:${event.id}\n取货时间：${event.date} ${event.time} \n`,
+              "content": `有顾客选择了取货时间~\ndelivery_id:${event.id}\n取货时间：${event.date} ${event.time} \n取货地点：${delivery_response.data.pickup_spot} \n取货码： ${delivery_response.data.pickup_code} \n`,
           }
          };
 
