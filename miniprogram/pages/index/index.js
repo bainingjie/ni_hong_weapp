@@ -42,7 +42,6 @@ Page({
     })
   },
   onLoad(options) {
-
     this.getPublic();
     if("process" in options){
       this.setData({
@@ -52,6 +51,7 @@ Page({
   },
   onShow() {
     this.getTabBar().init();
+    this.getPublic();
   },
   customer_service:function(){
     my_library.customer_service();

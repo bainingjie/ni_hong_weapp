@@ -43,11 +43,11 @@ async function sendMessage(ACCESS_TOKEN,delivery){
                       "color":"#173177"
                   },
                   "keyword4": {
-                      "value":"请尽快付款~",
+                      "value":"请尽快完成付款~",
                       "color":"#173177"
                   },
                   "remark":{
-                      "value":`计费总重量为${delivery.total_weight}kg。待包裹寄达日本后，公众号会自动通知您~⸜( •⌄• )⸝`,
+                      "value":`计费总重量为${delivery.total_weight}kg。待包裹寄达日本后，公众号会再次通知您~⸜( •⌄• )⸝`,
                       "color":"#173177"
                   }
           }

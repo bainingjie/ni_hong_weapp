@@ -17,7 +17,7 @@
     </view> -->
 
 
-    <van-row >
+    <van-row custom-style="margin:0">
       <van-col span="12" style="text-align: center"><van-button plain round  bindtap="jumpPage" data-jump="calculationSimulation">运费试算</van-button></van-col>
       <van-col span="12" style="text-align: center">
           <van-button plain round  bindtap="jumpPage" data-jump="pickUpSpots">查看自提点</van-button>
@@ -76,9 +76,10 @@
           <view><van-button round plain color="black" bindtap="copyText" data-text="{{address[3]}}" custom-style="margin:10rpx">点击复制地址: {{address[3]}}</van-button></view> -->
 
           <van-row>
-            <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[0]}}</view></van-col>
+            <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[0]}}<view style="font-size: x-small;color: red;margin:0rpx">数字很重要，不能省略哦~</view></view></van-col>
             <van-col span="8"><van-button round plain  bindtap="copyText" data-text="{{address[0]}}" size="small"  custom-style="margin:10rpx">复制收件人</van-button></van-col>
           </van-row>
+          
           <van-row>
             <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[1]}}</view></van-col>
             <van-col span="8"><van-button round plain bindtap="copyText" data-text="{{address[1]}}" size="small" custom-style="margin:10rpx">复制电话</van-button></van-col>
