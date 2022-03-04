@@ -45,7 +45,7 @@ async function sendMessage(ACCESS_TOKEN,delivery){
                       "color":"#173177"
                   },
                   "remark":{
-                      "value":`在您选择完取货时间后，商品将会被配送至自提点。取货时请记得自带包/袋哦 (ㅅ •͈ᴗ•͈)`,
+                      "value":`在您选择完取货时间后，商品将会被配送至自提点，出示取货码即可取件。 (ㅅ •͈ᴗ•͈)`,
                       "color":"#173177"
                   }
           }
@@ -92,13 +92,13 @@ async function sendMessage(ACCESS_TOKEN,delivery){
       let response = await axios.post(`https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${ACCESS_TOKEN}`, config);
       console.log(response)
       let tiktea_times = {
-        "1/25(火)":["14:00-17:00","17:00-20:30"],
-        "1/26(水)":["11:30-14:00","14:00-17:00","17:00-20:30"],
-        "1/27(木)":["11:30-14:00","14:00-17:00","17:00-20:30"],
-        "1/28(金)":["11:30-14:00","14:00-17:00","17:00-20:30"],
-        "1/29(土)":["11:30-14:00","14:00-17:00","17:00-20:30"],
-        "1/30(日)":["11:30-14:00","14:00-17:00","17:00-20:30"],
-        "1/31(月)":["11:30-14:00","14:00-17:00","17:00-20:30"]
+        "2/2(水)":["14:00-17:00","17:00-20:30"],
+        "2/3(木)":["12:30-14:00","14:00-17:00","17:00-20:30"],
+        "2/4(金)":["12:30-14:00","14:00-17:00","17:00-20:30"],
+        "2/5(土)":["12:30-14:00","14:00-17:00","17:00-20:30"],
+        "2/6(日)":["12:30-14:00","14:00-17:00","17:00-20:30"],
+        "2/7(月)":["12:30-14:00","14:00-17:00","17:00-20:30"],
+        "2/8(火)":["12:30-14:00","14:00-17:00","17:00-20:30"]
     }
     let kyoto_times = {
       "1/25(火)":["18:00-21:00","21:00-24:00"],
@@ -115,7 +115,7 @@ async function sendMessage(ACCESS_TOKEN,delivery){
           data:{
             is_pickupTimeSelector_sent:true,
             state:"待选择取货时间",
-            times:kyoto_times
+            times:tiktea_times
           }
         })
         if(response.stats.updated !=1){
@@ -148,9 +148,7 @@ exports.main = async (event, context) => {
     let res = await db.collection("public").doc("c0ca0aed61c3d73301ffd88d515bcb72").get();
     let token = res.data.accessToken;
     let delivery_array = [
-      "5b049cc861dd19e40455c2993384d2bf",
-      "bf4a0bf261dd77bd0506a38464c2c9a5",
-      "5b049cc861dd938f0493727d2fd6c436"
+      "17e3426e61e42dce06d143120b96c692"
     ]
     let deliveries = await db.collection("delivery").where({
         _id: _.in(delivery_array)

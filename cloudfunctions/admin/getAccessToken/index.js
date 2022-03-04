@@ -15,7 +15,7 @@ async function getAccessToken(){
                 secret: '00c7df2d3717ef39370829c4b69f0dd3',
             }
           });
-        // console.log(response)
+        console.log(response)
         return response.data.access_token
     }catch(e){
         console.log(e)
