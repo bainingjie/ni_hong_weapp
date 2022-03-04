@@ -52,5 +52,11 @@
     "value": {
       "type": "export_arrival"
     }
+  },
+  {
+    "name": "combine_delivery",
+    "value": {
+      "type": "combine_delivery"
+    }
   }
 ]

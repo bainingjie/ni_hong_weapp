@@ -43,7 +43,7 @@ exports.main = async (event, context) => {
         }
     })
 
-
+    let not_found = []
     let packages = promise_response.data
     console.log(packages)
     let weight_object={}
@@ -105,6 +105,7 @@ exports.main = async (event, context) => {
             package.weight = weight_object[package.tracking_number].toFixed(2);
           }else{
             not_found_count += 1;
+            not_found.push(package.tracking_number)
             console.log("NOT FOUND:",package.tracking_number," delivery_id: ",delivery._id)
           }
         }
@@ -148,7 +149,7 @@ exports.main = async (event, context) => {
         })
       }
     }
-
+    console.log("not found",not_found)
     return {
       state:"success"
     }
