@@ -9,6 +9,20 @@ const _ = db.command
 const log = cloud.logger()
 exports.main = async (event, context) => {
     try {
+
+        /* update international tracking number*/
+        let response = await db.collection("delivery").where({
+            state:"运输中",
+            tracking_number:"待发货"
+        }).update({
+          data:{
+            tracking_number:"EB761790686CN"
+          }
+        }) 
+        
+
+
+
       /*
       // let to_add_1 = await db.collection("delivery").doc("41ae62ef6215cf5108641b93047b5e5c").get() 
 
@@ -34,18 +48,18 @@ exports.main = async (event, context) => {
     */
 
     /*   */ 
-   let find = await db.collection('delivery')
-   .where({
-     'packages.tracking_number':"JT5103273565943"
-   })
-   .get()
+  //  let find = await db.collection('delivery')
+  //  .where({
+  //    'packages.tracking_number':"YT2204288696220"
+  //  })
+  //  .get()
  
-   let new_p = find.data[0]
-   delete new_p._id;
-   console.log(new_p)
-   response = await db.collection("delivery").add({
-    data: new_p
-  })
+  //  let new_p = find.data[0]
+  //  delete new_p._id;
+  //  console.log(new_p)
+  //  response = await db.collection("delivery").add({
+  //   data: new_p
+  // })
     }catch(e){
       console.log(e)
     }

@@ -31,33 +31,33 @@ exports.main = async (event, context) => {
       }).get();
 
       if(response.data.length>0){
-        // console.log(response)
-        let packages = response.data[0].packages
-        let index = packages.findIndex(x => x.tracking_number === item);
-        packages[index].international_tracking_number = number
-        packages[index].pickup_code = pickup
-        // console.log(packages)
-
-        // if(!deliveries.includes(response.data[0]._id)){
-        //   deliveries.push(response.data[0]._id)
-        //   await db.collection('delivery').doc(response.data[0]._id).update({
-        //     data:{
-        //       state:"运输中",
-        //       tracking_number:number,
-        //       pickup_code:pickup
-        //       /*packages:packages*/
-        //     }
-        //   })
-        // }
-
-        await db.collection('delivery').doc(response.data[0]._id).update({
-          data:{
-            state:"运输中",
-            tracking_number:number,
-            pickup_code:pickup,
-            packages:packages
-          }
-        })
+          // console.log(response)
+          let packages = response.data[0].packages
+          let index = packages.findIndex(x => x.tracking_number === item);
+          packages[index].international_tracking_number = number
+          packages[index].pickup_code = pickup
+          // console.log(packages)
+  
+          // if(!deliveries.includes(response.data[0]._id)){
+          //   deliveries.push(response.data[0]._id)
+          //   await db.collection('delivery').doc(response.data[0]._id).update({
+          //     data:{
+          //       state:"运输中",
+          //       tracking_number:number,
+          //       pickup_code:pickup
+          //       /*packages:packages*/
+          //     }
+          //   })
+          // }
+  
+          await db.collection('delivery').doc(response.data[0]._id).update({
+            data:{
+              state:"运输中",
+              tracking_number:number,
+              pickup_code:pickup,
+              packages:packages
+            }
+          })
       }else{
         console.log(item,number," application not found")
       }
