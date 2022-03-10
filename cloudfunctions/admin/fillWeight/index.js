@@ -15,7 +15,7 @@ exports.main = async (event, context) => {
     })
     const res = parse(weight_file.fileContent)
     console.log(res)
-    res.shift();
+    // res.shift();
 
     // id,weight,content,price,state 
     // state:0,1(delivered)
@@ -50,8 +50,9 @@ exports.main = async (event, context) => {
     let file_packages=[]
     for (row of res){
       if(row[0].length>5){
-        
-        let weight = Number(row[9]);
+        console.log(row)
+        let weight = Number(row[1]);
+        console.log(weight)
         if(weight != 0){
           weight_object[row[0]]=weight
         }
@@ -64,15 +65,15 @@ exports.main = async (event, context) => {
            return false
          }
         });
-        if(!exist && (Number(row[9])>0)){
+        if(!exist && weight>0){
           // console.log(exist,row[0])
           let package = {}
           package.tracking_number = row[0]
-          package.weight = Number(row[9])
+          package.weight = weight
           package.state = 0
-          package.content = row[5]
-          package.unit_price = row[7]
-          package.number =  row[6]
+          // package.content = row[5]
+          // package.unit_price = row[7]
+          // package.number =  row[6]
           await db.collection('chinese_packages').add({
             data: package
           })
@@ -99,7 +100,7 @@ exports.main = async (event, context) => {
       let not_found_count=0;
       let is_weight_updated=false;
       for(let package of delivery.packages){
-        if(package.weight==null){
+        if(package.weight==null ||package.weight=="NaN" ){
           if(package.tracking_number in weight_object){
             is_weight_updated=true;
             package.weight = weight_object[package.tracking_number].toFixed(2);

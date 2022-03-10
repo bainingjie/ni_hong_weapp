@@ -26,14 +26,16 @@ exports.main = async (event, context) => {
   // }
   // console.log(weight_objects)
 
-  // let deliveries = await db.collection("delivery").where({
-  //   state: _.and(_.neq("已配送"),_.neq("运输中"))
-  // }).get();
-  // console.log(deliveries)
-
   let deliveries = await db.collection("delivery").where({
-    state: _.neq("已配送")
+    state: _.and(_.neq("已配送"),_.neq("运输中"))
   }).get();
+  console.log(deliveries)
+
+  // let deliveries = await db.collection("delivery").get();
+
+  // let deliveries = await db.collection("delivery").where({
+  //   state: _.neq("已配送")
+  // }).get();
   console.log(deliveries)
 
   
@@ -60,7 +62,7 @@ exports.main = async (event, context) => {
     // })
     for(let package of delivery.packages){
       data.push({
-        count: "D"+count.toString(),
+        count: "E"+count.toString(),
         state:delivery.state,
         delivery_id:delivery._id,
         tracking_number:package.tracking_number,
@@ -68,12 +70,14 @@ exports.main = async (event, context) => {
         content:package.content,
         note:package.note,
         package_pickup_code:("pickup_code" in package)?package.pickup_code:"", 
+        package_remark:("remark" in package)?package.remark:"", 
         international_tracking_number:package.international_tracking_number,
         pickup_spot:delivery.pickup_spot,
         pickup_code:delivery.pickup_code,
         amount:delivery.amount_to_pay,
         real_total_weight:delivery.real_total_weight,
         delivery_tracking_number:delivery.tracking_number,
+        remark:("remark" in delivery)?delivery.remark:"", 
         pickup_date:("pickup_date" in delivery)?delivery.pickup_date:"", 
         pickup_time:("pickup_time" in delivery)?delivery.pickup_time:"",
         payment_id:("payment_id" in delivery)?"":"not paid",

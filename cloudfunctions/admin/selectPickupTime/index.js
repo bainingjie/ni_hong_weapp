@@ -104,11 +104,12 @@ async function sendMessage(ACCESS_TOKEN,delivery){
         "3/12(土)":["11:30-14:00","14:00-17:00","17:00-20:30"]
     }
     let kyoto_times = {
-      "3/6(日)":["15:00-17:00","17:00-19:00","19:00-21:00","21:00-24:00"],
-      "3/7(月)":["13:00-15:00","15:00-17:00","17:00-19:00","19:00-21:00","21:00-24:00"],
       "3/8(火)":["13:00-15:00","15:00-17:00","17:00-19:00","19:00-21:00","21:00-24:00"],
       "3/9(水)":["13:00-15:00","15:00-17:00","17:00-19:00","19:00-21:00","21:00-24:00"],
       "3/10(木)":["13:00-15:00","15:00-17:00","17:00-19:00","19:00-21:00","21:00-24:00"],
+      "3/11(金)":["13:00-15:00","15:00-17:00","17:00-19:00","19:00-21:00","21:00-24:00"],
+      "3/12(土)":["13:00-15:00","15:00-17:00","17:00-19:00","19:00-21:00","21:00-24:00"],
+      "3/13(日)":["13:00-15:00","15:00-17:00","17:00-19:00","19:00-21:00","21:00-24:00"],
     }
     let ookayama_times = {
       "2/28(月)":["11:30-14:00","14:00-17:00","17:00-20:00"],
@@ -164,16 +165,20 @@ exports.main = async (event, context) => {
   try{
     let res = await db.collection("public").doc("c0ca0aed61c3d73301ffd88d515bcb72").get();
     let token = res.data.accessToken;
+    // let delivery_array = 
+    //     // 1)delivery_array
+    //     // 2)录入取货码至数据库
+    //     // 3）修改取货时间
+    // [
+    //   "bf4a0bf2620c92eb0f21bd4c56826c19",
+    //   "bf4a0bf2621768a3113269aa3dc97381"
+    // ]
     let delivery_array = 
         // 1)delivery_array
         // 2)录入取货码至数据库
         // 3）修改取货时间
     [
-      "17e3426e61e7e27807d006983ed9c6ad",
-      "bf4a0bf2620c92eb0f21bd4c56826c19",
-      "5b049cc86213ac0a0dacc0b144c828e6",
-      "17e3426e62148ef2100e4f582020da1e",
-      "bf4a0bf2621768a3113269aa3dc97381"
+      "D48","D62","D67"
     ]
     // ["54ad1eea61e526ff07cb08e41ec84011"]
     
@@ -196,8 +201,11 @@ exports.main = async (event, context) => {
     //   }
     // }
 
-    let deliveries = await db.collection("delivery").where({
-        _id: _.in(delivery_array)
+    // let deliveries = await db.collection("delivery").where({
+    //     _id: _.in(delivery_array)
+    //   }).get()
+      let deliveries = await db.collection("delivery").where({
+        pickup_code: _.in(delivery_array)
       }).get()
     deliveries = deliveries.data
 

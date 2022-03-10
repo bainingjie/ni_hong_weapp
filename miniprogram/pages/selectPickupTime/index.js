@@ -104,7 +104,7 @@ Page({
        });
       },
     onLoad: function (options) {
-        this.getADelivery(options.param);
+
     },
 
     /**
@@ -118,7 +118,9 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+      let pages = getCurrentPages();
+      let currentPage = pages[pages.length-1];
+      this.getADelivery(currentPage.options.param);
     },
 
     /**
