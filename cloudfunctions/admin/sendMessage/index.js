@@ -79,7 +79,7 @@ async function sendMessage(ACCESS_TOKEN,delivery){
                     "color":"#173177"
                 },
                 "keyword4": {
-                    "value":"请在周五23点前完成付款",
+                    "value":"请尽快付款~",
                     "color":"#173177"
                 },
                 "remark":{

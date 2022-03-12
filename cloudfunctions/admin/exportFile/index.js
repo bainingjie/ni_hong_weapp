@@ -11,7 +11,7 @@ cloud.init()
 
 exports.main = async (event, context) => {
   
-
+  /*
   let weight_file = await cloud.downloadFile({
     fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/weight.csv'
   })
@@ -31,6 +31,8 @@ exports.main = async (event, context) => {
     anning_record.push(row[0])
   }
   console.log(anning_record)
+  */
+
   // let deliveries = await db.collection("delivery").where({
   //   state:_.or(["待发货","待支付"])
   // }).get();
@@ -47,17 +49,17 @@ exports.main = async (event, context) => {
   // }
   // console.log(weight_objects)
 
-  let deliveries = await db.collection("delivery").where({
-    state: _.and(_.neq("已配送"),_.neq("运输中"))
-  }).get();
-  console.log(deliveries)
+  // let deliveries = await db.collection("delivery").where({
+  //   state: _.and(_.neq("已配送"),_.neq("运输中"))
+  // }).get();
+  // console.log(deliveries)
 
   // let deliveries = await db.collection("delivery").get();
 
-  // let deliveries = await db.collection("delivery").where({
-  //   state: _.neq("已配送")
-  // }).get();
-  console.log(deliveries)
+  let deliveries = await db.collection("delivery").where({
+    state: _.neq("已配送")
+  }).get();
+  // console.log(deliveries)
 
   
   let data = []
@@ -81,15 +83,15 @@ exports.main = async (event, context) => {
     //   amount:delivery.amount_to_pay,
 
     // })
-    let changsha = 0
+    // let changsha = 0
     for(let package of delivery.packages){
-      if (record.includes(package.tracking_number)){
-        changsha = 0
-      }else if(anning_record.includes(package.tracking_number)){
-        changsha = 1
-      }else{
-        changsha = 2
-      }
+      // if (record.includes(package.tracking_number)){
+      //   changsha = 0
+      // }else if(anning_record.includes(package.tracking_number)){
+      //   changsha = 1
+      // }else{
+      //   changsha = 2
+      // }
       data.push({
         count: "E"+count.toString(),
         state:delivery.state,
@@ -98,7 +100,7 @@ exports.main = async (event, context) => {
         weight:package.weight,
         content:package.content,
         note:package.note,
-        place:changsha,
+        /*place:changsha,*/
         package_pickup_code:("pickup_code" in package)?package.pickup_code:"", 
         package_remark:("remark" in package)?package.remark:"", 
         international_tracking_number:package.international_tracking_number,
@@ -132,7 +134,7 @@ exports.main = async (event, context) => {
   const csvData = stringify(data, { header: true });
   // fs.writeFileSync("./sample.csv", csvData);
   await cloud.uploadFile({
-    cloudPath: 'export.csv',
+    cloudPath: 'export_3_12.csv',
     fileContent: csvData,
   })
 

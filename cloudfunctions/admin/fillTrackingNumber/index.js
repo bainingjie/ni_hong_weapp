@@ -14,7 +14,7 @@ exports.main = async (event, context) => {
     //     fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/sent.csv'
     //   })
     let delivery_file = await cloud.downloadFile({
-      fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/temp/2_25_tokyo.csv'
+      fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/temp/天马汇总.csv'
     })
       
     const res = parse(delivery_file.fileContent)
@@ -24,7 +24,7 @@ exports.main = async (event, context) => {
     for(row of res){
       // console.log(item)
       let item = row[1] //国内快递单号
-      let number = "EB761243257CN" //国际运单号
+      let number = "长沙清仓（东京）" //国际运单号
       let pickup = row[0] //取货码
       let response = await db.collection('delivery').where({
         'packages.tracking_number':item
@@ -52,9 +52,9 @@ exports.main = async (event, context) => {
   
           await db.collection('delivery').doc(response.data[0]._id).update({
             data:{
-              state:"运输中",
+              /* state:"运输中",
               tracking_number:number,
-              pickup_code:pickup,
+              pickup_code:pickup,*/
               packages:packages
             }
           })
