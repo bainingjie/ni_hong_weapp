@@ -10,6 +10,27 @@ const _ = db.command
 cloud.init()
 
 exports.main = async (event, context) => {
+  
+
+  let weight_file = await cloud.downloadFile({
+    fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/weight.csv'
+  })
+  let res = parse(weight_file.fileContent)
+  let record = []
+  for (let row of res){
+    record.push(row[0])
+  }
+  console.log(record)
+
+  weight_file = await cloud.downloadFile({
+    fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/anning_weight.csv'
+  })
+  res = parse(weight_file.fileContent)
+  let anning_record = []
+  for (let row of res){
+    anning_record.push(row[0])
+  }
+  console.log(anning_record)
   // let deliveries = await db.collection("delivery").where({
   //   state:_.or(["待发货","待支付"])
   // }).get();
@@ -60,7 +81,15 @@ exports.main = async (event, context) => {
     //   amount:delivery.amount_to_pay,
 
     // })
+    let changsha = 0
     for(let package of delivery.packages){
+      if (record.includes(package.tracking_number)){
+        changsha = 0
+      }else if(anning_record.includes(package.tracking_number)){
+        changsha = 1
+      }else{
+        changsha = 2
+      }
       data.push({
         count: "E"+count.toString(),
         state:delivery.state,
@@ -69,6 +98,7 @@ exports.main = async (event, context) => {
         weight:package.weight,
         content:package.content,
         note:package.note,
+        place:changsha,
         package_pickup_code:("pickup_code" in package)?package.pickup_code:"", 
         package_remark:("remark" in package)?package.remark:"", 
         international_tracking_number:package.international_tracking_number,

@@ -11,7 +11,7 @@ const _ = db.command;
 exports.main = async (event, context) => {
   try{
     let weight_file = await cloud.downloadFile({
-      fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/weight.csv'
+      fileID: 'cloud://testbai-6gjgkia55f6d4918.7465-testbai-6gjgkia55f6d4918-1308612466/anning_weight.csv'
     })
     const res = parse(weight_file.fileContent)
     console.log(res)
