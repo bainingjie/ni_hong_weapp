@@ -7,12 +7,12 @@ const admin_excel = require('./admin_excel/index');
 const add_activity = require('./add_activity/index');
 const add_template = require('./add_template/index');
 const getForm = require('./getForm/index');
+const upload_update = require('./upload_update/index');
 // 云函数入口函数
 exports.main = async (event, context) => {
   switch (event.type) {
     case 'submit':
       return await submit.main(event, context);
-
     case 'getBaomings':
       return await getBaomings.main(event, context);
     case 'getABaoming':
@@ -29,6 +29,8 @@ exports.main = async (event, context) => {
       return await add_template.main(event, context);
     case 'getForm':
       return await getForm.main(event, context);
+    case 'upload_update':
+      return await upload_update.main(event, context);
     default:
       console.log("switch语法的index.js也需要增量上传。");
   }

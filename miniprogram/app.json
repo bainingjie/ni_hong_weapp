@@ -23,12 +23,12 @@
     "useExtendedLib": {
         "weui": true
     },
+
+
+
     "tabBar": {
         "custom": true,
         "list": [
-            {
-                "pagePath": "pages/productList/index"
-            },
             {
                 "pagePath": "pages/index/index"
             },

@@ -61,10 +61,49 @@ Page({
             time:picker.getColumnValue(1)
         })
       },
-    /**
-     * 生命周期函数--监听页面加载
+    /*
+      
      */
-    getADelivery(id) {
+    getPickUpTime(id) {
+        wx.showLoading({
+          title: '',
+        });
+       wx.cloud.callFunction({
+          name: 'quickstartFunctions',
+          data: {
+            type: 'getPickupTime',
+            _id:id
+          }
+        }).then((resp) => {
+            let delivery = resp.result.data[0];
+            let times = delivery.times;
+            let col = [
+                {
+                  values: Object.keys(times),
+                  className: 'column1',
+                },
+                {
+                  values: times[Object.keys(times)[0]],
+                  className: 'column2',
+                  defaultIndex: 0,
+                },
+              ];
+        //   console.log(resp);
+          this.setData({
+            delivery: delivery,
+            times:times,
+            columns:col,
+            date:Object.keys(times)[0],
+            time:times[Object.keys(times)[0]][0],
+          });
+          // console.log(this.data);
+         wx.hideLoading();
+       }).catch((e) => {
+          console.log(e);
+          wx.hideLoading();
+       });
+      },
+      getADelivery(id) {
         wx.showLoading({
           title: '',
         });
@@ -103,8 +142,13 @@ Page({
           wx.hideLoading();
        });
       },
+  // let tokyo_time = new Date().toLocaleString({ timeZone: 'Asia/Tokyo' })
+  // tokyo_time = new Date(tokyo_time)
+  // tokyo_time.getDay()
+
+
     onLoad: function (options) {
-        this.getADelivery(options.param);
+
     },
 
     /**
@@ -118,7 +162,9 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+      let pages = getCurrentPages();
+      let currentPage = pages[pages.length-1];
+      this.getADelivery(currentPage.options.param);
     },
 
     /**

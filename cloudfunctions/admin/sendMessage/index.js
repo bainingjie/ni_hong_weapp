@@ -43,11 +43,11 @@ async function sendMessage(ACCESS_TOKEN,delivery){
                       "color":"#173177"
                   },
                   "keyword4": {
-                      "value":"请尽快付款",
+                      "value":"请在周五23点前完成付款~",
                       "color":"#173177"
                   },
                   "remark":{
-                      "value":`计费总重量为${delivery.total_weight}kg。付费后，订单状态会被更新为"待发货"。⸜( •⌄• )⸝`,
+                      "value":`计费总重量为${delivery.total_weight}kg。待包裹寄达日本后，公众号会再次通知您~⸜( •⌄• )⸝`,
                       "color":"#173177"
                   }
           }
@@ -79,11 +79,11 @@ async function sendMessage(ACCESS_TOKEN,delivery){
                     "color":"#173177"
                 },
                 "keyword4": {
-                    "value":"请在周五23点前完成付款",
+                    "value":"请尽快付款~",
                     "color":"#173177"
                 },
                 "remark":{
-                    "value":`计费总重量为${delivery.total_weight}kg。付费后，订单状态会被更新为"待发货"。⸜( •⌄• )⸝`,
+                    "value":`计费总重量为${delivery.total_weight}kg。待包裹寄达日本后，公众号会自动通知您~⸜( •⌄• )⸝`,
                     "color":"#173177"
                 }
         }
@@ -126,6 +126,7 @@ exports.main = async (event, context) => {
       state:"待支付"
     }).get();
     deliveries = deliveries.data
+    console.log("deliveries",deliveries)
     for(let delivery of deliveries){
       await sendMessage(token,delivery)
     }

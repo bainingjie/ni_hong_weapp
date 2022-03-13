@@ -4,11 +4,13 @@ Component({
      */
     data: {
       bottom_tabs_active_index: '',
-      list: [{
+      list: [
+        /**
+        {
           icon: 'send-gift-o',
           text: '精选商城',
           url: '/pages/productList/index'
-        },
+        }, */
         {
           icon: 'logistics',
           text: '集运',

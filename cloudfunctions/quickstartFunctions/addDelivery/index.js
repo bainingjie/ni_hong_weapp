@@ -41,6 +41,7 @@ exports.main = async (event, context) => {
             data_array.push({
               tracking_number:tracking_number.number,
               content:tracking_number.content,
+              note:tracking_number.note,
               weight:null
             });
           }
@@ -63,7 +64,7 @@ exports.main = async (event, context) => {
               is_pickup_remind_sent:false,
 
               tracking_number:"待发货",
-              pickup_code:"待发货",
+              pickup_code:"待到达",
               total_weight:"待称重",
               amount_to_pay:"待称重"
               // payment_id

@@ -12,5 +12,5 @@ exports.main = async (event, context) => {
   return await db.collection('delivery').where({
     open_id: wxContext.OPENID
     // open_id: "123"
-  }).get();
+  }).orderBy('added_date','desc').get();
 };
