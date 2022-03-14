@@ -2,27 +2,43 @@
 
 <view wx:if="{{state==0}}">
     <van-picker  show-toolbar title="请选择自提的时间" confirm-button-text="" cancel-button-text="" columns="{{ columns }}" bind:change="onChange" />
-
-
-    <view style="text-align: center;margin:20rpx;">
-        <text>自提点：{{delivery.pickup_spot}}</text>
-        <van-button type="primary" plain="true" round bindtap='submit' custom-style="width:70%;margin-top:10rpx">确定</van-button>
+    <view style="text-align: center;margin:20rpx;font-size: small;">
+        <text style="font-weight: bold;">自提点：{{delivery.pickup_spot}}
+        </text>
+        <van-button color="black" plain="true" round bindtap='submit' custom-style="width:70%;margin-top:30rpx">确定</van-button>
     </view>
+
+
 
     <van-divider></van-divider>
-    <view style="text-align: center;margin-top:50rpx;" class="top_tip">
-        <view>如有疑问，请:</view>
-        <view><van-button plain round  bindtap="copyText" data-text="{{delivery._id}}"custom-style="margin-top:20rpx" size="small">step1 复制订单号(请点击此处)</van-button></view>
-        <view><van-button plain round  bindtap="customer_service" custom-style="margin-top:20rpx" size="small">step2 粘贴并发送订单号(请点击此处)</van-button></view>
+    <view style="margin-top: 50rpx;text-align: center;font-size: small;" >
+        <view>如果无法确定取件时间，请联系客服:</view>
+        <view><van-button plain round  bindtap="copyText" data-text="{{delivery._id}}"custom-style="margin-top:20rpx" size="small">step1 点此复制订单ID</van-button></view>
+        <view><van-button plain round  bindtap="customer_service" custom-style="margin-top:20rpx" size="small">step2 点此打开客服</van-button></view>
     </view>
+    <van-divider></van-divider>
+    <!-- todo: 订单一览 -->
 </view>
 
 <view wx:if="{{state==1}}" style="text-align: center;margin-top: 30rpx;">
   <view>
     <icon class="icon-box-img icon" type="success" size="53"></icon>
     <view class="title">提交成功</view>
-    <!-- <view class="mid_menu"> -->
-      <view class="top_tip">如有变动，请及时联系客服哦。(ㅅ •͈ᴗ•͈)</view>
+
+    <view class=" mid_menu" style="margin-bottom:40rpx;margin-top: 80rpx;">
+        <!-- <view style="margin-bottom: 10rpx;text-align: center;" class="top_tip">中国→日本 空运</view> -->
+        <view style="margin-left: 40rpx;" >取件日期：{{date}} </view>
+        <view style="margin-left: 40rpx;" >取件时间：{{time}}</view>
+    </view>
+    <view style="text-align:center"><van-button plain round  bindtap="jumpPage" data-jump="getDelivery"  data-param="{{delivery._id}}" >查看订单详情</van-button></view>
+    <van-divider></van-divider>
+    <view style="margin-top: 50rpx;text-align: center;font-size: small;">
+      <text>您的包裹计划在当天配送至自提点。
+      </text>
+      <text style="color: red;">如果早于选择的时间来取件，
+      因为包裹还没到达自提点，可能会让您空等哦。
+      </text>
+    </view>
   </view>
 </view>
 
@@ -30,3 +46,34 @@
   提交失败，请联系客服。
   <view><van-button plain round  bindtap="customer_service" >客服</van-button></view>
 </view>
+
+<view wx:if="{{state==3}}">
+  <view class=" mid_menu" style="margin-bottom:40rpx;margin-top: 80rpx;">
+        <!-- <view style="margin-bottom: 10rpx;text-align: center;" class="top_tip">中国→日本 空运</view> -->
+        <view style="margin-left: 80rpx;" ><text style="font-weight: bold;">取件日期：</text>{{delivery.pickup_date}} </view>
+        <view style="margin-left: 80rpx;" ><text style="font-weight: bold;">取件时间：</text>{{delivery.pickup_time}}</view>
+        <view style="margin-left: 80rpx;" wx:if="{{delivery.pickup_code}}"><text style="font-weight: bold;">取件码：</text>{{delivery.pickup_code}}</view>
+        <!-- <view style="margin-top: 10rpx; text-align: center;" class="top_tip">报关手续费为4元</view> -->
+  </view>
+  <view style="text-align:center"><van-button plain round color="black" bindtap="jumpPage" data-jump="getDelivery"  data-param="{{delivery._id}}" >查看订单详情</van-button></view>
+  <van-divider></van-divider>
+
+  <view style="margin-top: 50rpx;margin-left:30rpx;font-size: small;">
+    <text>1.您的包裹计划在当天配送至自提点。
+    </text>
+    <text style="color: red;"> 如果早于选择的时间来取件，
+      因为包裹还没到达自提点，可能会让您空等哦。
+    </text>
+    <text>2.如因极端天气，交通堵塞/事故等，
+    导致取件时间发生变化，我们会尽快联系您。
+    </text>
+  </view>
+  <van-divider></van-divider>
+  <view style="margin-top: 50rpx;text-align: center;font-size: small;" >
+        <text style="font-weight: bold;">如果当天无法来取件，
+        请提前至少一天联系客服:</text>
+        <view><van-button plain  round  bindtap="copyText" data-text="{{delivery._id}}"custom-style="margin-top:20rpx" size="small">step1 点此复制订单ID</van-button></view>
+        <view><van-button plain round  bindtap="customer_service" custom-style="margin-top:20rpx" size="small">step2 点此打开客服</van-button></view>
+    </view>
+</view>
+

@@ -13,7 +13,22 @@ App({
         traceUser: true,
       });
     }
-
     this.globalData = {};
+  },
+  onShow: function () {
+    const updateManager = wx.getUpdateManager();
+    //检测版本更新
+    updateManager.onCheckForUpdate(function(res) {
+      // 请求完新版本信息的回调
+      if (res.hasUpdate) {
+        //监听小程序有版本更新事件
+        updateManager.onUpdateReady(function() {
+          updateManager.applyUpdate();
+        })
+        updateManager.onUpdateFailed(function() {
+          // 新版本下载失败
+        })
+      }
+    })
   }
 });

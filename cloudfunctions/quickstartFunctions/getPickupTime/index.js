@@ -23,6 +23,6 @@ exports.main = async (event, context) => {
 
   return {
     delivery:delivery.data[0],
-    time_object:pickup_spot.data[0]
+    pickup_spot:pickup_spot.data[0]
   }
 };

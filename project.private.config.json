@@ -1,66 +1,67 @@
 {
-    "setting": {},
-    "condition": {
-        "plugin": {
-            "list": []
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": -1,
+          "name": "db guide",
+          "pathName": "pages/databaseGuide/databaseGuide",
+          "query": ""
         },
-        "game": {
-            "list": []
+        {
+          "name": "pages/getOpenId/index",
+          "pathName": "pages/getOpenId/index",
+          "query": "",
+          "scene": null
         },
-        "gamePlugin": {
-            "list": []
+        {
+          "name": "pages/getDelivery/index",
+          "pathName": "pages/getDelivery/index",
+          "query": "param=5b049cc8621e28c40ed9115e320692c8",
+          "scene": null,
+          "launchMode": "default"
         },
-        "miniprogram": {
-            "list": [
-                {
-                    "id": -1,
-                    "name": "db guide",
-                    "pathName": "pages/databaseGuide/databaseGuide",
-                    "query": ""
-                },
-                {
-                    "name": "pages/getOpenId/index",
-                    "pathName": "pages/getOpenId/index",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/getDelivery/index",
-                    "pathName": "pages/getDelivery/index",
-                    "query": "param=undefined",
-                    "scene": null
-                },
-                {
-                    "name": "pages/calculationSimulation/index",
-                    "pathName": "pages/calculationSimulation/index",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/addDelivery/index",
-                    "pathName": "pages/addDelivery/index",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/product/index",
-                    "pathName": "pages/product/index",
-                    "query": "param=bf4a0bf261d28f80025046f879040453",
-                    "scene": null
-                },
-                {
-                    "name": "pages/updateRecordResult/index",
-                    "pathName": "pages/updateRecordResult/index",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "pages/shop/index",
-                    "pathName": "pages/shop/index",
-                    "query": "",
-                    "scene": null
-                }
-            ]
+        {
+          "name": "pages/calculationSimulation/index",
+          "pathName": "pages/calculationSimulation/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/addDelivery/index",
+          "pathName": "pages/addDelivery/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/product/index",
+          "pathName": "pages/product/index",
+          "query": "param=bf4a0bf261d28f80025046f879040453",
+          "scene": null
+        },
+        {
+          "name": "pages/updateRecordResult/index",
+          "pathName": "pages/updateRecordResult/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/shop/index",
+          "pathName": "pages/shop/index",
+          "query": "",
+          "scene": null
         }
+      ]
     }
+  }
 }

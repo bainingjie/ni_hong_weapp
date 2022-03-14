@@ -10,6 +10,27 @@ function copyText(text) {
   })
 }
 
+/* 数字=》月日 */
+function dayConverter(day) {
+  switch (day) {
+    case 0:
+      return "日"
+    case 1:
+      return "月"
+    case 2:
+      return "火"
+    case 3:
+      return "水"
+    case 4:
+      return "木"
+    case 5:
+      return "金"
+    case 6:
+      return "土"
+    default:
+      console.log(`error : day is out of range`);
+  }
+}
 function bottomTabbarClicked(event) {
   // event.detail 的值为当前选中项的索引
   // console.log(event)
@@ -57,3 +78,4 @@ module.exports.jumpPage = jumpPage;
 module.exports.copyText = copyText;
 module.exports.prefectures_function = prefectures_function;
 module.exports.bottomTabbarClicked = bottomTabbarClicked;
+module.exports.dayConverter=dayConverter;

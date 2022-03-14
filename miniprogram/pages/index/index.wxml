@@ -50,8 +50,8 @@
         <view class="mid_menu"  style="text-align: center">
           <view style="font-size: 20px;color: #EE0A24;font-weight: bold;">①</view>
           <view>确认商品都能空运</view>
-          <view class="top_tip">常见不可寄：纯液体、化妆品、可充电的电器、</view>
-          <view class="top_tip">马达、压力罐、自热火锅、刀具等。</view>
+          <view class="top_tip"><text style="color: #EE0A24;font-weight: bold;">严禁邮寄：</text>液体、粉末、膏状、药品、化妆品、肉类、</view>
+          <view class="top_tip">可充电的电器、马达、压力罐、自热锅、刀具等。</view>
           <van-row>
             <van-col span="12">
               <van-button plain round  color="black" bindtap="jumpPage" customStyle="margin-top: 10rpx;" data-jump="official_account" data-param="{{enter_official_account}}">什么不能寄</van-button>
@@ -76,7 +76,7 @@
           <view><van-button round plain color="black" bindtap="copyText" data-text="{{address[3]}}" custom-style="margin:10rpx">点击复制地址: {{address[3]}}</van-button></view> -->
 
           <van-row>
-            <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[0]}}<view style="font-size: x-small;color: red;margin:0rpx">数字很重要，不能省略哦~</view></view></van-col>
+            <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[0]}}<view style="font-size: x-small;color: red;margin:0rpx">数字很重要，不能省略哦</view></view></van-col>
             <van-col span="8"><van-button round plain  bindtap="copyText" data-text="{{address[0]}}" size="small"  custom-style="margin:10rpx">复制收件人</van-button></van-col>
           </van-row>
           

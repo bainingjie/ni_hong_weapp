@@ -80,7 +80,7 @@ Page({
         wx.cloud.callFunction({
           name: 'quickstartFunctions',
           data: {
-            type: 'getPickupTime2',
+            type: 'getPickupTime',
             _id:id
           }
         }).then((resp) => {
@@ -94,18 +94,53 @@ Page({
             return 0
           }
 
-     
-          this.setData({
-            delivery: resp.result.delivery,
-            time_object:resp.result.time_object,
-            columns:resp.result.columns,
-            date:resp.result.date,
-            time:resp.result.time,
-            date_day_object:resp.result.date_day_object
-          });
-          // console.log(this.data);
-          wx.hideLoading();
-      })
+          
+          let tokyo_time = new Date().toLocaleString({ timeZone: 'Asia/Tokyo' })
+          tokyo_time = new Date(tokyo_time)
+          tokyo_time = tokyo_time.setDate(tokyo_time.getDate() + 1);//最早显示次日的时间
+          tokyo_time = new Date(tokyo_time)
+          let tokyo_day = tokyo_time.getDay()
+          let day_array = []
+          for(let i = 0;i<7; i++){
+            day_array.push((tokyo_day+i)%7)
+          }
+          let date_array = []
+          let date_day_object = {}
+          let temp_date = null
+          for(let i = 0;i<7; i++){
+            temp_date = String(tokyo_time.getMonth()+1)+"月"+String(tokyo_time.getDate())+"日"+"("+my_library.dayConverter(day_array[i])+")"
+            date_array.push(temp_date)
+            date_day_object[temp_date] = day_array[i]
+            // console.log(date_array)
+            tokyo_time = tokyo_time.setDate(tokyo_time.getDate() + 1);
+            tokyo_time = new Date(tokyo_time)
+          }
+          
+          let delivery = resp.result.delivery;
+          let time_object = resp.result.pickup_spot.time_object;
+          let temp = time_object[day_array[0]]
+          let col = [
+              {
+                values: date_array,
+                className: 'column1',
+              },
+              {
+                values: temp,
+                className: 'column2',
+                defaultIndex: 0,
+              },
+            ];
+            this.setData({
+              delivery: delivery,
+              time_object:time_object,
+              columns:col,
+              date:(date_array[0]),
+              time:(time_object[day_array[0]][0]),
+              date_day_object:date_day_object
+            });
+            // console.log(this.data);
+           wx.hideLoading();
+        })
     },
     onLoad: function (options) {
 
