@@ -31,7 +31,7 @@ exports.main = async (event, context) => {
         console.log(`error : day is out of range`);
     }
   }
-  
+
   let delivery = await db.collection('delivery').where({
     _id:event._id
   }).get();
@@ -41,13 +41,30 @@ exports.main = async (event, context) => {
     name:delivery.data[0].pickup_spot
   }).get();
 
+  delivery = delivery.data[0];
+  pickup_spot = pickup_spot.data[0]
+  let time_object = pickup_spot.time_object
+
   /* start */
         
-  let tokyo_time = new Date().toLocaleString({ timeZone: 'Asia/Tokyo' })
+  let tokyo_time = new Date().toLocaleString("ja-JP",{ timeZone: 'Asia/Tokyo' })
+  let print_tokyo_time1 = tokyo_time 
   tokyo_time = new Date(tokyo_time)
+ 
+  /* CUSTOMIZE */
 
-  tokyo_time = tokyo_time.setDate(tokyo_time.getDate() + 1);//最早显示次日的时间
-  tokyo_time = new Date(tokyo_time)
+  switch (pickup_spot.name) {
+    case "四条・迷雾Space剧本研究所":
+      time_object[0]=["18:00-19:00","19:00-21:00","21:00-24:00"]
+      break; 
+    default:
+      // time_object[5]=["17:30-20:00"]
+      /*最早显示次日的时间*/
+      if(tokyo_time.getHours()>8){
+        tokyo_time = tokyo_time.setDate(tokyo_time.getDate() + 1);
+        tokyo_time = new Date(tokyo_time)
+      }
+  }
 
 
 
@@ -71,9 +88,15 @@ exports.main = async (event, context) => {
     tokyo_time = new Date(tokyo_time)
   }
   
-  delivery = delivery.data[0];
-  let time_object = pickup_spot.data[0]
-  time_object = time_object.time_object
+
+
+
+  // if(pickup_spot.pickup_spot=="四条・迷雾Space剧本研究所"){
+  //   time_object[1]
+  // }else{
+
+  // }
+
   let temp = time_object[day_array[0]]
   let col = [
       {

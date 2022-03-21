@@ -93,7 +93,6 @@ Page({
             wx.hideLoading();
             return 0
           }
-
      
           this.setData({
             delivery: resp.result.delivery,

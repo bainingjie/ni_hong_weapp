@@ -28,7 +28,6 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "enableEngineNative": false,
     "useIsolateContext": false,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": true,
@@ -42,7 +41,6 @@
     "disableUseStrict": false,
     "minifyWXML": true,
     "showES6CompileOption": false,
-
     "useCompilerPlugins": false,
     "ignoreUploadUnusedFiles": true
   },

@@ -45,7 +45,7 @@ async function sendMessage(ACCESS_TOKEN,delivery){
                       "color":"#173177"
                   },
                   "remark":{
-                      "value":`根据您选择的时间，商品将被配送至自提点。取货时出示取货码即可，请记得自带包/袋哦 (ㅅ •͈ᴗ•͈)`,
+                      "value":`根据您选择的时间，商品将被配送至自提点(提前来可能会空等)。取货时出示取货码即可，请记得自带包/袋哦 (ㅅ •͈ᴗ•͈)`,
                       "color":"#173177"
                   }
           }
@@ -80,7 +80,7 @@ async function sendMessage(ACCESS_TOKEN,delivery){
                     "color":"#173177"
                 },
                 "remark":{
-                    "value":`根据您选择的时间，商品将被配送至自提点。取货时出示取货码即可，请记得自带包/袋哦 (ㅅ •͈ᴗ•͈)`,
+                    "value":`根据您选择的时间，商品将被配送至自提点(提前来可能会空等)。取货时出示取货码即可，请记得自带包/袋哦 (ㅅ •͈ᴗ•͈)`,
                     "color":"#173177"
                 }
         }
@@ -181,8 +181,7 @@ exports.main = async (event, context) => {
         // 2)录入取货码至数据库
         // 3）修改取货时间
     [
-      "D48","D62","D67"
-
+      "617ef50c622096f30986724701b9c5ec"
     ]
     // ["54ad1eea61e526ff07cb08e41ec84011"]
     
@@ -210,35 +209,29 @@ exports.main = async (event, context) => {
     //   }).get()
 
     let object = {}
-    object["17e3426e61d8745603c841c66e57ff67"]="admin"//ADMIN
+    // object["17e3426e61d8745603c841c66e57ff67"]="admin"//ADMIN
 
-    object["5b049cc8621c5cae0e9ec4290a838136"]="E15"
-    object["17e3426e621c6bdb111ca8135b79d408"]="E17"
-    object["41ae62ef621c667109723955213aa47c"]="E16"
-    object["54ad1eea621d55fb1389a0675a023e8a"]="E19"
-    object["5b049cc8621d79aa0ebf3ff673b67af9"]="E20"
-    object["41ae62ef621e161f09c0a3e955aa2f74"]="E23"
-    object["5b049cc8621e28c40ed9115e320692c8"]="E24"
-    object["41ae62ef621ecd6d09d6164b4c3ea4bd"]="F27"
-    object["617ef50c621ecda30938764b6e7185e9"]="E28"
-    object["617ef50c621f09ad0945372636e7f22a"]="E29"
-    object["5b049cc8621f68200efb283f7a5ed2a7"]="E31"
-    object["617ef50c622096f30986724701b9c5ec"]="E36"
-    object["5b049cc86220b9130f205b3360bf513e"]="E42"
-    object["5b049cc862203ef50f0ccaab7cda11ac"]="E35"
+    object["54ad1eea62233f1b146f84ad1b3159e3"]="E12"
+    object["54ad1eea622495661495b70b3f4512f3"]="E15"
+
+    
     delivery_array =Object.keys(object)
-    // for (let delivery of delivery_array){
-    //   response = await db.collection("delivery").doc(delivery).update({
-    //     data:{
-    //       state:"待选择取货时间",
-    //       pickup_code:object[delivery]
-    //     }
-    //   })
-    // }
+    for (let delivery of delivery_array){
+      response = await db.collection("delivery").doc(delivery).update({
+        data:{
+          state:"待选择取货时间",
+          pickup_code:object[delivery]
+        }
+      })
+    }
     console.log(delivery_array)
     let deliveries = await db.collection("delivery").where({
         _id: _.in(delivery_array)
       }).get()
+    
+    // let deliveries = await db.collection("delivery").where({
+    //   state:"待选择取货时间"
+    // }).get()
     deliveries = deliveries.data
     for(let delivery of deliveries){
       await sendMessage(token,delivery)

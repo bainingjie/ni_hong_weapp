@@ -50,9 +50,9 @@ exports.main = async (event, context) => {
     let file_packages=[]
     for (row of res){
       if(row[0].length>5){
-        console.log(row)
+        // console.log(row)
         let weight = Number(row[1]);
-        console.log(weight)
+        // console.log(weight)
         if(weight != 0){
           weight_object[row[0]]=weight
         }

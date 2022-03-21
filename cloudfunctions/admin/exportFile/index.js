@@ -93,7 +93,8 @@ exports.main = async (event, context) => {
       //   changsha = 2
       // }
       data.push({
-        count: "E"+count.toString(),
+        count: "G"+count.toString(),
+        // ID: delivery.union_id.slice(-3),
         state:delivery.state,
         delivery_id:delivery._id,
         tracking_number:package.tracking_number,

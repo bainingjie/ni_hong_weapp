@@ -50,8 +50,8 @@
         <view class="mid_menu"  style="text-align: center">
           <view style="font-size: 20px;color: #EE0A24;font-weight: bold;">①</view>
           <view>确认商品都能空运</view>
-          <view class="top_tip"><text style="color: #EE0A24;font-weight: bold;">严禁邮寄：</text>液体、粉末、膏状、药品、化妆品、肉类、</view>
-          <view class="top_tip">可充电的电器、马达、压力罐、自热锅、刀具等。</view>
+          <view class="top_tip"><text style="color: #EE0A24;font-weight: bold;">严禁邮寄：</text>液体、粉末、膏状、药品、化妆品、</view>
+          <view class="top_tip">肉类、可充电的电器、压力罐、自热锅、刀具等。</view>
           <van-row>
             <van-col span="12">
               <van-button plain round  color="black" bindtap="jumpPage" customStyle="margin-top: 10rpx;" data-jump="official_account" data-param="{{enter_official_account}}">什么不能寄</van-button>
