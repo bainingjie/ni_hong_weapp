@@ -55,7 +55,7 @@ exports.main = async (event, context) => {
 
   switch (pickup_spot.name) {
     case "四条・迷雾Space剧本研究所":
-      time_object[0]=["18:00-19:00","19:00-21:00","21:00-24:00"]
+      time_object[1]=["19:00-21:00","21:00-24:00"]
       break; 
     default:
       // time_object[5]=["17:30-20:00"]
@@ -63,6 +63,7 @@ exports.main = async (event, context) => {
       if(tokyo_time.getHours()>8){
         tokyo_time = tokyo_time.setDate(tokyo_time.getDate() + 1);
         tokyo_time = new Date(tokyo_time)
+        time_object[2]=["17:00-20:00"]
       }
   }
 

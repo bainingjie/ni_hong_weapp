@@ -211,10 +211,9 @@ exports.main = async (event, context) => {
     let object = {}
     // object["17e3426e61d8745603c841c66e57ff67"]="admin"//ADMIN
 
-    object["54ad1eea62233f1b146f84ad1b3159e3"]="E12"
-    object["54ad1eea622495661495b70b3f4512f3"]="E15"
+    object["617ef50c6227857d0a70b6f171844332"]="G23"
+ 		
 
-    
     delivery_array =Object.keys(object)
     for (let delivery of delivery_array){
       response = await db.collection("delivery").doc(delivery).update({
