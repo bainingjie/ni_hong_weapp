@@ -12,6 +12,7 @@ const payTrade = require('./payTrade/index');
 const addPhone = require('./addPhone/index');
 const getPickupTime =  require('./getPickupTime/index');
 const getPickupTime2 =  require('./getPickupTime2/index');
+const getPickupCode =  require('./getPickupCode/index');
 // 云函数入口函数
 exports.main = async (event, context) => {
   switch (event.type) {
@@ -39,6 +40,8 @@ exports.main = async (event, context) => {
       return await payTrade.main(event, context);
     case 'addPhone':
       return await addPhone.main(event, context);
+    case 'getPickupCode':
+      return await getPickupCode.main(event, context);
     case 'getPickupTime':
       return await getPickupTime.main(event, context);
     case 'getPickupTime2':

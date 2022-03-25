@@ -42,7 +42,7 @@ Page({
     })
   },
   onLoad(options) {
-    this.getPublic();
+    // this.getPublic();
     if("process" in options){
       this.setData({
         active:1
@@ -52,6 +52,7 @@ Page({
   onShow() {
     this.getTabBar().init();
     this.getPublic();
+    this.getPickupCode();
   },
   customer_service:function(){
     my_library.customer_service();
@@ -64,6 +65,27 @@ Page({
   },
 
 
+  getPickupCode() {
+    wx.showLoading({
+      title: '',
+    });
+   wx.cloud.callFunction({
+      name: 'quickstartFunctions',
+      data: {
+        type: 'getPickupCode'
+      }
+    }).then((resp) => {
+      console.log(resp)
+      this.setData({
+        pickup_code: resp.result.code
+      });
+      console.log(this.data);
+     wx.hideLoading();
+   }).catch((e) => {
+      console.log(e);
+     wx.hideLoading();
+   });
+  },
   getPublic() {
     wx.showLoading({
       title: '',

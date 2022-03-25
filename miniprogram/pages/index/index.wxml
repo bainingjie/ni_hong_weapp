@@ -76,8 +76,8 @@
           <view><van-button round plain color="black" bindtap="copyText" data-text="{{address[3]}}" custom-style="margin:10rpx">点击复制地址: {{address[3]}}</van-button></view> -->
 
           <van-row>
-            <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[0]}}<view style="font-size: x-small;color: red;margin:0rpx">数字很重要，不能省略哦</view></view></van-col>
-            <van-col span="8"><van-button round plain  bindtap="copyText" data-text="{{address[0]}}" size="small"  custom-style="margin:10rpx">复制收件人</van-button></van-col>
+            <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[0]}}_{{pickup_code}}<view style="font-size: x-small;color: red;margin:0rpx">数字很重要，不能省略哦</view></view></van-col>
+            <van-col span="8"><van-button round plain  bindtap="copyText" data-text="{{address[0]}}_{{pickup_code}}" size="small"  custom-style="margin:10rpx">复制收件人</van-button></van-col>
           </van-row>
           
           <van-row>
@@ -89,8 +89,8 @@
             <van-col span="8"><van-button round plain bindtap="copyText" data-text="{{address[2]}}" size="small" custom-style="margin:10rpx">复制邮编</van-button></van-col>
           </van-row>
           <van-row>
-            <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[3]}}</view></van-col>
-            <van-col span="8"><van-button round plain bindtap="copyText" data-text="{{address[3]}}" size="small" custom-style="margin:10rpx">复制地址</van-button></van-col>
+            <van-col span="16" style="font-size: x-small;color: #888888;"><view style="margin-top: 15rpx;">{{address[3]}}_{{pickup_code}}</view></van-col>
+            <van-col span="8"><van-button round plain bindtap="copyText" data-text="{{address[3]}}_{{pickup_code}}" size="small" custom-style="margin:10rpx">复制地址</van-button></van-col>
           </van-row>
           <!-- <van-button round plain color="#EE0A24" bindtap="copyText" customStyle="margin-top: 10rpx;">复制最新地址</van-button> -->
         </view>
