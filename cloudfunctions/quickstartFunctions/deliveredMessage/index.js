@@ -18,34 +18,30 @@ async function sendMessage(ACCESS_TOKEN,delivery){
 
       let config={
           "touser":user.data[0].openid,
-          "template_id":"0LLI8zBo0xT5EcLDQyETXPaXkVtQmIV-vJdUh_YvQfw",
+          "template_id":"UULMNrbFYG6pfF43nEo_QHEMEOKDIqrpZDrxZ31wJbs",
           "url":"http://weixin.qq.com/download",
           "miniprogram":{
             "appid":"wxf3ecc758c5fb4028",
-            "pagepath":`/pages/selectPickupTime/index?param=${delivery._id}`
+            "pagepath":`/pages/getDelivery/index?param=${delivery._id}`
             // "pagepath":"index?foo=bar"
           },  
           
         
           "data":{
                   "first": {
-                      "value":"请选择取货时间",
+                      "value":`已配送至${delivery.pickup_spot}`,
                       "color":"#173177"
                   },
                   "keyword1":{
-                      "value":delivery.pickup_code,
+                      "value":delivery._id,
                       "color":"#173177"
                   },
                   "keyword2": {
-                      "value":delivery.pickup_spot,
-                      "color":"#173177"
-                  },
-                  "keyword3": {
-                      "value":"请查看自提点详情页",
+                      "value":`集运(取件码：${delivery.pickup_code})`,
                       "color":"#173177"
                   },
                   "remark":{
-                      "value":`根据您选择的时间，商品将被配送至自提点(提前来可能会空等)。取货时出示取货码即可，请记得自带包/袋哦 (ㅅ •͈ᴗ•͈)`,
+                      "value":`商品已经配送至自提点啦，请您今天方便的时间记得取一下哈☺️。因为商品在自提点无法过夜，如有特殊情况无法今天取件，请及时联系我们～`,
                       "color":"#173177"
                   }
           }
@@ -53,75 +49,44 @@ async function sendMessage(ACCESS_TOKEN,delivery){
     
       let admin_config = {
         "touser":"oeWiL54aqo92Cc1UONS58t812UV4",
-        "template_id":"0LLI8zBo0xT5EcLDQyETXPaXkVtQmIV-vJdUh_YvQfw",
+        "template_id":"UULMNrbFYG6pfF43nEo_QHEMEOKDIqrpZDrxZ31wJbs",
         "url":"http://weixin.qq.com/download",
         "miniprogram":{
           "appid":"wxf3ecc758c5fb4028",
-          "pagepath":`/pages/selectPickupTime/index?param=${delivery._id}`
+          "pagepath":`/pages/getDelivery/index?param=${delivery._id}`
           // "pagepath":"index?foo=bar"
         },  
         
-      
+   
         "data":{
-                "first": {
-                    "value":"请选择取货时间",
-                    "color":"#173177"
-                },
-                "keyword1":{
-                    "value":delivery.pickup_code,
-                    "color":"#173177"
-                },
-                "keyword2": {
-                    "value":delivery.pickup_spot,
-                    "color":"#173177"
-                },
-                "keyword3": {
-                    "value":"请查看自提点详情页",
-                    "color":"#173177"
-                },
-                "remark":{
-                    "value":`根据您选择的时间，商品将被配送至自提点(提前来可能会空等)。取货时出示取货码即可，请记得自带包/袋哦 (ㅅ •͈ᴗ•͈)`,
-                    "color":"#173177"
-                }
+          "first": {
+              "value":`已配送至${delivery.pickup_spot}`,
+              "color":"#173177"
+          },
+          "keyword1":{
+              "value":delivery._id,
+              "color":"#173177"
+          },
+          "keyword2": {
+              "value":`集运(取件码：${delivery.pickup_code})`,
+              "color":"#173177"
+          },
+          "remark":{
+              "value":`商品已经配送至自提点啦，请您今天方便的时间记得取一下哈☺️。因为商品在自提点无法过夜，如有特殊情况无法今天取件，请及时联系我们～`,
+              "color":"#173177"
+          }
         }
     };
 
       console.log(admin_config)
       let response = null
-      if(!delivery.is_pickupTimeSelector_sent){
+      // if(!delivery.is_pickupTimeSelector_sent){
         await axios.post(`https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${ACCESS_TOKEN}`, admin_config);
         response = await axios.post(`https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=${ACCESS_TOKEN}`, config);
-      }
+      // }
       
       console.log(response)
 
-      let tiktea_hotpot_yimu_times = {
-        "3/6(日)":["16:00-20:30"],
-        "3/7(月)":["11:30-14:00","14:00-17:00","17:00-20:30"],
-        "3/8(火)":["11:30-14:00","14:00-17:00","17:00-20:30"],
-        "3/9(水)":["11:30-14:00","14:00-17:00","17:00-20:30"],
-        "3/10(木)":["11:30-14:00","14:00-17:00","17:00-20:30"],
-        "3/11(金)":["11:30-14:00","14:00-17:00","17:00-20:30"],
-        "3/12(土)":["11:30-14:00","14:00-17:00","17:00-20:30"]
-
-    }
-    let kyoto_times = {
-      "3/8(火)":["13:00-15:00","15:00-17:00","17:00-19:00","19:00-21:00","21:00-24:00"],
-      "3/9(水)":["13:00-15:00","15:00-17:00","17:00-19:00","19:00-21:00","21:00-24:00"],
-      "3/10(木)":["13:00-15:00","15:00-17:00","17:00-19:00","19:00-21:00","21:00-24:00"],
-      "3/11(金)":["13:00-15:00","15:00-17:00","17:00-19:00","19:00-21:00","21:00-24:00"],
-      "3/12(土)":["13:00-15:00","15:00-17:00","17:00-19:00","19:00-21:00","21:00-24:00"],
-      "3/13(日)":["13:00-15:00","15:00-17:00","17:00-19:00","19:00-21:00","21:00-24:00"],
-    }
-    let ookayama_times = {
-      "2/28(月)":["11:30-14:00","14:00-17:00","17:00-20:00"],
-      "3/1(火)":["11:30-14:00","14:00-17:00","17:00-20:00"],
-      "3/2(水)":["11:30-14:00","14:00-17:00","17:00-20:00"],
-      "3/3(木)":["11:30-14:00","14:00-17:00","17:00-20:00"],
-      "3/4(金)":["11:30-14:00","14:00-17:00","17:00-20:00"],
-      "3/5(土)":["11:30-14:00","14:00-17:00","17:00-20:00"],
-      "3/6(日)":["11:30-14:00","14:00-17:00","17:00-20:00"]
-  }
     // response = await db.collection("delivery").doc(delivery._id).update({
     //   data:{
     //     is_pickupTimeSelector_sent:true,
@@ -133,16 +98,16 @@ async function sendMessage(ACCESS_TOKEN,delivery){
         console.log("delivery_id ",delivery._id," 成功发送模板消息")
 
         //TODO: 记录消息推送时间。
-        response = await db.collection("delivery").doc(delivery._id).update({
-          data:{
-            is_pickupTimeSelector_sent:true,
-            /*state:"待选择取货时间",
-            times:tiktea_times*/
-          }
-        })
-        if(response.stats.updated !=1){
-          console.log("delivery_id ",delivery._id," is_quote_message_sent 更新失败")
-        }
+        // response = await db.collection("delivery").doc(delivery._id).update({
+        //   data:{
+        //     is_pickupTimeSelector_sent:true,
+        //     /*state:"待选择取货时间",
+        //     times:tiktea_times*/
+        //   }
+        // })
+        // if(response.stats.updated !=1){
+        //   console.log("delivery_id ",delivery._id," is_quote_message_sent 更新失败")
+        // }
         console.log(response)
       }else{
         console.log("delivery_id",delivery._id," 发送模板消息失败")
@@ -181,7 +146,11 @@ exports.main = async (event, context) => {
         // 2)录入取货码至数据库
         // 3）修改取货时间
     [
-      "617ef50c622096f30986724701b9c5ec"
+      "41ae62ef622d58a90bfa538c698d6971",
+      "617ef50c623099640bc0f5b11d765aa1",
+      "d4107ab16231d39e000831100e46fca4",
+      "d4107ab16231dd7d000a1a473b9f9339",
+      "d4107ab1623458b9006b7d20119b1e1b",
     ]
     // ["54ad1eea61e526ff07cb08e41ec84011"]
     
@@ -208,16 +177,13 @@ exports.main = async (event, context) => {
     //     _id: _.in(delivery_array)
     //   }).get()
 
-    let object = {}
+    // let object = {}
     // object["17e3426e61d8745603c841c66e57ff67"]="admin"//ADMIN
 
-    object["bf4a0bf2622a4bc313d1350565bc73a2"]="G25"
-    object["54ad1eea622f4674162b7658271c3937"]="G32"
-    object["54ad1eea62318a0016836d5a2864f847"]="G36"
-    object["82afc00a6231e4b50007cf7e7e4c7da4"]="G39"
-    object["d4107ab162344c3a0068fd58634c44f1"]="G48"
+    // object["617ef50c6227857d0a70b6f171844332"]="G23"
+ 		
 
-    delivery_array =Object.keys(object)
+    // delivery_array =Object.keys(object)
     // for (let delivery of delivery_array){
     //   response = await db.collection("delivery").doc(delivery).update({
     //     data:{
@@ -226,7 +192,7 @@ exports.main = async (event, context) => {
     //     }
     //   })
     // }
-    console.log(delivery_array)
+    // console.log(delivery_array)
     let deliveries = await db.collection("delivery").where({
         _id: _.in(delivery_array)
       }).get()
