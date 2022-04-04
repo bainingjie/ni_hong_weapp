@@ -211,21 +211,20 @@ exports.main = async (event, context) => {
     let object = {}
     // object["17e3426e61d8745603c841c66e57ff67"]="admin"//ADMIN
 
-    object["bf4a0bf2622a4bc313d1350565bc73a2"]="G25"
-    object["54ad1eea622f4674162b7658271c3937"]="G32"
-    object["54ad1eea62318a0016836d5a2864f847"]="G36"
-    object["82afc00a6231e4b50007cf7e7e4c7da4"]="G39"
-    object["d4107ab162344c3a0068fd58634c44f1"]="G48"
+    object["63605076623827d800c3cc6702a0f236"]="G24"
+    object["d2fe6f20623be0d401c94e9404a2ae20"]="G30"
+    object["efbc6d71623c25cf01a2e2ce56fd61ea"]="G36"
+
 
     delivery_array =Object.keys(object)
-    // for (let delivery of delivery_array){
-    //   response = await db.collection("delivery").doc(delivery).update({
-    //     data:{
-    //       state:"待选择取货时间",
-    //       pickup_code:object[delivery]
-    //     }
-    //   })
-    // }
+    for (let delivery of delivery_array){
+      response = await db.collection("delivery").doc(delivery).update({
+        data:{
+          state:"待选择取货时间",
+          pickup_code:object[delivery]
+        }
+      })
+    }
     console.log(delivery_array)
     let deliveries = await db.collection("delivery").where({
         _id: _.in(delivery_array)

@@ -10,6 +10,52 @@ const log = cloud.logger()
 exports.main = async (event, context) => {
     try {
 
+      /* add packages to delivery*/
+      // let tar="d4107ab16235fea700a2203f20a4743d"
+      // let target = await db.collection("delivery").doc(tar).get() 
+
+      // let new_packages = target.data.packages
+      // packages=[
+      //   {tracking_number:"YT6387549623300",content:"配饰"},
+      //   {tracking_number:"75864963238141",content:"衣服"},
+      //   {tracking_number:"75864850485921",content:"衣服"},
+      //   {tracking_number:"YT6383367420999",content:"配饰"},
+      //   {tracking_number:"75864828547280",content:"配饰"},
+      //   {tracking_number:"75866602557627",content:"配饰"},
+      //   {tracking_number:"SF1351591478914",content:"零食"},
+      //   {tracking_number:"75864855483248",content:"衣服"},
+      //   {tracking_number:"75864847619568",content:"配饰"},
+      // ]
+      // for(let package of packages){
+      //   new_packages.push(package)
+      // }
+      // response = await db.collection("delivery").doc(tar).update({
+      //   data:{
+      //     packages:new_packages
+      //   }
+      // })
+      // console.log(packages)
+
+
+          let packages = [
+    "807102f66244ecbd02f099a241135642",
+    "efbc6d7162455c88031d15ed1d39cfed",
+    "efbc6d716245c69d03350ae974615dd1",
+    "807102f66241454302526dd9537c4da8",
+    "d4107ab16247b4960422a46232d44102",
+    "63605076623e83fe01ba26eb21552a93",
+    "82afc00a623e9f480162dd6048158863",
+    "82afc00a623fde39017cd46a17edeba8",
+    "d4107ab162438cb002ef54f930963895",
+    "efbc6d716241100b02513a11517d6b6a"]
+    for(let package of packages){
+      response = await db.collection("delivery").doc(package).update({
+        data:{
+          remark:"因为上海疫情的封闭管理，原计划4/2(周六)寄出的货物，统一安排4/6(周三)优先加急寄出。抱歉给您添麻烦了。"
+        }
+      })
+    }
+
         /* update international tracking number*/
       // let package = ["617ef50c6220975009867e0350b1dbd5",
       //   "54ad1eea62209a3f1414f0aa4ea378ca",
@@ -42,26 +88,26 @@ exports.main = async (event, context) => {
       //   }
       // }) 
 
-      let to_add_1 = await db.collection("delivery").doc("82afc00a62370531007dcec96d6873e5").get() 
-      let tar="807102f66239be5b01221e453a9a5156"
-      // let to_add_2 = await db.collection("delivery").doc("41ae62ef6228534d0b420d046685c961").get() 
-      let target = await db.collection("delivery").doc(tar).get() 
-      let packages = to_add_1.data.packages
-      let new_packages = target.data.packages
-      for(let package of packages){
-        new_packages.push(package)
-      }
+      // let to_add_1 = await db.collection("delivery").doc("82afc00a62370531007dcec96d6873e5").get() 
+      // let tar="807102f66239be5b01221e453a9a5156"
+      // // let to_add_2 = await db.collection("delivery").doc("41ae62ef6228534d0b420d046685c961").get() 
+      // let target = await db.collection("delivery").doc(tar).get() 
+      // let packages = to_add_1.data.packages
+      // let new_packages = target.data.packages
+      // for(let package of packages){
+      //   new_packages.push(package)
+      // }
       // packages = to_add_2.data.packages
       // for(let package of packages){
       //   new_packages.push(package)
       // }
 
-    response = await db.collection("delivery").doc(tar).update({
-      data:{
-        packages:new_packages
-      }
-    })
-    console.log(packages)
+    // response = await db.collection("delivery").doc(tar).update({
+    //   data:{
+    //     packages:new_packages
+    //   }
+    // })
+    // console.log(packages)
 
 
     /*   */ 
