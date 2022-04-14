@@ -17,9 +17,9 @@ Page({
         weight_example:null
     },
     getInputVal:function(e){
-        var val=e.detail;//获取输入的值
-        var weight=this.data.weight;
-        var trimmed_weight = this.data.trimmed_weight;
+        let val=e.detail;//获取输入的值
+        let weight=this.data.weight;
+        let trimmed_weight = this.data.trimmed_weight;
         weight = val;
         let ceil = Math.ceil(weight);
         let floor = Math.floor(weight);
@@ -31,7 +31,7 @@ Page({
         }else{
             trimmed_weight = ceil;
         }
-        // var price_estimate = this.data.price_estimate;
+        // let price_estimate = this.data.price_estimate;
         // price_estimate = trimmed_weight*this.data.price_500g*2
         var price_opponent = this.data.price_opponent;
         if(trimmed_weight>0.5){

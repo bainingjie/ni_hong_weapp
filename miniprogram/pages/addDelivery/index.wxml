@@ -8,7 +8,7 @@
 
     <!-- <view style="margin-left: 30rpx;margin-bottom: 10rpx;" class="weui-cells__title">自提点</view>  -->
     <view class="weui-cells__title" style="color: black;font-weight: bold;">1.自提点</view> 
-    <van-cell title="{{pick_up_spot}}" is-link bind:click="showPopup" />
+    <van-cell title="{{pickup_spot}}" is-link bind:click="showPopup" />
     <van-popup show="{{ show }}" bind:close="onClose"   closeable
       position="bottom"
       lock-scroll="true"
@@ -39,19 +39,19 @@
       <van-field
         value="{{tracking_number}}" 
         bind:input='getInputVal'
-        placeholder="快递单号 (例:75839440148343）"
+        placeholder="快递单号（例：75839440148343）"
         border="{{ true }}"
         required="{{true}}"
       ></van-field>
       <van-field
         model:value="{{package_content}}" 
-        placeholder="包裹内容 (例:卫衣，化妆刷，螺狮粉)"
+        placeholder="包裹内容（例：卫衣，化妆刷，螺狮粉）"
         border="{{ false }}"
         required="{{true}}"
       ></van-field>
       <van-field
         model:value="{{package_note}}" 
-        placeholder="备注 (怕挤/易碎需加固，需取出液体/电池赠品)"
+        placeholder="备注（怕挤/易碎需加固，需取出液体/电池赠品）"
         border="{{ false }}"
       >
     </van-field>
@@ -68,13 +68,13 @@
     <van-divider contentPosition="center" textColor="red" customStyle="font-weight:bold; border-color: red;">已添加的快递信息</van-divider>
 
     <view wx:if="{{!show}}">
-      <van-cell wx:for='{{tracking_numbers}}' wx:key="*this" title="{{item.number}}  ({{item.content}})  {{item.note}}" >
+      <van-cell wx:for='{{shipping_details}}' wx:key="*this" title="{{item.tracking_number}}  ({{item.content}})  {{item.note}}" >
         <van-icon slot="right-icon" name="close" class="custom-icon" bindtap='delInput' data-idx='{{index}}' />
       </van-cell>
    </view>    
 
    <view style="text-align: center;margin-top: 20rpx;">
-    <view class="top_tip" style="margin-bottom: 20rpx;">共 {{tracking_numbers.length}} 件</view>
+    <view class="top_tip" style="margin-bottom: 20rpx;">共 {{shipping_details.length}} 件</view>
     <van-button type="primary" plain="true" bindtap='submit' color="#EE0A24;" round custom-style="width:70%;font-weight:bold">提交</van-button>
    </view>
 </view>

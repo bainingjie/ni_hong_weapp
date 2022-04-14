@@ -1,5 +1,5 @@
 // pages/product/index.js
-var my_library = require('../../my_library/index.js');
+var my_library = require('../../my_library/index');
 Page({
 
   /**

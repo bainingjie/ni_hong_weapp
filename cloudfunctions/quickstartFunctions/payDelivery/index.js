@@ -12,9 +12,12 @@ exports.main = async (event, context) => {
         type:0,
         delivery_id:event.delivery_id,
         is_paid:false,
-        totalFee:event.amount_to_pay
+        totalFee:event.amount_to_pay,
+        timestamp: new Date(),
+        debugflag: "r"
       }
     });
+    console.log(`event.amount_to_pay=${event.amount_to_pay}`)
     const res = await cloud.cloudPay.unifiedOrder({
       "body" : "霓虹町指南-集运运费",
       "outTradeNo" : response._id,

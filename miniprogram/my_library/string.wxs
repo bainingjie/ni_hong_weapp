@@ -1,34 +1,51 @@
-function my_slice(str,a,b){
-    return str.slice(a,b);
-  }
-function my_equal(a,type){
-  switch (type) {
-    case 0:
-      return a=="待支付";
-    case 1:
-      return a=="待发货";
-    case 2:
-      return a=="待打包称重";
-    case 3:
-      return a=="待选择取货时间"
-  }
+function my_slice(str, a, b) {
+	return str.slice(a, b);
+}
+function checkIsString(arg,argumentName){
+	if(typeof arg!=='string'){
+		console.log('TypeError: 名为',argumentName,'的参数类型不匹配。期望为string, 而实际为',typeof arg,'.')
+	}
+}
+function checkType(arg, argumentName, expectedType){
+	if(typeof arg!==expectedType){
+		console.log('TypeError: 名为',argumentName,'的参数类型不匹配。期望为',expectedType,'而实际为',typeof arg,'.')
+	}
+	// else console.log('type is ok.');
+}
+function my_equal(a, type) {
+	checkType(a, 'a', 'string');
+	checkType(type, 'type', 'number');
+	
+	switch (type) {
+		case 0:
+			return a === "待支付";
+		case 1:
+			return a === "待发货";
+		case 2:
+			return a === "待打包称重";
+		case 3:
+			return a === "待选择取货时间";
+		default:
+			console.log("NotImplementError in my_equal(a=", a, ", type=", type, ")")
+			return undefined;
+	}
 }
 
 // wxs 只支持语法，不支持arrow function,也不持支findindex
-function steps_index(text){
-  var states=["待打包称重",'待支付','待发货', '运输中','待取货','已取货'];
-  return states.indexOf(text);
+function steps_index(text) {
+	var states = ["待打包称重", '待支付', '待发货', '运输中', '待取货', '已取货'];
+	return states.indexOf(text);
 }
 
-function n_correction(text){
-  var new_text = text.split('&hc').join('\n')
-  return new_text;
+function n_correction(text) {
+	var new_text = text.split('&hc').join('\n')
+	return new_text;
 }
 
 module.exports = {
-my_slice: my_slice,
-my_equal: my_equal,
-steps_index:steps_index,
-n_correction:n_correction
+	my_slice: my_slice,
+	my_equal: my_equal,
+	steps_index: steps_index,
+	n_correction: n_correction
 }
 
