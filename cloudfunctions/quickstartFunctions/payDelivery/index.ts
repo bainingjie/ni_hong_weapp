@@ -1,21 +1,17 @@
-import cloud from 'wx-server-sdk';
-import { IPayment } from '../../../miniprogram/pages/getDelivery/Delivery';
+import * as cloud from 'wx-server-sdk';
+import { getDBCollection, IPayment, IProduct } from '../../../miniprogram/pages/getDelivery/Delivery';
+import { randomString } from '../../../miniprogram/my_library/index';
 cloud.init({
 	env: cloud.DYNAMIC_CURRENT_ENV
 })
 const db = cloud.database();
-function randomString(len: number): string {
-	const t = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678";
-	let res = "";
-	for (let i = 0; i < len; i++)
-		res += t.charAt(Math.floor(Math.random() * t.length));
-	return res;
-}
-export async function main(event: { delivery_id: string, amount_to_pay: string }, context: any) {
+export async function main(event: { delivery_id: string, amount_to_pay: number }, context: any) {
 	console.assert("delivery_id" in event);
+	console.assert(typeof event.delivery_id === 'string');
 	console.assert("amount_to_pay" in event);
+	console.assert(typeof event.amount_to_pay === 'number');
 	try {
-		const response = <IPayment>await db.collection('payment').add({
+		const response = await getDBCollection<IPayment>(db, 'payment').add({
 			// data 字段表示需新增的 JSON 数据
 			data: {
 				type: 0,
@@ -37,7 +33,7 @@ export async function main(event: { delivery_id: string, amount_to_pay: string }
 			totalFee: parseInt(event.amount_to_pay) * 100,
 			envId: "testbai-6gjgkia55f6d4918",
 			functionName: "payDeliveryCallback",
-			nonceStr: randomString(32),
+			nonceStr: randomString(),
 			tradeType: "JSAPI"
 		});
 		console.log(`unified order res=${JSON.stringify(res)}`);

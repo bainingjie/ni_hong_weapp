@@ -1,4 +1,5 @@
 import cloud from 'wx-server-sdk';
+import { getDBCollection, IProduct } from '../../../miniprogram/pages/getDelivery/Delivery';
 
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
@@ -6,7 +7,7 @@ cloud.init({
 const db = cloud.database();
 
 // 查询数据库集合云函数入口函数
-exports.main = async (event: any, context: any) => {
+export async function main (event: any, context: any) {
   // 返回数据库查询结果
-  return await db.collection('products').orderBy('view','desc').get();
+  return await getDBCollection<IProduct>(db, 'products').orderBy('view','desc').get();
 };

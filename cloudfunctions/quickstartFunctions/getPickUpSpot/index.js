@@ -59,66 +59,22 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.main = void 0;
 var cloud = __importStar(require("wx-server-sdk"));
 cloud.init({
     env: cloud.DYNAMIC_CURRENT_ENV
 });
 var db = cloud.database();
-function randomString(len) {
-    var t = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678";
-    var res = "";
-    for (var i = 0; i < len; i++)
-        res += t.charAt(Math.floor(Math.random() * t.length));
-    return res;
-}
-function main(event, context) {
-    return __awaiter(this, void 0, void 0, function () {
-        var response, res, e_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    console.assert("delivery_id" in event);
-                    console.assert("amount_to_pay" in event);
-                    _a.label = 1;
-                case 1:
-                    _a.trys.push([1, 4, , 5]);
-                    return [4 /*yield*/, db.collection('payment').add({
-                            // data 字段表示需新增的 JSON 数据
-                            data: {
-                                type: 0,
-                                delivery_id: event.delivery_id,
-                                is_paid: false,
-                                totalFee: event.amount_to_pay
-                            }
-                        })];
-                case 2:
-                    response = _a.sent();
-                    console.assert(response._id !== undefined);
-                    if (response._id === undefined)
-                        throw new TypeError();
-                    return [4 /*yield*/, cloud.cloudPay.unifiedOrder({
-                            body: "霓虹町指南-集运运费",
-                            outTradeNo: response._id.toString(),
-                            spbillCreateIp: "127.0.0.1",
-                            subMchId: "1614594513",
-                            totalFee: parseInt(event.amount_to_pay) * 100,
-                            envId: "testbai-6gjgkia55f6d4918",
-                            functionName: "payDeliveryCallback",
-                            nonceStr: randomString(32),
-                            tradeType: "JSAPI"
-                        })];
-                case 3:
-                    res = _a.sent();
-                    console.log("unified order res=".concat(JSON.stringify(res)));
-                    return [2 /*return*/, res];
-                case 4:
-                    e_1 = _a.sent();
-                    console.log(e_1);
-                    return [3 /*break*/, 5];
-                case 5: return [2 /*return*/];
-            }
-        });
+// 查询数据库集合云函数入口函数
+exports.main = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, db.collection('pickup_spots').where({
+                    name: event.name
+                    // open_id: "123"
+                }).get()];
+            case 1: 
+            // 返回数据库查询结果
+            return [2 /*return*/, _a.sent()];
+        }
     });
-}
-exports.main = main;
+}); };

@@ -1,4 +1,4 @@
-import cloud from 'wx-server-sdk';
+import * as cloud from 'wx-server-sdk';
 import { IPickupSpot } from '../../../miniprogram/pages/getDelivery/Delivery';
 
 cloud.init({

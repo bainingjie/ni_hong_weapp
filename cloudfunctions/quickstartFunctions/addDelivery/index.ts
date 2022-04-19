@@ -1,6 +1,6 @@
 import * as cloud from 'wx-server-sdk';
 import request from "request-promise";
-import { IDelivery, IPackage, IPublic, IUser } from '../../../miniprogram/pages/getDelivery/Delivery';
+import { getDBCollection, IDelivery, IPackage, IPublic, IUser } from '../../../miniprogram/pages/getDelivery/Delivery';
 
 cloud.init({
 	env: cloud.DYNAMIC_CURRENT_ENV
@@ -16,17 +16,27 @@ export async function main(
 		shipping_details: Array<IPackage>,
 		pickup_spot: string,
 		phone: string,
-		[key:string]: any
 	},
 	context: any): Promise<
 	{ success: true, official_account_url: string } |
-	{ success: false, data: 'create collection failed' , msg:string, e: any}> {
+	{ success: false, data: 'create collection failed' }> {
 	try {
 		const wxContext = cloud.getWXContext();
-		const user_db = db.collection<IUser>('user');
+		const open_id = wxContext.OPENID;
+		const union_id = wxContext.UNIONID;
+		const user_db = getDBCollection<IUser>(db, 'user');
+
+		console.assert("OPENID" in wxContext);
+		console.assert("UNIONID" in wxContext);
+		console.assert(wxContext.OPENID!== undefined);
+		console.assert(wxContext.UNIONID!== undefined);
+		if(open_id=== undefined)
+			throw new Error("wxContext.OPENID === undefined")
+		if(union_id === undefined)
+			throw new Error("wxContext.UNIONID === undefined")
 		let user = await user_db
 			.where({
-				miniprogram_open_id: _.eq(wxContext.OPENID)
+				miniprogram_open_id: _.eq(open_id)
 			})
 			.get();
 		// console.log(user);
@@ -37,8 +47,8 @@ export async function main(
 				// data 字段表示需新增的 JSON 数据
 				data: {
 					// _id: 'todo-identifiant-aleatoire', // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
-					miniprogram_open_id: wxContext.OPENID,
-					union_id: wxContext.UNIONID,
+					miniprogram_open_id: open_id,
+					union_id: union_id,
 					official_account_open_id: null
 				}
 			});
@@ -63,10 +73,11 @@ export async function main(
 		// 	});
 		// 	// }
 		// }
+
 		let data: IDelivery = {
 			type: 0, //0是集运，1是商城交易 
-			open_id: wxContext.OPENID,
-			union_id: wxContext.UNIONID,
+			open_id: open_id,
+			union_id: union_id,
 			added_date: new Date(),
 			pickup_spot: event.pickup_spot,
 			packages: event.shipping_details,
@@ -84,7 +95,7 @@ export async function main(
 
 		}
 
-		const add_response = await db.collection<IDelivery>('delivery').add({
+		const add_response = await getDBCollection<IDelivery>(db, 'delivery').add({
 			// data 字段表示需新增的 JSON 数据
 			data: {
 				...data
@@ -97,7 +108,7 @@ export async function main(
 		if (add_response === undefined || typeof add_response === 'string')
 			throw new TypeError(`add_response=${add_response}`);
 
-		const response = await db.collection<IPublic>('public').doc('287a53aa61adee4100ba68a821f0aae3').get();
+		const response = await getDBCollection<IPublic>(db, 'public').doc('287a53aa61adee4100ba68a821f0aae3').get();
 		// log.info({
 		//   add_response:add_response
 		// })
@@ -151,8 +162,6 @@ export async function main(
 		return {
 			success: false,
 			data: 'create collection failed',
-			msg: "wtf?",
-			e: e
 		};
 	}
 }

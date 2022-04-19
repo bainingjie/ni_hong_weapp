@@ -3,6 +3,7 @@ import * as my_library from '../../my_library/index';
 import { IPackage, IPickupSpot } from '../getDelivery/Delivery';
 import type { main as addDelivery} from '../../../cloudfunctions/quickstartFunctions/addDelivery/index'
 import type {main as getPickUpSpots} from '../../../cloudfunctions/quickstartFunctions/getPickUpSpots/index'
+import type {main as getDelivery} from '../../../cloudfunctions/quickstartFunctions/getDelivery/index'
 Page({
 	/**
 	 * 页面的初始数据
@@ -100,7 +101,9 @@ Page({
 		let pickup_spot = this.data.pickup_spot;
 		let phone = this.data.phone;
 		console.debug(details, tracking_number);
+		console.debug("submitting...")
 		if (details.length > 0 && pickup_spot !=="请选择自提点" && phone.length > 0 && tracking_number==="") {
+			console.debug("alice");
 			wx.showLoading({
 				title: "",
 			});
@@ -111,9 +114,12 @@ Page({
 				// },
 				data: {
 					type: 'addDelivery',
-					shipping_details: this.data.shipping_details,
-					pickup_spot: this.data.pickup_spot,
-					phone: this.data.phone
+					arg: {
+						shipping_details: this.data.shipping_details,
+						// tracking_numbers: this.data.shipping_details,
+						pickup_spot: this.data.pickup_spot,
+						phone: this.data.phone
+					}
 				}
 			}).then((resp) => {
 				const result= resp.result;
@@ -174,7 +180,7 @@ Page({
 		wx.showLoading({
 			title: '',
 		});
-		wx.cloud.callFunction({
+		wx.cloud.callFunction<typeof getDelivery>({
 			name: 'quickstartFunctions',
 			data: {
 				type: 'getDelivery'

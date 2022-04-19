@@ -1,6 +1,7 @@
 // import * as cloud from 'wx-server-sdk';
 // const db = cloud.database();
-
+import type {DB} from 'wx-server-sdk';
+import type {main as getDelivery} from '../../../cloudfunctions/quickstartFunctions/getDelivery/index'
 export const ALL_JAPAN_PREFECTURES = ["北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県",
 	"茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県",
 	"新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県",
@@ -15,19 +16,12 @@ const db_collection_names = [
 	"baoming", "baoming_activity", "baoming_form_template",
 	"chinese_packages", "coupon", "delivery",
 	"official_account_user", "payment", "pickup_code",
-	"pickup_spots", "products", "public", "test", "user"
+	"pickup_spots", "products", "public", "test", "user", "coupon_user"
 ] as const;
 
-// type eq<X, Y> =
-//     (<T>() => T extends X ? 1 : 2) extends
-// 	(<T>() => T extends Y ? 1 : 2) ? true : false;
-// type first<T,U> = T;
-// type second<T,U> = U;
-
-// export function getDB<T extends typeof db_collection_names[number]>(): cloud.DB.CollectionReference {
-// 	console.assert()
-// 	return db.collection(T);
-// }
+export function getDBCollection<T extends DB.IDocumentData>(db: DB.Database, name:typeof db_collection_names[number]){
+	return db.collection<T>(name);
+}
 export interface IPickupSpot extends DB.IDocumentData {
 	address: {
 		postcode: string;
@@ -40,7 +34,7 @@ export interface IPickupSpot extends DB.IDocumentData {
 	name: string;
 }
 
-const DeliveryState = ["待打包称重", "待报价", "待支付", "待发货", "运输中", "已到达"] as const;
+const DeliveryState = ["待打包称重", "待报价", "待支付", "待发货", "运输中", "待配送至自提点", "已到达"] as const;
 type DeliveryState = typeof DeliveryState[number];
 
 export interface IPackage {
@@ -48,6 +42,12 @@ export interface IPackage {
 	content: string;
 	note: string;
 	weight: number | null;
+}
+export function assertIPackage<T extends IPackage>(p: T){
+	console.assert(typeof p.tracking_number === 'string');
+	console.assert(typeof p.content === 'string');
+	console.assert(typeof p.note === 'string');
+	console.assert(typeof p.weight === 'number' || p.weight === null);
 }
 export interface IDelivery extends DB.IDocumentData {
 	added_date: Date;
@@ -59,15 +59,18 @@ export interface IDelivery extends DB.IDocumentData {
 	phone: string;
 	pickup_code: string;
 	pickup_spot: string | IPickupSpot;
+	pickup_date?: string;
+	pickup_time?: string
 	remark: string;
 	state: DeliveryState;
 	tracking_number: string;
 	type: 0 | 1;
 	total_weight: "待称重" | number;
-	union_id: string | undefined;
+	union_id: string;
+	open_id: string;
 }
 export interface IPayment extends DB.IDocumentData {
-
+	totalFee?: number;
 }
 
 export type ICoupon = DB.IDocumentData & ({
@@ -79,11 +82,21 @@ export type ICoupon = DB.IDocumentData & ({
 	readonly percent: number;
 })
 export interface IUser extends DB.IDocumentData {
-	readonly miniprogram_open_id: string | undefined;
-	readonly union_id: string | undefined;
-	readonly official_account_open_id: null;
+	readonly miniprogram_open_id: string ;
+	readonly union_id: string ;
+	official_account_open_id: string|null;
 }
-
+export interface IProduct extends DB.IDocumentData{
+	is_active: boolean;
+	start_index: number;
+	sku: any[];
+	text:{
+		card_description: string;
+		name: string;
+		subtitle: string;
+		url_title: string;
+	}
+}
 export interface IPublic extends DB.IDocumentData {
 	JPY_to_CNY: number;
 	address: string;
@@ -106,12 +119,16 @@ export interface IPublic extends DB.IDocumentData {
 }
 
 export interface ICouponUser extends DB.IDocumentData {
-	readonly coupon: DB.DocumentId;
-	readonly user: DB.DocumentId;
+	readonly coupon_id: DB.DocumentId;
+	readonly open_id: DB.DocumentId;
 	readonly available_until: Date;
 	readonly state: "未使用" | "已使用" | "已过期" | "已作废"
+	count:number;
 }
-class NotImplementError extends Error{
+class NotImplementError extends Error {
 }
-class ValueError extends Error{
+class ValueError extends Error {
+}
+const callQuickstartFunction:typeof getDelivery = (event, context)=> {
+	
 }

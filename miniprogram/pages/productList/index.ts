@@ -1,12 +1,13 @@
 // pages/shop/index.ts
 import * as my_library from '../../my_library/index';
-import { IPublic } from '../getDelivery/Delivery';
+import { IProduct} from '../getDelivery/Delivery';
+import type {main as getProducts} from '../../../cloudfunctions/quickstartFunctions/getProducts'
 Page({
 
 	/**
 	 * 页面的初始数据
 	 */
-	data: <{is_ready: boolean, products: IPublic[]}>{
+	data: <{is_ready: boolean, products: IProduct[]}>{
 		is_ready: false,
 		products: [],
 	},
@@ -14,7 +15,7 @@ Page({
 		wx.showLoading({
 			title: '',
 		});
-		wx.cloud.callFunction({
+		wx.cloud.callFunction<typeof getProducts>({
 			name: 'quickstartFunctions',
 			data: {
 				type: 'getProducts',
@@ -24,9 +25,8 @@ Page({
 			if (resp.result === undefined || typeof resp.result === 'string')
 				throw new TypeError(`resp.result=${resp.result}`);
 
-			const result = resp.result as DB.IQueryResult<IPublic>;
 			this.setData({
-				products: result.data,
+				products: resp.result.data,
 			});
 			// console.log(this.data);
 			wx.hideLoading();

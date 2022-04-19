@@ -1,4 +1,4 @@
-import cloud from 'wx-server-sdk';
+import * as cloud from 'wx-server-sdk';
 import { IPublic } from '../../../miniprogram/pages/getDelivery/Delivery';
 
 cloud.init({

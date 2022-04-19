@@ -1,5 +1,5 @@
-import cloud from 'wx-server-sdk';
-import { IDelivery } from '../../../miniprogram/pages/getDelivery/Delivery';
+import * as cloud from 'wx-server-sdk';
+import { getDBCollection, IDelivery } from '../../../miniprogram/pages/getDelivery/Delivery';
 
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
@@ -10,7 +10,7 @@ const db = cloud.database();
 export async function main(event: {}, context: any) {
   const wxContext = cloud.getWXContext();
   // 返回数据库查询结果
-  return await db.collection<IDelivery>('delivery').where({
+  return await getDBCollection<IDelivery>(db, 'delivery').where({
     open_id: wxContext.OPENID
     // open_id: "123"
   }).orderBy('added_date','desc').get();

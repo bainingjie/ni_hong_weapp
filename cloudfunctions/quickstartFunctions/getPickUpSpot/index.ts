@@ -1,4 +1,5 @@
-import cloud from 'wx-server-sdk';
+import * as cloud from 'wx-server-sdk';
+import { getDBCollection, IPickupSpot } from '../../../miniprogram/pages/getDelivery/Delivery';
 
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
@@ -6,9 +7,9 @@ cloud.init({
 const db = cloud.database();
 
 // 查询数据库集合云函数入口函数
-exports.main = async (event:{name:string}, context: any) => {
+export async function main(event:{name:string}, context: any) {
   // 返回数据库查询结果
-  return await db.collection('pickup_spots').where({
+  return await getDBCollection<IPickupSpot>(db, 'pickup_spots').where({
     name:event.name
     // open_id: "123"
   }).get();

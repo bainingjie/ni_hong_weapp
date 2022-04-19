@@ -1,14 +1,7 @@
 <!--pages/getDelivery/index.wxml-->
 
 <wxs src="../../my_library/string.wxs" module="tools" />
-<wxs module="f_ck">
-function print(x){
-    console.log(JSON.stringify(x));
-}
-module.exports={
-    "print":print
-}
-</wxs>
+
 <view wx:if="{{delivery.type==0}}"> 
     
     <view class="mid_menu">
@@ -40,7 +33,7 @@ module.exports={
                     <!-- <van-button round size="small" color="red" plain wx:if="{{tools.my_equal(delivery.state,0)}}"  
                     bindtap="pay"  data-param="{{delivery._id}}"
                     >支付运费</van-button> -->
-                    <van-button round size="small" color="red" plain wx:if="{{tools.my_equal(delivery.state,0)}}"  bindtap="jumpPage"  data-jump="payDelivery">点我结算</van-button>
+                    <van-button round size="small" color="red" plain wx:if="{{tools.my_equal(delivery.state,0)}}"  bindtap="jumpPage"  data-jump="payDelivery" data-param="{{delivery._id}}">点我结算</van-button>
 
                 </view>
             </van-col>

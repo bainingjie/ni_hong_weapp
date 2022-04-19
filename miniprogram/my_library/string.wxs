@@ -1,7 +1,11 @@
 function my_slice(str, a, b) {
 	return str.slice(a, b);
 }
-function checkIsString(arg,argumentName){
+function print(x){
+    console.log(JSON.stringify(x));
+}
+
+function checkIsString(arg, argumentName){
 	if(typeof arg!=='string'){
 		console.log('TypeError: 名为',argumentName,'的参数类型不匹配。期望为string, 而实际为',typeof arg,'.')
 	}
@@ -46,6 +50,7 @@ module.exports = {
 	my_slice: my_slice,
 	my_equal: my_equal,
 	steps_index: steps_index,
-	n_correction: n_correction
+	n_correction: n_correction,
+	print: print
 }
 

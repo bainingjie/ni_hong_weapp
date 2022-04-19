@@ -55,3 +55,11 @@ export function prefectures_function<T>() {
 	// console.log(output);
 	return output;
 }
+
+export function randomString(len: number=32): string {
+	const t = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678";
+	let res = "";
+	for (let i = 0; i < len; i++)
+		res += t.charAt(Math.floor(Math.random() * t.length));
+	return res;
+}

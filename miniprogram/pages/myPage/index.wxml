@@ -1,4 +1,4 @@
-<view style="text-align: center;margin-top: 30rpx;" wx:if="{{my_delivery.length <1 }}">暂无订单</view>
+<view style="text-align: center;margin-top: 30rpx;" wx:if="{{my_delivery.length<1}}">暂无订单</view>
 
 <!-- <view class=" mid_menu" wx:if="{{my_delivery.length >0 }}" style="">
     <view style="text-align: center;color:black;font-size: 35rpx;margin-bottom: 0rpx;"> 流程 </view>
@@ -13,8 +13,9 @@
 </view> -->
 
 <wxs src="../../my_library/string.wxs" module="tools" />
-<view style="text-align: center;margin-top: 30rpx;margin-bottom: 10rpx;" wx:if="{{my_delivery.length >0 }}">我的订单</view>
-<view class=" mid_menu" style="margin-bottom:10rpx;margin-top: 10rpx;" wx:for="{{my_delivery}}" wx:key="*this" bindtap="jumpPage" data-jump="getDelivery" data-param="{{item._id}}">
+
+<view style="text-align: center;margin-top: 30rpx;margin-bottom: 10rpx;" wx:if="{{my_delivery.length>0}}">我的订单</view>
+<view class="mid_menu" style="margin-bottom:10rpx;margin-top: 10rpx;" wx:for="{{my_delivery}}" wx:key="*this" bindtap="jumpPage" data-jump="getDelivery" data-param="{{item._id}}">
     <!-- <view style="margin-bottom: 10rpx;text-align: center;" class="top_tip">中国→日本 空运</view> -->
     <!-- <van-steps
         steps="{{ steps }}"
@@ -26,8 +27,8 @@
         /> -->
     <van-row>
     <van-col span="20">
-        <view class="top_tip" style="margin-left: 30rpx;color: black;" wx:if="{{item.type==0}}"> 集运 </view>
-        <view class="top_tip" style="margin-left: 30rpx;color: black;" wx:if="{{item.type==1}}"> {{item.product_name}} </view>
+        <view class="top_tip" style="margin-left: 30rpx;color: black;" wx:if="{{item.type===0}}"> 集运 </view>
+        <view class="top_tip" style="margin-left: 30rpx;color: black;" wx:if="{{item.type===1}}"> {{item.product_name}} </view>
         <view style="margin-left: 30rpx;" class="top_tip" > 状态：<text style="color:#ee0a24;">{{item.state}}</text></view>
         <!-- <view style="margin-left: 30rpx;" class="top_tip" > 添加日期：{{tools.my_slice(item.added_date,0,10)}}</view> -->
         <view style="margin-left: 30rpx;" class="top_tip" > 自提点：{{item.pickup_spot}}</view>

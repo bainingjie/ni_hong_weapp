@@ -1,15 +1,19 @@
 
 import * as my_library from '../../my_library/index';
 import { IDelivery } from './Delivery';
+import type {main as getADelivery} from '../../../cloudfunctions/quickstartFunctions/getADelivery/index'
+import type {main as payDelivery} from '../../../cloudfunctions/quickstartFunctions/payDelivery/index'
 // pages/getDelivery/index.js
+const d = {};
 Page({
 
 	/**
 	 * 页面的初始数据
 	 */
-	data: <{delivery:IDelivery|null}>{
-		delivery: {state: [] as any}
-	},
+	data: d,
+	// <{delivery:IDelivery|null|undefined}>{
+		// delivery: undefined
+	// },
 	jumpPage: function (e: WechatMiniprogram.BaseEvent) {
 		my_library.jumpPage(e);
 	},
@@ -20,18 +24,15 @@ Page({
 		wx.showLoading({
 			title: '',
 		});
-		wx.cloud.callFunction({
+		wx.cloud.callFunction<typeof getADelivery>({
 			name: 'quickstartFunctions',
 			data: {
 				type: 'getADelivery',
 				_id: id
 			}
-		}).then((resp: ICloud.CallFunctionResult) => {
-			//   console.log(resp);
-			if (resp.result === undefined || typeof resp.result === 'string')
-				throw new TypeError(`resp.result=${resp.result}`);
+		}).then((resp) => {
 
-			const result = resp.result as DB.IQueryResult<IDelivery>;
+			const result = resp.result;
 			console.assert('data' in result);
 			console.assert(result.data.length>0);
 			this.setData({
@@ -46,41 +47,49 @@ Page({
 		});
 	},
 
-	pay() {
-		console.log("pay() called!")
-		if(this.data.delivery===null){
-			throw TypeError();
-		}
-		let that = this;
-		wx.cloud.callFunction({
-			name: 'quickstartFunctions',
-			data: {
-				type: 'payDelivery',
-				delivery_id: this.data.delivery._id,
-				amount_to_pay: this.data.delivery.amount_to_pay
-			}}).then((res) => {
-				console.log("pay() called successfully.");
-				console.log(res);
-				if(res.result === undefined || typeof res.result ==="string")
-					throw new TypeError();
-				const payment = res.result.payment;
+	// pay() {
+	// 	console.log("pay() called!")
+	// 	if(this.data.delivery===null){
+	// 		throw TypeError();
+	// 	}
+	// 	let that = this;
+	// 	if(typeof this.data.delivery.amount_to_pay === 'string')
+	// 		throw new TypeError();
+	// 	if(this.data.delivery._id === undefined)
+	// 		throw new TypeError();
 
-				wx.requestPayment({
-					...payment,
-					success(res: any) {
-						console.log('pay success', res)
-						that.getADelivery(that.data.delivery?._id!)
-					},
-					fail(err: any) {
-						console.error('pay fail', err)
-					}
-				})
-			}).catch(res => {
-				console.error("pay() failed.");
-				console.error(res);
-			})
+	// 	wx.cloud.callFunction<typeof payDelivery>({
+	// 		name: 'quickstartFunctions',
+	// 		data: {
+	// 			type: 'payDelivery',
+	// 			delivery_id: this.data.delivery._id.toString(),
+	// 			amount_to_pay: this.data.delivery.amount_to_pay
+	// 		}}).then((res) => {
+	// 			console.log("pay() called successfully.");
+	// 			console.log(res);
+	// 			if(res.result === undefined || typeof res.result ==="string")
+	// 				throw new TypeError();
+	// 			if(res.result.returnCode!=='SUCCESS')
+	// 				throw new Error('payment returnCode = FAIL');
+
+	// 			const payment = res.result.payment;
+
+	// 			wx.requestPayment({
+	// 				...payment,
+	// 				success(res: any) {
+	// 					console.log('pay success', res)
+	// 					that.getADelivery(that.data.delivery?._id!)
+	// 				},
+	// 				fail(err: any) {
+	// 					console.error('pay fail', err)
+	// 				}
+	// 			})
+	// 		}).catch(res => {
+	// 			console.error("pay() failed.");
+	// 			console.error(res);
+	// 		})
 		
-	},
+	// },
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
