@@ -7,11 +7,12 @@ cloud.init({
 const db = cloud.database();
 
 // 查询数据库集合云函数入口函数
-export async function main(event: { open_id: string;[key: string]: any }, context: any) {
+export async function main(event: { open_id: string;type: 'getCouponForUser'}, context: any) {
 	// 返回数据库查询结果
 	console.assert('open_id' in event);
-	console.assert(event.open_id !== undefined);
-	if (event.open_id === undefined) throw new Error("event.open_id can't be undefined!");
+	console.assert(typeof event.open_id === 'string');
+	if (typeof event.open_id !== 'string')
+		throw new Error(`event.open_id must be a string, but received a ${typeof event.open_id}. (event = ${JSON.stringify(event)}!`);
 
 	const qq = await getDBCollection<ICouponUser>(db, 'coupon_user').where({
 		open_id: event.open_id,
@@ -19,13 +20,19 @@ export async function main(event: { open_id: string;[key: string]: any }, contex
 		// open_id: "123"
 	}).get();
 
-	let coupons = new Array<ICoupon>();
+	let coupons = new Array<[ICouponUser,ICoupon]>();
+	const now = (new Date()).getTime();
 	for (let e of qq.data) {
-		const temp = await getDBCollection<ICoupon>(db, 'coupon').where({
-			_id: e.coupon_id
-		}).get();
-		console.assert(temp.data.length === 1);
-		coupons.push(...temp.data);
+		if(e.available_until.getTime()<now){
+			await getDBCollection<ICouponUser>(db, 'coupon_user').doc(e._id!).update({
+				data:{
+					state:"已过期"
+				}
+			});
+			continue;
+		};
+		const temp = await getDBCollection<ICoupon>(db, 'coupon').doc(e.coupon_id).get();
+		coupons.push([e,temp.data]);
 
 	}
 	return coupons;

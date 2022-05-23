@@ -1,3 +1,6 @@
+import { IPickupSpot } from "../pages/getDelivery/Delivery";
+// declare namespace WechatMiniprogram{ type BaseEvent=any;type CustomEvent<T>=any};
+// declare const wx: any;
 export function jumpPage(e: WechatMiniprogram.BaseEvent) {
 	// console.log(`/pages/${e.currentTarget.dataset.jump}/index?param=${e.currentTarget.dataset.param}`);
 	wx.navigateTo({
@@ -33,7 +36,7 @@ export function customer_service() {
 	wx.openCustomerServiceChat({
 		extInfo: { url: 'https://work.weixin.qq.com/kfid/kfc4b923529ee456844' },
 		corpId: 'ww4df7b908b4170ed8',
-		success(res) {
+		success(res: any) {
 		}
 	})
 }
@@ -46,14 +49,15 @@ export const prefecture_names = [
 	"徳島県", "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県",
 	"熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県"] as const;
 
-export function prefectures_function<T>() {
-	let prefectures: { [k: string]: T[] } = {};
-	for (let p of prefecture_names) {
-		prefectures[p] = new Array<T>();
+export function pickup_spots_groupby_prefectures(pickup_spots: IPickupSpot[]) {
+	let res: { [k: string]: IPickupSpot[] } = {};
+	for (let p of pickup_spots) {
+		const t = p.address.prefecture;
+		if(!(t in res))
+			res[t] = new Array<IPickupSpot>();
+		res[t].push(p);
 	}
-	let output = { prefecture_names, prefectures };
-	// console.log(output);
-	return output;
+	return res;
 }
 
 export function randomString(len: number=32): string {

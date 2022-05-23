@@ -46,7 +46,15 @@ Page({
         my_library.bottomTabbarClicked(event);
     },
     jumpPage(e: WechatMiniprogram.BaseEvent) {
-        my_library.jumpPage(e);
+		if(e.currentTarget.dataset.jump==="getDelivery"){
+			wx.navigateTo({
+				url: `/pages/${e.currentTarget.dataset.jump}/index`,
+				success(res: WechatMiniprogram.NavigateToSuccessCallbackResult){
+					res.eventChannel.emit("currentDelivery", e.currentTarget.dataset.param)
+				}
+			})
+		}
+		else my_library.jumpPage(e);
     },
     onLoad: function (options: any) {
         // this.getDelivery();

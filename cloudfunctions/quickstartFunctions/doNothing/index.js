@@ -61,27 +61,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.main = void 0;
 var cloud = __importStar(require("wx-server-sdk"));
-var Delivery_1 = require("../../../miniprogram/pages/getDelivery/Delivery");
 cloud.init({
     env: cloud.DYNAMIC_CURRENT_ENV
 });
 var db = cloud.database();
-// 查询数据库集合云函数入口函数
 function main(event, context) {
     return __awaiter(this, void 0, void 0, function () {
-        var wxContext;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    wxContext = cloud.getWXContext();
-                    return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'delivery').where({
-                            open_id: wxContext.OPENID
-                            // open_id: "123"
-                        }).orderBy('added_date', 'desc').get()];
-                case 1: 
-                // 返回数据库查询结果
-                return [2 /*return*/, _a.sent()];
-            }
+            throw new Error("NotImplementedError");
         });
     });
 }

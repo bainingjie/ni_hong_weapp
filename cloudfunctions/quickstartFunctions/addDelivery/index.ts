@@ -7,12 +7,13 @@ cloud.init({
 });
 const db = cloud.database();
 const _ = db.command;
-const log = cloud.logger();
+
 
 
 
 export async function main(
 	event: {
+		type: 'addDelivery',
 		shipping_details: Array<IPackage>,
 		pickup_spot: string,
 		phone: string,
@@ -20,6 +21,8 @@ export async function main(
 	context: any): Promise<
 	{ success: true, official_account_url: string } |
 	{ success: false, data: 'create collection failed' }> {
+	
+		const log = cloud.logger();
 	try {
 		const wxContext = cloud.getWXContext();
 		const open_id = wxContext.OPENID;

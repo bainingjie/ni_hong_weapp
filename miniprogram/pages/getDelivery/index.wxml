@@ -1,156 +1,178 @@
 <!--pages/getDelivery/index.wxml-->
-
+<!-- <page-meta page-style="{{ show ? 'overflow: hidden;' : '' }}" /> -->
 <wxs src="../../my_library/string.wxs" module="tools" />
 
-<view wx:if="{{delivery.type==0}}"> 
-    
-    <view class="mid_menu">
-        <van-row>
-            <van-col span="16">
-                <view style="margin-left: 30rpx;font-weight: bold;" class="top_tip"  > 订单ID：</view>
-            </van-col>
-            <van-col span="8">
-                <van-button round size="small" bindtap="copyText" data-text="{{delivery._id}}">复制订单ID</van-button>
-            </van-col>
-        </van-row>
-        <view style="margin-left: 30rpx;" class="top_tip"  > {{delivery._id}}</view>
+<view wx:if="{{delivery.type==0}}">
 
-        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 添加日期：</view>
-        <view style="margin-left: 30rpx;" class="top_tip" wx:if="{{delivery.added_date}}"> {{tools.my_slice(delivery.added_date,0,10)}}</view>
-        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 状态：</view>
-        <view style="margin-left: 30rpx;" class="top_tip" > <text style="color:#ee0a24;">{{delivery.state}}</text></view>
-        <view wx:if="{{delivery.remark}}">
-            <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 备注：</view>
-            <view style="margin-left: 30rpx;" class="top_tip" > <text style="color:#ee0a24;">{{delivery.remark}}</text></view>
-        </view>
+	<view class="mid_menu">
+		<van-row>
+			<van-col span="16">
+				<view style="margin-left: 30rpx;font-weight: bold;" class="top_tip"> 订单ID：</view>
+			</van-col>
+			<van-col span="8">
+				<van-button round size="small" bindtap="copyText" data-text="{{delivery._id}}">复制订单ID</van-button>
+			</van-col>
+		</van-row>
+		<view style="margin-left: 30rpx;" class="top_tip"> {{delivery._id}}</view>
 
-        <van-row>
-            <van-col span="16">
-                <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"  > 总运费 (元):</view>
-            </van-col>
-            <van-col span="8">
-                <view style="margin-top: 20rpx;">
-                    <!-- <van-button round size="small" color="red" plain wx:if="{{tools.my_equal(delivery.state,0)}}"  
+		<view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"> 添加日期：</view>
+		<view style="margin-left: 30rpx;" class="top_tip" wx:if="{{delivery.added_date}}"> {{tools.my_slice(delivery.added_date,0,10)}}</view>
+		<view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"> 状态：</view>
+		<view style="margin-left: 30rpx;" class="top_tip"> <text style="color:#ee0a24;">{{delivery.state}}</text></view>
+		<view wx:if="{{delivery.remark}}">
+			<view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"> 备注：</view>
+			<view style="margin-left: 30rpx;" class="top_tip"> <text style="color:#ee0a24;">{{delivery.remark}}</text></view>
+		</view>
+
+		<van-row>
+			<van-col span="16">
+				<view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"> 总运费 (元):</view>
+			</van-col>
+			<van-col span="8">
+				<view style="margin-top: 20rpx;">
+					<!-- <van-button round size="small" color="red" plain wx:if="{{tools.my_equal(delivery.state,0)}}"  
                     bindtap="pay"  data-param="{{delivery._id}}"
                     >支付运费</van-button> -->
-                    <van-button round size="small" color="red" plain wx:if="{{tools.my_equal(delivery.state,0)}}"  bindtap="jumpPage"  data-jump="payDelivery" data-param="{{delivery._id}}">点我结算</van-button>
+					<!-- <van-button round size="small" color="red" plain wx:if="{{tools.my_equal(delivery.state,0)}}"  bindtap="jumpPage"  data-jump="payDelivery" data-param="{{delivery}}">点我结算</van-button> -->
 
-                </view>
-            </van-col>
-        </van-row>
-        
-        <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.amount_to_pay}}<text wx:if="{{!tools.my_equal(delivery.state,2)}}"> </text> </view>
+				</view>
+			</van-col>
+		</van-row>
 
-        <van-row>
-            <van-col span="16">
-                <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"  > 国际运单号：</view>
-            </van-col>
-            <van-col span="8">
-                <view style="margin-top: 20rpx;"><van-button round size="small" bindtap="copyText" data-text="{{delivery.tracking_number}}" wx:if="{{!tools.my_equal(delivery.tracking_number,1)}}">复制运单号</van-button></view>
-            </van-col>
-        </van-row>
+		<view style="margin-left: 30rpx;" class="top_tip"> {{delivery.amount_to_pay}}<text wx:if="{{!tools.my_equal(delivery.state,2)}}"> </text> </view>
 
-        <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.tracking_number}}</view>
-        <view  class="top_tip" style="margin-left: 30rpx;font-size: 28rpx;color: rgba(0, 0, 0, 0.5);margin-top: 20rpx;"> 运单号可在17track.net或日本邮政官网上追踪，信息更新有时会有1-2天的延迟，属于正常现象。包裹到达后，会有公众号的自动通知~</view>
-        <!-- <view  class="top_tip" style="margin-left: 30rpx;font-size: 28rpx;color: rgba(0, 0, 0, 0.5);"> 物流信息的更新有时会有1-2天的延迟，属于正常现象请放心~</view> -->
-        
+		<van-row>
+			<van-col span="16">
+				<view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"> 国际运单号：</view>
+			</van-col>
+			<van-col span="8">
+				<view style="margin-top: 20rpx;">
+					<van-button round size="small" bindtap="copyText" data-text="{{delivery.tracking_number}}" wx:if="{{!tools.my_equal(delivery.tracking_number,1)}}">复制运单号</van-button>
+				</view>
+			</van-col>
+		</van-row>
+
+		<view style="margin-left: 30rpx;" class="top_tip"> {{delivery.tracking_number}}</view>
+		<view class="top_tip" style="margin-left: 30rpx;font-size: 28rpx;color: rgba(0, 0, 0, 0.5);margin-top: 20rpx;"> 运单号可在17track.net或日本邮政官网上追踪，信息更新有时会有1-2天的延迟，属于正常现象。包裹到达后，会有公众号的自动通知~</view>
+		<!-- <view  class="top_tip" style="margin-left: 30rpx;font-size: 28rpx;color: rgba(0, 0, 0, 0.5);"> 物流信息的更新有时会有1-2天的延迟，属于正常现象请放心~</view> -->
 
 
-    </view>
 
-    <view class=" mid_menu">
-        <van-row>
-            <van-col span="16">
-                <view style="margin-left: 30rpx;font-weight: bold;" class="top_tip"  > 自提点：</view>
-            </van-col>
-            <van-col span="8">
-                <van-button round size="small" bindtap="jumpPage" data-jump="pickUpSpot" data-param="{{delivery.pickup_spot}}">查看详情</van-button>
-            </van-col>
-        </van-row>
-        <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.pickup_spot}}</view>
+	</view>
 
-        <view wx:if="{{tools.my_equal(delivery.state,3)}}">
-            <van-row>
-                <van-col span="16">
-                    <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"  > 取货时间：</view>
-                </van-col>
-                <van-col span="8">
-                    <view style="margin-top: 20rpx;">
-                        <van-button round size="small" color="red" plain bindtap="jumpPage" data-jump="selectPickupTime"  data-param="{{delivery._id}}">选择取货时间</van-button>
-                    </view>
-                </van-col>
-            </van-row>
-        </view>
-        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" wx:if="{{delivery.pickup_date}}"> 取货时间：</view>
-        <view style="margin-left: 30rpx;" class="top_tip" wx:if="{{delivery.pickup_date}}"> {{delivery.pickup_date}} {{delivery.pickup_time}}</view>
-        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 取货码：</view>
-        <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.pickup_code}}</view>
-        <view  class="top_tip" style="margin-left: 30rpx;font-size: 28rpx;margin-top: 20rpx;color: rgba(0, 0, 0, 0.5);"> 用取货码即可在自提点取件，</view>
-        <view  class="top_tip" style="margin-left: 30rpx;font-size: 28rpx;margin-top: 0rpx;color: rgba(0, 0, 0, 0.5);"> 取货时请记得自带手提袋/包哦 ~ ⸜( •⌄• )⸝</view>
-    </view>
+	<view class=" mid_menu">
+		<van-row>
+			<van-col span="16">
+				<view style="margin-left: 30rpx;font-weight: bold;" class="top_tip"> 自提点：</view>
+			</van-col>
+			<van-col span="8">
+				<van-button round size="small" bindtap="jumpPage" data-jump="pickUpSpot" data-param="{{delivery.pickup_spot}}">查看详情</van-button>
+			</van-col>
+		</van-row>
+		<view style="margin-left: 30rpx;" class="top_tip"> {{delivery.pickup_spot}}</view>
 
-    <view class=" mid_menu">
-        <van-row>
-                <van-col span="16"  style="font-weight: bold;" class="top_tip" ><text style="padding-left:30rpx;">计费总重量 (kg):</text></van-col>
-                <!-- <van-col span="8"  wx:if="{{delivery.real_total_weight}}" style="font-weight: bold;" class="top_tip" ><text>总重量:</text></van-col> -->
-        </van-row>
-        <van-row>
-                <van-col span="16"  class="top_tip" ><text style="padding-left:30rpx;">{{delivery.total_weight}} </text></van-col>
-                <!-- <van-col span="8"  wx:if="{{delivery.real_total_weight}}" class="top_tip" ><text>{{delivery.real_total_weight}} kg</text></van-col> -->
-        </van-row>
-        <view style="margin-top: 20rpx;margin-bottom: 20rpx;"></view>
-        <van-row>
-                <van-col span="19"  style="font-weight: bold;" class="top_tip" ><text style="padding-left:30rpx;">快递单号</text></van-col>
-                <van-col span="5"  wx:if="{{delivery.total_weight}}" style="font-weight: bold;" class="top_tip" ><text>重量(kg)</text></van-col>
-        </van-row>
-        <view wx:for="{{delivery.packages}}" wx:key="*this" class="top_tip">
-            <van-row >
-                <van-col span="20"   class="top_tip" ><text style="padding-left:30rpx;">{{item.tracking_number}}</text><text wx:if="{{item.content}}"> ({{item.content}})</text></van-col>
-                <van-col span="4"  wx:if="{{item.weight}}" class="top_tip" ><text>{{item.weight}}</text></van-col> 
-            </van-row>
-            <view style="padding-left:30rpx;color: rgba(0, 0, 0, 0.5);" class="top_tip" wx:if="{{item.note}}">备注: {{item.note}}</view>
-        </view>
-    </view>
+		<view wx:if="{{tools.my_equal(delivery.state,3)}}">
+			<van-row>
+				<van-col span="16">
+					<view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"> 取货时间：</view>
+				</van-col>
+				<van-col span="8">
+					<view style="margin-top: 20rpx;">
+						<van-button round size="small" color="red" plain bindtap="jumpPage" data-jump="selectPickupTime" data-param="{{delivery._id}}">选择取货时间</van-button>
+					</view>
+				</van-col>
+			</van-row>
+		</view>
+		<view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" wx:if="{{delivery.pickup_date}}"> 取货时间：</view>
+		<view style="margin-left: 30rpx;" class="top_tip" wx:if="{{delivery.pickup_date}}"> {{delivery.pickup_date}} {{delivery.pickup_time}}</view>
+		<view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"> 取货码：</view>
+		<view style="margin-left: 30rpx;" class="top_tip"> {{delivery.pickup_code}}</view>
+		<view class="top_tip" style="margin-left: 30rpx;font-size: 28rpx;margin-top: 20rpx;color: rgba(0, 0, 0, 0.5);"> 用取货码即可在自提点取件，</view>
+		<view class="top_tip" style="margin-left: 30rpx;font-size: 28rpx;margin-top: 0rpx;color: rgba(0, 0, 0, 0.5);"> 取货时请记得自带手提袋/包哦 ~ ⸜( •⌄• )⸝</view>
+	</view>
+
+	<view class=" mid_menu">
+		<van-row>
+			<van-col span="16" style="font-weight: bold;" class="top_tip"><text style="padding-left:30rpx;">计费总重量 (kg):</text></van-col>
+			<!-- <van-col span="8"  wx:if="{{delivery.real_total_weight}}" style="font-weight: bold;" class="top_tip" ><text>总重量:</text></van-col> -->
+		</van-row>
+		<van-row>
+			<van-col span="16" class="top_tip"><text style="padding-left:30rpx;">{{delivery.total_weight}} </text></van-col>
+			<!-- <van-col span="8"  wx:if="{{delivery.real_total_weight}}" class="top_tip" ><text>{{delivery.real_total_weight}} kg</text></van-col> -->
+		</van-row>
+		<view style="margin-top: 20rpx;margin-bottom: 20rpx;"></view>
+		<van-row>
+			<van-col span="19" style="font-weight: bold;" class="top_tip"><text style="padding-left:30rpx;">快递单号</text></van-col>
+			<van-col span="5" wx:if="{{delivery.total_weight}}" style="font-weight: bold;" class="top_tip"><text>重量(kg)</text></van-col>
+		</van-row>
+		<view wx:for="{{delivery.packages}}" wx:key="*this" class="top_tip">
+			<van-row>
+				<van-col span="20" class="top_tip"><text style="padding-left:30rpx;">{{item.tracking_number}}</text><text wx:if="{{item.content}}"> ({{item.content}})</text></van-col>
+				<van-col span="4" wx:if="{{item.weight}}" class="top_tip"><text>{{item.weight}}</text></van-col>
+			</van-row>
+			<view style="padding-left:30rpx;color: rgba(0, 0, 0, 0.5);" class="top_tip" wx:if="{{item.note}}">备注: {{item.note}}</view>
+		</view>
+	</view>
+	<view class="mid_menu">
+		<van-cell title="我的优惠券" value="{{coupons.length||0}}张可用" is-link bind:click="showPopup">
+		</van-cell>
+		<van-popup round show="{{ couponPopupShow }}" position="bottom" custom-style="height: 50%;" bind:close="onPopupClose" safe-area-inset-bottom="{{true}}">
+			<view style="text-align: center;margin-top: 30rpx;" wx:if="{{!coupons||coupons.length===0}}">你还没有优惠券哦</view>
+			<van-checkbox-group value="{{ selectedCouponIndices }}" bind:change="onCouponCheckboxChange" wx:else>
+				<van-cell-group>
+					<van-cell wx:for="{{ coupons }}" wx:key="index" title="{{ item[1].description }}" value-class="value-class" clickable data-index="{{ index }}" bind:click="toggle">
+						<van-checkbox catch:tap="noop" class="checkboxes-{{ index }}" name="{{ index }}" />
+					</van-cell>
+				</van-cell-group>
+			</van-checkbox-group>
+
+			<van-button round type="primary" size="large" color="red" bind:click="onConfirmPopupClose">确认</van-button>
+		</van-popup>
+		<!-- <van-cell title="查看优惠券" value="-10.00" is-link bind:tap="jumpPage" data-jump="selectCoupons" data-param="{{delivery}}" /> -->
+	</view>
 </view>
 
 
 
-<view wx:if="{{delivery.type==1}}"> 
-    <view class=" mid_menu">
+<view wx:if="{{delivery.type==1}}">
+	<view class=" mid_menu">
 
-        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 商品：</view>
-        <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.product_name}}</view>
-        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 种类：</view>
-        <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.sku_name}}</view>
-        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 状态：</view>
-        <view style="margin-left: 30rpx;" class="top_tip" > <text style="color:#ee0a24;">{{delivery.state}}</text></view>
-        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 添加日期：</view>
-        <view style="margin-left: 30rpx;margin-bottom: 30rpx;" class="top_tip" wx:if="{{delivery.added_date}}"> {{tools.my_slice(delivery.added_date,0,10)}}</view>
+		<view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"> 商品：</view>
+		<view style="margin-left: 30rpx;" class="top_tip"> {{delivery.product_name}}</view>
+		<view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"> 种类：</view>
+		<view style="margin-left: 30rpx;" class="top_tip"> {{delivery.sku_name}}</view>
+		<view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"> 状态：</view>
+		<view style="margin-left: 30rpx;" class="top_tip"> <text style="color:#ee0a24;">{{delivery.state}}</text></view>
+		<view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"> 添加日期：</view>
+		<view style="margin-left: 30rpx;margin-bottom: 30rpx;" class="top_tip" wx:if="{{delivery.added_date}}"> {{tools.my_slice(delivery.added_date,0,10)}}</view>
 
-        <van-row>
-            <van-col span="16">
-                <view style="margin-left: 30rpx;font-weight: bold;" class="top_tip"  > 订单ID：</view>
-            </van-col>
-            <van-col span="8">
-                <van-button round size="small" bindtap="copyText" data-text="{{delivery._id}}">复制订单ID</van-button>
-            </van-col>
-        </van-row>
-        <view style="margin-left: 30rpx;" class="top_tip"  > {{delivery._id}}</view>
+		<van-row>
+			<van-col span="16">
+				<view style="margin-left: 30rpx;font-weight: bold;" class="top_tip"> 订单ID：</view>
+			</van-col>
+			<van-col span="8">
+				<van-button round size="small" bindtap="copyText" data-text="{{delivery._id}}">复制订单ID</van-button>
+			</van-col>
+		</van-row>
+		<view style="margin-left: 30rpx;" class="top_tip"> {{delivery._id}}</view>
 
-    </view>
+	</view>
 
-    <view class=" mid_menu">
-        <van-row>
-            <van-col span="16">
-                <view style="margin-left: 30rpx;font-weight: bold;" class="top_tip"  > 自提点：</view>
-            </van-col>
-            <van-col span="8">
-                <van-button round size="small" bindtap="jumpPage" data-jump="pickUpSpot" data-param="{{delivery.pickup_spot}}">查看详情</van-button>
-            </van-col>
-        </van-row>
-        <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.pickup_spot}}</view>
-        <view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip" > 取货码：</view>
-        <view style="margin-left: 30rpx;" class="top_tip" > {{delivery.pickup_code}}</view>
-        <view  class="top_tip" style="margin-left: 30rpx;font-size: 28rpx;margin-top: 30rpx;color: rgba(0, 0, 0, 0.5);"> 取货时请记得自带手提袋/包~ ⸜( •⌄• )⸝</view>
-    </view>
+	<view class=" mid_menu">
+		<van-row>
+			<van-col span="16">
+				<view style="margin-left: 30rpx;font-weight: bold;" class="top_tip"> 自提点：</view>
+			</van-col>
+			<van-col span="8">
+				<van-button round size="small" bindtap="jumpPage" data-jump="pickUpSpot" data-param="{{delivery.pickup_spot}}">查看详情</van-button>
+			</van-col>
+		</van-row>
+		<view style="margin-left: 30rpx;" class="top_tip"> {{delivery.pickup_spot}}</view>
+		<view style="margin-left: 30rpx;font-weight: bold;margin-top: 20rpx;" class="top_tip"> 取货码：</view>
+		<view style="margin-left: 30rpx;" class="top_tip"> {{delivery.pickup_code}}</view>
+		<view class="top_tip" style="margin-left: 30rpx;font-size: 28rpx;margin-top: 30rpx;color: rgba(0, 0, 0, 0.5);"> 取货时请记得自带手提袋/包~ ⸜( •⌄• )⸝</view>
+	</view>
 </view>
+<van-submit-bar wx:if="{{tools.my_equal(delivery.state, 0)}}" label="{{label}}" price="{{ (delivery.amount_to_pay===undefined||delivery.amount_to_pay===null?0:delivery.amount_to_pay-discount)*100 }}" button-text="提交订单" bind:submit="pay" safe-area-inset-bottom="{{true}}" >
+	
+</van-submit-bar>

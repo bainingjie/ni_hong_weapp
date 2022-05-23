@@ -7,7 +7,7 @@ cloud.init({
 const db = cloud.database();
 
 // 查询数据库集合云函数入口函数
-export async function main(event: {}, context: any) {
+export async function main(event: {type:'getDelivery'}, context: any) {
   const wxContext = cloud.getWXContext();
   // 返回数据库查询结果
   return await getDBCollection<IDelivery>(db, 'delivery').where({

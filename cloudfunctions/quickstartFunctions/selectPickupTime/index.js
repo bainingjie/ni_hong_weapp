@@ -41,23 +41,68 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 exports.main = void 0;
 var wx_server_sdk_1 = __importDefault(require("wx-server-sdk"));
+var request_promise_1 = __importDefault(require("request-promise"));
 var Delivery_1 = require("../../../miniprogram/pages/getDelivery/Delivery");
 wx_server_sdk_1["default"].init({
     env: wx_server_sdk_1["default"].DYNAMIC_CURRENT_ENV
 });
 var db = wx_server_sdk_1["default"].database();
-// 查询数据库集合云函数入口函数
+var _ = db.command;
+var log = wx_server_sdk_1["default"].logger();
 function main(event, context) {
     return __awaiter(this, void 0, void 0, function () {
+        var delivery_response, resData, text, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'products').orderBy('view', 'desc').get()];
-                case 1: 
-                // 返回数据库查询结果
-                return [2 /*return*/, _a.sent()];
+                case 0:
+                    _a.trys.push([0, 4, , 5]);
+                    return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'delivery').doc(event.id).get()];
+                case 1:
+                    delivery_response = _a.sent();
+                    resData = { msgtype: "", text: { content: "" } };
+                    if ("pickup_date" in delivery_response.data) {
+                        text = "\u6709\u987E\u5BA2\u4FEE\u6539\u4E86\u53D6\u8D27\u65F6\u95F4~\ndelivery_id:".concat(event.id, "\n\u4FEE\u6539\u524D\uFF1A").concat(delivery_response.data.pickup_date, " ").concat(delivery_response.data.pickup_time, " \n\u4FEE\u6539\u540E\uFF1A").concat(event.date, " ").concat(event.time, " \n\u53D6\u8D27\u5730\u70B9\uFF1A").concat(delivery_response.data.pickup_spot, " \n\u53D6\u8D27\u7801\uFF1A ").concat(delivery_response.data.pickup_code, " \n");
+                        resData.msgtype = "text";
+                        resData.text.content = text;
+                    }
+                    else {
+                        resData.msgtype = "text";
+                        resData.text.content = "\u6709\u987E\u5BA2\u9009\u62E9\u4E86\u53D6\u8D27\u65F6\u95F4~\ndelivery_id:".concat(event.id, "\n\u53D6\u8D27\u65F6\u95F4\uFF1A").concat(event.date, " ").concat(event.time, " \n\u53D6\u8D27\u5730\u70B9\uFF1A").concat(delivery_response.data.pickup_spot, " \n\u53D6\u8D27\u7801\uFF1A ").concat(delivery_response.data.pickup_code, " \n");
+                    }
+                    return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'delivery').doc(event.id).update({
+                            data: {
+                                state: "待配送至自提点",
+                                pickup_date: event.date,
+                                pickup_time: event.time
+                            }
+                        })];
+                case 2:
+                    _a.sent();
+                    return [4 /*yield*/, (0, request_promise_1["default"])({
+                            url: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=182aec95-9e36-4f6b-9fb4-2087d5f31dca",
+                            method: "POST",
+                            headers: {
+                                "content-type": "application/json"
+                            },
+                            body: JSON.stringify(resData)
+                        })];
+                case 3:
+                    _a.sent();
+                    return [2 /*return*/, {
+                            success: true
+                        }];
+                case 4:
+                    e_1 = _a.sent();
+                    log.error({
+                        error: e_1
+                    });
+                    return [2 /*return*/, {
+                            success: false,
+                            data: "failed to update pickup time"
+                        }];
+                case 5: return [2 /*return*/];
             }
         });
     });
 }
 exports.main = main;
-;

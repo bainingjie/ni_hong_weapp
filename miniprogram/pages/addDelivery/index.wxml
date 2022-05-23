@@ -1,5 +1,5 @@
 
-<view wx:if="{{state==0}}" style="padding-top: 20rpx;">
+<view wx:if="{{state===0}}" style="padding-top: 20rpx;">
     <view class="mid_menu"  style="text-align: center">
       <text>请确认所有包裹都被仓库签收后，
       一口气添加快递单号。₍ᐢ⑅•ᴗ•⑅ᐢ₎♡</text> 
@@ -79,7 +79,7 @@
    </view>
 </view>
 
-<view wx:if="{{state==1}}" style="text-align: center;">
+<view wx:if="{{state===1}}" style="text-align: center;">
   <view>
     <icon class="icon-box-img icon" type="success" size="53"></icon>
     <view class="title">提交成功</view>
@@ -96,7 +96,7 @@
   </view>
 </view>
 
-<view wx:if="{{state==2}}">
+<view wx:if="{{state===2}}">
   添加失败，请联系客服。
 </view>
   

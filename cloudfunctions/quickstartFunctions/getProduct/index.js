@@ -1,27 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -58,31 +35,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
 exports.main = void 0;
-var cloud = __importStar(require("wx-server-sdk"));
+var wx_server_sdk_1 = __importDefault(require("wx-server-sdk"));
 var Delivery_1 = require("../../../miniprogram/pages/getDelivery/Delivery");
-cloud.init({
-    env: cloud.DYNAMIC_CURRENT_ENV
+wx_server_sdk_1["default"].init({
+    env: wx_server_sdk_1["default"].DYNAMIC_CURRENT_ENV
 });
-var db = cloud.database();
+var db = wx_server_sdk_1["default"].database();
 // 查询数据库集合云函数入口函数
 function main(event, context) {
     return __awaiter(this, void 0, void 0, function () {
-        var wxContext;
+        var product_response, delivery;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    wxContext = cloud.getWXContext();
-                    return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'delivery').where({
-                            open_id: wxContext.OPENID
-                            // open_id: "123"
-                        }).orderBy('added_date', 'desc').get()];
-                case 1: 
-                // 返回数据库查询结果
-                return [2 /*return*/, _a.sent()];
+                case 0: return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'products').doc(event.product_id).get()];
+                case 1:
+                    product_response = _a.sent();
+                    return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'public').doc("287a53aa61adee4100ba68a821f0aae3").get()];
+                case 2:
+                    delivery = _a.sent();
+                    return [2 /*return*/, { data: product_response.data, delivery: delivery.data.product_delivery }];
             }
         });
     });
 }
 exports.main = main;
+;

@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/inquirer": "^8.2.1",
     "@vant/weapp": "^1.10.2",
+    "inquirer": "^8.2.2",
     "wx-server-sdk": "^2.6.1"
   },
   "devDependencies": {

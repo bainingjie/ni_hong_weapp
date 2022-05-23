@@ -41,23 +41,73 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 exports.__esModule = true;
 exports.main = void 0;
 var wx_server_sdk_1 = __importDefault(require("wx-server-sdk"));
+var my_library_1 = require("../../../miniprogram/my_library");
 var Delivery_1 = require("../../../miniprogram/pages/getDelivery/Delivery");
 wx_server_sdk_1["default"].init({
     env: wx_server_sdk_1["default"].DYNAMIC_CURRENT_ENV
 });
 var db = wx_server_sdk_1["default"].database();
-// 查询数据库集合云函数入口函数
+var log = wx_server_sdk_1["default"].logger();
 function main(event, context) {
     return __awaiter(this, void 0, void 0, function () {
+        var pub, totalFee, wxContext, is_admin, response, res, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'products').orderBy('view', 'desc').get()];
-                case 1: 
-                // 返回数据库查询结果
-                return [2 /*return*/, _a.sent()];
+                case 0:
+                    _a.trys.push([0, 5, , 6]);
+                    return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'public').doc("287a53aa61adee4100ba68a821f0aae3").get()];
+                case 1:
+                    pub = _a.sent();
+                    totalFee = 0;
+                    if (event.currency === "JPY") {
+                        totalFee = Math.ceil(parseInt(event.amount_to_pay) * pub.data.JPY_to_CNY);
+                    }
+                    else {
+                        totalFee = parseInt(event.amount_to_pay);
+                    }
+                    return [4 /*yield*/, wx_server_sdk_1["default"].getWXContext()];
+                case 2:
+                    wxContext = _a.sent();
+                    is_admin = (wxContext.OPENID === "onlNR5CLE8pj91ZhS1PkZaDv9OfU");
+                    return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'payment').add({
+                            // data 字段表示需新增的 JSON 数据
+                            data: {
+                                //delivery_id:event.delivery_id,
+                                type: 1,
+                                is_paid: false,
+                                totalFee: totalFee,
+                                currency: "CNY",
+                                product_id: event.product_id,
+                                sku_index: event.sku_index,
+                                pick_up_spot: event.pick_up_spot,
+                                miniprogram_open_id: wxContext.OPENID,
+                                union_id: wxContext.UNIONID
+                            }
+                        })];
+                case 3:
+                    response = _a.sent();
+                    return [4 /*yield*/, wx_server_sdk_1["default"].cloudPay.unifiedOrder({
+                            body: "霓虹町指南-结算",
+                            outTradeNo: response._id.toString(),
+                            spbillCreateIp: "127.0.0.1",
+                            subMchId: "1614594513",
+                            totalFee: is_admin ? 100 : totalFee * 100,
+                            envId: "testbai-6gjgkia55f6d4918",
+                            functionName: "payDeliveryCallback",
+                            nonceStr: (0, my_library_1.randomString)(),
+                            tradeType: "JSAPI"
+                        })];
+                case 4:
+                    res = _a.sent();
+                    console.log("res", res);
+                    return [2 /*return*/, { res: res, payment_id: response._id }];
+                case 5:
+                    e_1 = _a.sent();
+                    console.log(e_1);
+                    return [2 /*return*/, e_1];
+                case 6: return [2 /*return*/];
             }
         });
     });
 }
 exports.main = main;
-;

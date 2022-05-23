@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -37,33 +60,91 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 exports.main = void 0;
-var CloudFunctionEventTypes = {
-    getPublicData: require('./getPublicData/index'),
-    addDelivery: require('./addDelivery/index'),
-    payDelivery: require('./payDelivery/index'),
-    getPickUpSpot: require('./getPickUpSpot/index'),
-    getPickUpSpots: require('./getPickUpSpots/index'),
-    getDelivery: require('./getDelivery/index'),
-    getADelivery: require('./getADelivery/index'),
-    getProduct: require('./getProduct/index'),
-    getProducts: require('./getProducts/index'),
-    selectPickupTime: require('./selectPickupTime/index'),
-    payTrade: require('./payTrade/index'),
-    addPhone: require('./addPhone/index')
-};
+// 云函数入口函数
+var addDelivery = __importStar(require("./addDelivery/index"));
+var addPhone = __importStar(require("./addPhone/index"));
+var doNothing = __importStar(require("./doNothing/index"));
+var getADelivery = __importStar(require("./getADelivery/index"));
+var getCouponForUser = __importStar(require("./getCouponForUser/index"));
+var getDelivery = __importStar(require("./getDelivery/index"));
+var getPickUpSpot = __importStar(require("./getPickUpSpot/index"));
+var getPickUpSpots = __importStar(require("./getPickUpSpots/index"));
+var getProduct = __importStar(require("./getProduct/index"));
+var getProducts = __importStar(require("./getProducts/index"));
+var getPublicData = __importStar(require("./getPublicData/index"));
+var payDelivery = __importStar(require("./payDelivery/index"));
+var payTrade = __importStar(require("./payTrade/index"));
+var selectPickupTime = __importStar(require("./selectPickupTime/index"));
+var CloudFunctionEventTypes = [
+    'addDelivery',
+    'addPhone',
+    'doNothing',
+    'getADelivery',
+    'getCouponForUser',
+    'getDelivery',
+    'getPickUpSpot',
+    'getPickUpSpots',
+    'getProduct',
+    'getProducts',
+    'getPublicData',
+    'payDelivery',
+    'payTrade',
+    'selectPickupTime',
+];
 function main(event, context) {
     return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    console.log(event.type);
-                    if (!(event.type in CloudFunctionEventTypes)) return [3 /*break*/, 2];
-                    return [4 /*yield*/, CloudFunctionEventTypes[event.type].main(event, context)];
-                case 1: return [2 /*return*/, _a.sent()];
-                case 2:
-                    console.log("switch语法的index.js也需要增量上传。");
-                    _a.label = 3;
-                case 3: return [2 /*return*/];
+                    console.assert(typeof event.type === 'string');
+                    _a = event.type;
+                    switch (_a) {
+                        case 'addDelivery': return [3 /*break*/, 1];
+                        case 'addPhone': return [3 /*break*/, 3];
+                        case 'doNothing': return [3 /*break*/, 5];
+                        case 'getADelivery': return [3 /*break*/, 7];
+                        case 'getCouponForUser': return [3 /*break*/, 9];
+                        case 'getDelivery': return [3 /*break*/, 11];
+                        case 'getPickUpSpot': return [3 /*break*/, 13];
+                        case 'getPickUpSpots': return [3 /*break*/, 15];
+                        case 'getProduct': return [3 /*break*/, 17];
+                        case 'getProducts': return [3 /*break*/, 19];
+                        case 'getPublicData': return [3 /*break*/, 21];
+                        case 'payDelivery': return [3 /*break*/, 23];
+                        case 'payTrade': return [3 /*break*/, 25];
+                        case 'selectPickupTime': return [3 /*break*/, 27];
+                    }
+                    return [3 /*break*/, 29];
+                case 1: return [4 /*yield*/, addDelivery.main(event, context)];
+                case 2: return [2 /*return*/, _b.sent()];
+                case 3: return [4 /*yield*/, addPhone.main(event, context)];
+                case 4: return [2 /*return*/, _b.sent()];
+                case 5: return [4 /*yield*/, doNothing.main(event, context)];
+                case 6: return [2 /*return*/, _b.sent()];
+                case 7: return [4 /*yield*/, getADelivery.main(event, context)];
+                case 8: return [2 /*return*/, _b.sent()];
+                case 9: return [4 /*yield*/, getCouponForUser.main(event, context)];
+                case 10: return [2 /*return*/, _b.sent()];
+                case 11: return [4 /*yield*/, getDelivery.main(event, context)];
+                case 12: return [2 /*return*/, _b.sent()];
+                case 13: return [4 /*yield*/, getPickUpSpot.main(event, context)];
+                case 14: return [2 /*return*/, _b.sent()];
+                case 15: return [4 /*yield*/, getPickUpSpots.main(event, context)];
+                case 16: return [2 /*return*/, _b.sent()];
+                case 17: return [4 /*yield*/, getProduct.main(event, context)];
+                case 18: return [2 /*return*/, _b.sent()];
+                case 19: return [4 /*yield*/, getProducts.main(event, context)];
+                case 20: return [2 /*return*/, _b.sent()];
+                case 21: return [4 /*yield*/, getPublicData.main(event, context)];
+                case 22: return [2 /*return*/, _b.sent()];
+                case 23: return [4 /*yield*/, payDelivery.main(event, context)];
+                case 24: return [2 /*return*/, _b.sent()];
+                case 25: return [4 /*yield*/, payTrade.main(event, context)];
+                case 26: return [2 /*return*/, _b.sent()];
+                case 27: return [4 /*yield*/, selectPickupTime.main(event, context)];
+                case 28: return [2 /*return*/, _b.sent()];
+                case 29: throw new Error("switch语法的index.js也需要增量上传。");
             }
         });
     });

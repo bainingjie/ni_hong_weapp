@@ -34,7 +34,7 @@ export interface IPickupSpot extends DB.IDocumentData {
 	name: string;
 }
 
-const DeliveryState = ["待打包称重", "待报价", "待支付", "待发货", "运输中", "待配送至自提点", "已到达"] as const;
+export const DeliveryState = ["待打包称重", "待报价", "待支付", "待发货", "运输中", "待配送至自提点", "已到达", "待选择取货时间"] as const;
 type DeliveryState = typeof DeliveryState[number];
 
 export interface IPackage {
@@ -52,6 +52,7 @@ export function assertIPackage<T extends IPackage>(p: T){
 export interface IDelivery extends DB.IDocumentData {
 	added_date: Date;
 	amount_to_pay: "待称重" | number;
+	payment_id?: string;
 	is_pickup_message_sent: boolean;
 	is_pickup_remind_sent: boolean;
 	is_quote_message_sent: boolean;
@@ -70,17 +71,30 @@ export interface IDelivery extends DB.IDocumentData {
 	open_id: string;
 }
 export interface IPayment extends DB.IDocumentData {
+	type: 0|1;
+	delivery_id: string;
+	is_paid: boolean;
 	totalFee?: number;
+	feeType: string;
+	mchId: string;
+	openid: string;
+	returnCode:string;
+	transactionId: string;
+	userInfo:{
+		appId: string; 
+		openId: string
+	}
+	currency: string;
+	product_id: string;
+	sku_index: number;
+	pick_up_spot: IPickupSpot;
+	miniprogram_open_id: string;
+	union_id: string;
 }
 
-export type ICoupon = DB.IDocumentData & ({
-	readonly type: "满减";
-	readonly 满: number;
-	readonly 减: number;
-} | {
-	readonly type: "折扣";
-	readonly percent: number;
-})
+export interface ICoupon extends DB.IDocumentData {
+	description: string;
+}
 export interface IUser extends DB.IDocumentData {
 	readonly miniprogram_open_id: string ;
 	readonly union_id: string ;
@@ -123,12 +137,12 @@ export interface ICouponUser extends DB.IDocumentData {
 	readonly open_id: DB.DocumentId;
 	readonly available_until: Date;
 	readonly state: "未使用" | "已使用" | "已过期" | "已作废"
+	readonly payment_id?: DB.DocumentId;
 	count:number;
 }
-class NotImplementError extends Error {
+class NotImplementedError extends Error {
+
 }
 class ValueError extends Error {
-}
-const callQuickstartFunction:typeof getDelivery = (event, context)=> {
-	
+
 }

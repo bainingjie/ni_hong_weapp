@@ -66,21 +66,38 @@ cloud.init({
     env: cloud.DYNAMIC_CURRENT_ENV
 });
 var db = cloud.database();
-// 查询数据库集合云函数入口函数
+var _ = db.command;
+var log = cloud.logger();
 function main(event, context) {
     return __awaiter(this, void 0, void 0, function () {
-        var wxContext;
+        var e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    wxContext = cloud.getWXContext();
+                    _a.trys.push([0, 2, , 3]);
                     return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'delivery').where({
-                            open_id: wxContext.OPENID
-                            // open_id: "123"
-                        }).orderBy('added_date', 'desc').get()];
-                case 1: 
-                // 返回数据库查询结果
-                return [2 /*return*/, _a.sent()];
+                            payment_id: event.payment_id
+                        }).update({
+                            // data 字段表示需新增的 JSON 数据
+                            data: {
+                                phone: event.phone
+                            }
+                        })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/, {
+                            success: true
+                        }
+                        // return await db.collection('public').doc('287a53aa61adee4100ba68a821f0aae3').get();
+                    ];
+                case 2:
+                    e_1 = _a.sent();
+                    // 这里catch到的是该collection已经存在，从业务逻辑上来说是运行成功的，所以catch返回success给前端，避免工具在前端抛出异常
+                    return [2 /*return*/, {
+                            success: false,
+                            data: 'failed'
+                        }];
+                case 3: return [2 /*return*/];
             }
         });
     });

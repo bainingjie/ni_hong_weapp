@@ -1,0 +1,27 @@
+<!--pages/selectCoupons/index.wxml-->
+<view style="text-align: center;margin-top: 30rpx;margin-bottom: 10rpx;" wx:if="{{coupons.length>0}}">我的优惠券</view>
+<view style="text-align: center;margin-top: 30rpx;" wx:else>你还没有优惠券哦</view>
+<van-checkbox-group value="{{ selectedCouponIndices }}" bind:change="onChange">
+  <van-cell-group>
+    <van-cell
+      wx:for="{{ coupons }}"
+      wx:key="index"
+      title="{{ item[1].description }}"
+      value-class="value-class"
+      clickable
+      data-index="{{ index }}"
+      bind:click="toggle"
+    >
+      <van-checkbox
+        catch:tap="noop"
+        class="checkboxes-{{ index }}"
+        name="{{ index }}"
+      />
+    </van-cell>
+  </van-cell-group>
+</van-checkbox-group>
+<van-divider />
+	<!-- <van-button round size="small" color="red" bindtap="pay" data-param="{{delivery._id}}">查看拥有的优惠券</van-button>
+	<van-button round size="small" color="red" bindtap="pay" data-param="{{delivery._id}}">输入兑换码</van-button>
+	<van-button round size="small" color="red" bindtap="pay" data-param="{{delivery._id}}">点我确认</van-button>
+	<van-button round size="small" color="red" bindtap="pay" data-param="{{delivery._id}}">支付</van-button> -->

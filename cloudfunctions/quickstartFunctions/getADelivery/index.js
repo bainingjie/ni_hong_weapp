@@ -61,6 +61,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.main = void 0;
 var cloud = __importStar(require("wx-server-sdk"));
+var Delivery_1 = require("../../../miniprogram/pages/getDelivery/Delivery");
 cloud.init({
     env: cloud.DYNAMIC_CURRENT_ENV
 });
@@ -73,7 +74,7 @@ function main(event, context) {
                 case 0:
                     // 返回数据库查询结果
                     console.assert('_id' in event);
-                    return [4 /*yield*/, db.collection('delivery').where({
+                    return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'delivery').where({
                             _id: event._id
                             // open_id: "123"
                         }).get()];

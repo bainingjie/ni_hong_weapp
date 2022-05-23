@@ -76,44 +76,57 @@ exports.__esModule = true;
 exports.main = void 0;
 var cloud = __importStar(require("wx-server-sdk"));
 var request_promise_1 = __importDefault(require("request-promise"));
+var Delivery_1 = require("../../../miniprogram/pages/getDelivery/Delivery");
 cloud.init({
     env: cloud.DYNAMIC_CURRENT_ENV
 });
 var db = cloud.database();
 var _ = db.command;
-var log = cloud.logger();
 function main(event, context) {
     return __awaiter(this, void 0, void 0, function () {
-        var wxContext, user_db, user, _i, _a, detail, data, add_response, response, resData, group_resp, e_1;
+        var log, wxContext, open_id, union_id, user_db, user, _i, _a, detail, data, add_response, response, resData, group_resp, e_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    _b.trys.push([0, 7, , 8]);
+                    log = cloud.logger();
+                    _b.label = 1;
+                case 1:
+                    _b.trys.push([1, 8, , 9]);
                     wxContext = cloud.getWXContext();
-                    user_db = db.collection('user');
+                    open_id = wxContext.OPENID;
+                    union_id = wxContext.UNIONID;
+                    user_db = (0, Delivery_1.getDBCollection)(db, 'user');
+                    console.assert("OPENID" in wxContext);
+                    console.assert("UNIONID" in wxContext);
+                    console.assert(wxContext.OPENID !== undefined);
+                    console.assert(wxContext.UNIONID !== undefined);
+                    if (open_id === undefined)
+                        throw new Error("wxContext.OPENID === undefined");
+                    if (union_id === undefined)
+                        throw new Error("wxContext.UNIONID === undefined");
                     return [4 /*yield*/, user_db
                             .where({
-                            miniprogram_open_id: _.eq(wxContext.OPENID)
+                            miniprogram_open_id: _.eq(open_id)
                         })
                             .get()];
-                case 1:
+                case 2:
                     user = _b.sent();
                     // console.log(user);
                     console.assert(typeof user === 'object');
-                    if (!(user.data.length === 0)) return [3 /*break*/, 3];
+                    if (!(user.data.length === 0)) return [3 /*break*/, 4];
                     return [4 /*yield*/, user_db.add({
                             // data 字段表示需新增的 JSON 数据
                             data: {
                                 // _id: 'todo-identifiant-aleatoire', // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
-                                miniprogram_open_id: wxContext.OPENID,
-                                union_id: wxContext.UNIONID,
+                                miniprogram_open_id: open_id,
+                                union_id: union_id,
                                 official_account_open_id: null
                             }
                         })];
-                case 2:
-                    _b.sent();
-                    _b.label = 3;
                 case 3:
+                    _b.sent();
+                    _b.label = 4;
+                case 4:
                     // let data_array: IPackage[] = [];
                     for (_i = 0, _a = event.shipping_details; _i < _a.length; _i++) {
                         detail = _a[_i];
@@ -124,8 +137,8 @@ function main(event, context) {
                     }
                     data = {
                         type: 0,
-                        open_id: wxContext.OPENID,
-                        union_id: wxContext.UNIONID,
+                        open_id: open_id,
+                        union_id: union_id,
                         added_date: new Date(),
                         pickup_spot: event.pickup_spot,
                         packages: event.shipping_details,
@@ -140,19 +153,19 @@ function main(event, context) {
                         amount_to_pay: "待称重",
                         remark: ""
                     };
-                    return [4 /*yield*/, db.collection('delivery').add({
+                    return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'delivery').add({
                             // data 字段表示需新增的 JSON 数据
                             data: __assign({}, data
                             // _id: 'todo-identifiant-aleatoire', // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
                             // payment_id
                             )
                         })];
-                case 4:
+                case 5:
                     add_response = _b.sent();
                     if (add_response === undefined || typeof add_response === 'string')
                         throw new TypeError("add_response=".concat(add_response));
-                    return [4 /*yield*/, db.collection('public').doc('287a53aa61adee4100ba68a821f0aae3').get()];
-                case 5:
+                    return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'public').doc('287a53aa61adee4100ba68a821f0aae3').get()];
+                case 6:
                     response = _b.sent();
                     resData = {
                         "msgtype": "text",
@@ -168,7 +181,7 @@ function main(event, context) {
                             },
                             body: JSON.stringify(resData)
                         })];
-                case 6:
+                case 7:
                     group_resp = _b.sent();
                     console.log(group_resp);
                     // let new_promise = new Promise((resolve, reject) => {
@@ -197,14 +210,14 @@ function main(event, context) {
                         }
                         // return await db.collection('public').doc('287a53aa61adee4100ba68a821f0aae3').get();
                     ];
-                case 7:
+                case 8:
                     e_1 = _b.sent();
                     // 这里catch到的是该collection已经存在，从业务逻辑上来说是运行成功的，所以catch返回success给前端，避免工具在前端抛出异常
                     return [2 /*return*/, {
                             success: false,
                             data: 'create collection failed'
                         }];
-                case 8: return [2 /*return*/];
+                case 9: return [2 /*return*/];
             }
         });
     });

@@ -1,0 +1,4 @@
+/* pages/payDelivery/index.wxss */
+.value-class {
+	flex: none !important;
+  }

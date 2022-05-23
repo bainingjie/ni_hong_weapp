@@ -69,20 +69,52 @@ var db = cloud.database();
 // 查询数据库集合云函数入口函数
 function main(event, context) {
     return __awaiter(this, void 0, void 0, function () {
-        var wxContext;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var qq, coupons, now, _i, _a, e, temp;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    wxContext = cloud.getWXContext();
-                    return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'delivery').where({
-                            open_id: wxContext.OPENID
+                    // 返回数据库查询结果
+                    console.assert('open_id' in event);
+                    console.assert(typeof event.open_id === 'string');
+                    if (typeof event.open_id !== 'string')
+                        throw new Error("event.open_id must be a string, but received a ".concat(typeof event.open_id, ". (event = ").concat(JSON.stringify(event), "!"));
+                    return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'coupon_user').where({
+                            open_id: event.open_id,
+                            state: "未使用"
                             // open_id: "123"
-                        }).orderBy('added_date', 'desc').get()];
-                case 1: 
-                // 返回数据库查询结果
-                return [2 /*return*/, _a.sent()];
+                        }).get()];
+                case 1:
+                    qq = _b.sent();
+                    coupons = new Array();
+                    now = (new Date()).getTime();
+                    _i = 0, _a = qq.data;
+                    _b.label = 2;
+                case 2:
+                    if (!(_i < _a.length)) return [3 /*break*/, 7];
+                    e = _a[_i];
+                    if (!(e.available_until.getTime() < now)) return [3 /*break*/, 4];
+                    return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'coupon_user').doc(e._id).update({
+                            data: {
+                                state: "已过期"
+                            }
+                        })];
+                case 3:
+                    _b.sent();
+                    return [3 /*break*/, 6];
+                case 4:
+                    ;
+                    return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'coupon').doc(e.coupon_id).get()];
+                case 5:
+                    temp = _b.sent();
+                    coupons.push([e, temp.data]);
+                    _b.label = 6;
+                case 6:
+                    _i++;
+                    return [3 /*break*/, 2];
+                case 7: return [2 /*return*/, coupons];
             }
         });
     });
 }
 exports.main = main;
+;

@@ -7,7 +7,7 @@ cloud.init({
 const db = cloud.database();
 
 // 查询数据库集合云函数入口函数
-export async function main(event: any, context: any) {
+export async function main(event: {type: 'getPublicData'}, context: any) {
   // 返回数据库查询结果
   return await db.collection<IPublic>('public').doc('287a53aa61adee4100ba68a821f0aae3').get();
 };

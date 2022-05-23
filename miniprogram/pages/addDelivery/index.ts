@@ -10,7 +10,7 @@ Page({
 	 */
 	data: {
 		show: false,
-		prefecture_names: <readonly string[]>[],
+		prefecture_names: my_library.prefecture_names,
 		prefectures: <{[k:string]:IPickupSpot[]}>{},
 		pickup_spot: "请选择自提点",
 		// trimmed_prefectures:null,
@@ -114,12 +114,10 @@ Page({
 				// },
 				data: {
 					type: 'addDelivery',
-					arg: {
-						shipping_details: this.data.shipping_details,
-						// tracking_numbers: this.data.shipping_details,
-						pickup_spot: this.data.pickup_spot,
-						phone: this.data.phone
-					}
+					shipping_details: this.data.shipping_details,
+					// tracking_numbers: this.data.shipping_details,
+					pickup_spot: this.data.pickup_spot,
+					phone: this.data.phone
 				}
 			}).then((resp) => {
 				const result= resp.result;
@@ -171,7 +169,7 @@ Page({
 				duration: 1500
 			})
 		} else{
-			throw Error('NotImplemented');
+			throw Error('NotImplementedError');
 		}
 
 	},
@@ -215,18 +213,9 @@ Page({
 			}
 		}).then((resp) => {
 			// console.log(resp.result.data);
-			let output = my_library.prefectures_function<IPickupSpot>();
-			//console.log(output);
-			let prefecture_names = output.prefecture_names;
-			let prefectures = output.prefectures;
-			for (let spot of resp.result.data) {
-				// console.log(spot.address)
-				prefectures[spot.address.prefecture].push(spot)
-			}
-			// console.log(prefectures)
+			let pickup_spot_groups = my_library.pickup_spots_groupby_prefectures(resp.result.data);
 			this.setData({
-				prefecture_names,
-				prefectures
+				prefectures: pickup_spot_groups
 			});
 			wx.hideLoading();
 		}).catch((e) => {

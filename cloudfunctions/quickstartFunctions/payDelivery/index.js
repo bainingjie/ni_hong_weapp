@@ -61,17 +61,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.main = void 0;
 var cloud = __importStar(require("wx-server-sdk"));
+var Delivery_1 = require("../../../miniprogram/pages/getDelivery/Delivery");
+var index_1 = require("../../../miniprogram/my_library/index");
 cloud.init({
     env: cloud.DYNAMIC_CURRENT_ENV
 });
 var db = cloud.database();
-function randomString(len) {
-    var t = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678";
-    var res = "";
-    for (var i = 0; i < len; i++)
-        res += t.charAt(Math.floor(Math.random() * t.length));
-    return res;
-}
 function main(event, context) {
     return __awaiter(this, void 0, void 0, function () {
         var response, res, e_1;
@@ -79,11 +74,13 @@ function main(event, context) {
             switch (_a.label) {
                 case 0:
                     console.assert("delivery_id" in event);
+                    console.assert(typeof event.delivery_id === 'string');
                     console.assert("amount_to_pay" in event);
+                    console.assert(typeof event.amount_to_pay === 'number');
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 4, , 5]);
-                    return [4 /*yield*/, db.collection('payment').add({
+                    return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'payment').add({
                             // data 字段表示需新增的 JSON 数据
                             data: {
                                 type: 0,
@@ -102,10 +99,10 @@ function main(event, context) {
                             outTradeNo: response._id.toString(),
                             spbillCreateIp: "127.0.0.1",
                             subMchId: "1614594513",
-                            totalFee: parseInt(event.amount_to_pay) * 100,
+                            totalFee: parseInt(event.amount_to_pay.toString()) * 100,
                             envId: "testbai-6gjgkia55f6d4918",
                             functionName: "payDeliveryCallback",
-                            nonceStr: randomString(32),
+                            nonceStr: (0, index_1.randomString)(),
                             tradeType: "JSAPI"
                         })];
                 case 3:

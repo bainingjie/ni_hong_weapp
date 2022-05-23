@@ -59,22 +59,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
+exports.main = void 0;
 var cloud = __importStar(require("wx-server-sdk"));
+var Delivery_1 = require("../../../miniprogram/pages/getDelivery/Delivery");
 cloud.init({
     env: cloud.DYNAMIC_CURRENT_ENV
 });
 var db = cloud.database();
 // 查询数据库集合云函数入口函数
-exports.main = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, db.collection('pickup_spots').where({
-                    name: event.name
-                    // open_id: "123"
-                }).get()];
-            case 1: 
-            // 返回数据库查询结果
-            return [2 /*return*/, _a.sent()];
-        }
+function main(event, context) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'pickup_spots').where({
+                        name: event.name
+                        // open_id: "123"
+                    }).get()];
+                case 1: 
+                // 返回数据库查询结果
+                return [2 /*return*/, _a.sent()];
+            }
+        });
     });
-}); };
+}
+exports.main = main;
+;

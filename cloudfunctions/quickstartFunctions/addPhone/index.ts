@@ -8,9 +8,9 @@ cloud.init({
 const db = cloud.database();
 const _ = db.command;
 const log = cloud.logger();
-export async function main(event: unknown, context: any) {
+export async function main(event: {type: 'addPhone', phone: string, payment_id: string}, context: any) {
 	try {
-		await getDBCollection<unknown>(db, 'delivery').where({
+		await getDBCollection<IDelivery>(db, 'delivery').where({
 			payment_id: event.payment_id
 		}).update({
 			// data 字段表示需新增的 JSON 数据

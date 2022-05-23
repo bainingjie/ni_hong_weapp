@@ -1,4 +1,4 @@
-<view wx:if="{{state==1}}" style="text-align: center;margin-top: 30rpx;">
+<view wx:if="{{state===1}}" style="text-align: center;margin-top: 30rpx;">
   <view>
     <view class="title">还差最后一步！</view>
     <!-- <view class="mid_menu"> -->
@@ -13,7 +13,7 @@
   <van-button round plain  bindtap="submit" customStyle="margin-top: 10rpx;">提交</van-button>
 </view>
 
-<view wx:if="{{state==3}}" style="text-align: center;margin-top: 30rpx;">
+<view wx:if="{{state===3}}" style="text-align: center;margin-top: 30rpx;">
   <view>
     <icon class="icon-box-img icon" type="success" size="53"></icon>
     <view class="title">下单成功</view>
@@ -30,10 +30,10 @@
   </view>
 </view>
 
-<view wx:if="{{state==2}}" style="margin-top: 30rpx;">
+<view wx:if="{{state===2}}" style="margin-top: 30rpx;">
   下单失败，请联系客服。
 </view>
-<view wx:if="{{state==0}}">
+<view wx:if="{{state===0}}">
     <image style="width: 100%;" webp="{{true}}" mode="widthFix" src="{{product.sku[type_index].image}}"></image>
     <view style="font-weight: bold;margin:20rpx 20rpx 0rpx 40rpx;font-size: x-large;">{{product.text.name}}</view>
     <wxs src="../../my_library/string.wxs" module="tools" />
