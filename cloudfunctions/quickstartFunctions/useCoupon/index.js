@@ -62,58 +62,37 @@ exports.__esModule = true;
 exports.main = void 0;
 var cloud = __importStar(require("wx-server-sdk"));
 var Delivery_1 = require("../../../miniprogram/pages/getDelivery/Delivery");
-var index_1 = require("../../../miniprogram/my_library/index");
 cloud.init({
     env: cloud.DYNAMIC_CURRENT_ENV
 });
 var db = cloud.database();
 function main(event, context) {
     return __awaiter(this, void 0, void 0, function () {
-        var response, res, e_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var d, _i, _a, cu;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    console.assert("delivery_id" in event);
-                    console.assert(typeof event.delivery_id === 'string');
-                    console.assert("amount_to_pay" in event);
-                    console.assert(typeof event.amount_to_pay === 'number');
-                    _a.label = 1;
+                    d = (0, Delivery_1.getDBCollection)(db, "coupon_user");
+                    _i = 0, _a = event.coupon_users;
+                    _b.label = 1;
                 case 1:
-                    _a.trys.push([1, 4, , 5]);
-                    return [4 /*yield*/, (0, Delivery_1.getDBCollection)(db, 'payment').add({
-                            // data 字段表示需新增的 JSON 数据
+                    if (!(_i < _a.length)) return [3 /*break*/, 4];
+                    cu = _a[_i];
+                    if (cu._id === undefined)
+                        throw new Error();
+                    return [4 /*yield*/, d.doc(cu._id).update({
                             data: {
-                                type: 0,
-                                delivery_id: event.delivery_id,
-                                is_paid: false,
-                                totalFee: event.amount_to_pay
+                                state: "已使用",
+                                payment_id: event.payment_id
                             }
                         })];
                 case 2:
-                    response = _a.sent();
-                    (0, Delivery_1.getDBCollection)(db, "delivery").doc(event.delivery_id).update({ data: { payment_id: response._id.toString() } });
-                    if (response._id === undefined)
-                        throw new TypeError();
-                    return [4 /*yield*/, cloud.cloudPay.unifiedOrder({
-                            body: "霓虹町指南-集运运费",
-                            outTradeNo: response._id.toString(),
-                            spbillCreateIp: "127.0.0.1",
-                            subMchId: "1614594513",
-                            totalFee: parseInt(event.amount_to_pay.toString()) * 100,
-                            envId: "testbai-6gjgkia55f6d4918",
-                            functionName: "payDeliveryCallback",
-                            nonceStr: (0, index_1.randomString)(),
-                            tradeType: "JSAPI"
-                        })];
+                    _b.sent();
+                    _b.label = 3;
                 case 3:
-                    res = _a.sent();
-                    console.log("unified order res=".concat(JSON.stringify(res)));
-                    return [2 /*return*/, { unified_order_res: res, payment_id: response._id }];
-                case 4:
-                    e_1 = _a.sent();
-                    console.log(e_1);
-                    return [3 /*break*/, 5];
-                case 5: return [2 /*return*/];
+                    _i++;
+                    return [3 /*break*/, 1];
+                case 4: return [2 /*return*/];
             }
         });
     });

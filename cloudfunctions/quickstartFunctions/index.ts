@@ -13,6 +13,7 @@ import * as getPublicData from './getPublicData/index';
 import * as payDelivery from './payDelivery/index';
 import * as payTrade from './payTrade/index';
 import * as selectPickupTime from './selectPickupTime/index';
+import * as useCoupon from './useCoupon/index';
 
 
 const CloudFunctionEventTypes = [
@@ -30,6 +31,7 @@ const CloudFunctionEventTypes = [
 	'payDelivery',
 	'payTrade',	
 	'selectPickupTime',
+	'useCoupon',
 ] as const;
 // const CloudFunctionEventTypes = {
 // 	addDelivery: addDelivery.main,
@@ -84,6 +86,8 @@ export async function main(event: {type: CloudFunctionEventTypes}, context: any)
 			return await payTrade.main(event as any, context);
 		case 'selectPickupTime':
 			return await selectPickupTime.main(event as any, context);
+		case 'useCoupon':
+			return await useCoupon.main(event as any, context);
 		default:
 			throw new Error("switch语法的index.js也需要增量上传。");
 	}

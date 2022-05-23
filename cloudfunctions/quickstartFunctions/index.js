@@ -75,6 +75,7 @@ var getPublicData = __importStar(require("./getPublicData/index"));
 var payDelivery = __importStar(require("./payDelivery/index"));
 var payTrade = __importStar(require("./payTrade/index"));
 var selectPickupTime = __importStar(require("./selectPickupTime/index"));
+var useCoupon = __importStar(require("./useCoupon/index"));
 var CloudFunctionEventTypes = [
     'addDelivery',
     'addPhone',
@@ -90,6 +91,7 @@ var CloudFunctionEventTypes = [
     'payDelivery',
     'payTrade',
     'selectPickupTime',
+    'useCoupon',
 ];
 function main(event, context) {
     return __awaiter(this, void 0, void 0, function () {
@@ -114,8 +116,9 @@ function main(event, context) {
                         case 'payDelivery': return [3 /*break*/, 23];
                         case 'payTrade': return [3 /*break*/, 25];
                         case 'selectPickupTime': return [3 /*break*/, 27];
+                        case 'useCoupon': return [3 /*break*/, 29];
                     }
-                    return [3 /*break*/, 29];
+                    return [3 /*break*/, 31];
                 case 1: return [4 /*yield*/, addDelivery.main(event, context)];
                 case 2: return [2 /*return*/, _b.sent()];
                 case 3: return [4 /*yield*/, addPhone.main(event, context)];
@@ -144,7 +147,9 @@ function main(event, context) {
                 case 26: return [2 /*return*/, _b.sent()];
                 case 27: return [4 /*yield*/, selectPickupTime.main(event, context)];
                 case 28: return [2 /*return*/, _b.sent()];
-                case 29: throw new Error("switch语法的index.js也需要增量上传。");
+                case 29: return [4 /*yield*/, useCoupon.main(event, context)];
+                case 30: return [2 /*return*/, _b.sent()];
+                case 31: throw new Error("switch语法的index.js也需要增量上传。");
             }
         });
     });
